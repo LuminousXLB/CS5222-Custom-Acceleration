@@ -31,8 +31,78 @@
 \author{Shen Jiamin (A0209166A)}
 \email{shen_jiamin@u.nus.edu}
 
+
+\begin{abstract}
+  Your report in \texttt{.pdf} format with concise answers to the questions
+  asked in Parts 1 and 2.
+  In addition, the report should contain a short (couple paragraphs) description
+  of your optimized implementation for Part 3 (what you changed about the
+  hardware, or classifier, or both).
+\end{abstract}
+
 \maketitle
 
+\section{Matrix Multiplication Pipeline Optimization in HLS}
+
+
+\subsection{Understanding the baseline matrix multiply (background)}
+
+\subsection{B. Pipelining in HLS (8 marks)}
+
+Report
+\begin{enumerate}
+  \item the design latency in cycles,
+  \item the overall device utilization (as Total per Resource),
+  \item the number of floating point adders and multipliers (you can find this information under the Instance section of the synthesis report) and
+  \item the Initiation Interval of the loops you pipelined.
+\end{enumerate}
+
+\subsection{C. Increasing Pipeline Parallelism by Repartitioning Memories (8 marks)}
+
+Report
+\begin{enumerate}
+  \item the design latency in cycles,
+  \item the overall device utilization (as Total per Resource),
+  \item the number of floating point adders and multipliers (you can find this information under the Instance section of the synthesis report) and
+  \item the Initiation Interval of the loops you pipelined.
+\end{enumerate}
+
+\subsection{D. Amortizing Iteration Latency with Batching (8 marks)}
+
+Report \begin{enumerate}
+  \item the design latency in cycles, and 
+  \item the overall device utilization (as Total per Resource).
+\end{enumerate}
+
+\subsection{E. Extending Batch Size with Tiling (8 marks)}
+
+Report \begin{enumerate}
+  \item the design latency in cycles, and 
+  \item the overall device utilization (as Total per Resource).
+\end{enumerate}
+
+\subsection{F. Hardware compilation and FPGA testing on the PYNQ (8 marks)}
+
+Report 
+\begin{enumerate}
+  \item the measured speedup and 
+  \item measured classification accuracy.
+\end{enumerate}
+
+\section{Part 2: Fixed-Point Optimizations (30 marks)}
+
+\begin{enumerate}
+  \item the fixed-point validation accuracy reported by mnist.py after you've tweaked the SCALE factor.
+  \item the design latency in cycles
+  \item the overall device utilization (as Total per Resource).
+  \item your measured system speedup over the fixed-point CPU implementation
+  \item your measured classification accuracy on the 8k MNIST test sample
+  \item how many multipliers are instantiated in your desing?
+  \item report the initiation interval of the matrix multiplication loop that you pipelined
+  \item given the number of multipliers in your design and input throughput via the AXI port, is the design bandwidth- or compute-limited?
+\end{enumerate}
+
+\section{Part 3: Open-ended design optimization (30 marks)}
 
 
 % \bibliographystyle{ACM-Reference-Format}
