@@ -1,0 +1,17 @@
+---
+BasedOnStyle: LLVM
+Language: Cpp
+ColumnLimit: 120
+AlignAfterOpenBracket: AlwaysBreak
+AlignEscapedNewlinesLeft: true
+AllowAllArgumentsOnNextLine: false
+AllowAllParametersOfDeclarationOnNextLine: false
+AllowShortFunctionsOnASingleLine: false
+AlwaysBreakTemplateDeclarations: true
+BinPackArguments: false
+BinPackParameters: false
+BreakBeforeBraces: Linux
+IndentCaseLabels: true
+IndentWidth: 4
+TabWidth: 4
+...
