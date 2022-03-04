@@ -36,6 +36,27 @@ def extract_latency(p):
     return line
 
 
+def extract_loop_summary(p: Path):
+    if not isinstance(p, Path):
+        p = Path(p)
+
+    rpt = p.read_text()
+    rpt = rpt[rpt.find("* Loop:") :]
+    rpt = rpt[: rpt.find("==============================================")]
+    rpt = rpt.strip().splitlines()[5:-1]
+
+    lines = []
+    for line in rpt:
+        cells = line.split("|")[1:-1]
+        cells[0] = r"\texttt{" + cells[0].rstrip(" ").replace("_", r"\_") + "}"
+        for i in range(1, 8):
+            cells[i] = cells[i].strip()
+
+        lines.append(" & ".join(cells) + r" \\")
+
+    return "\n".join(lines)
+
+
 def extract_utilization(p):
     if not isinstance(p, Path):
         p = Path(p)
@@ -99,6 +120,14 @@ def update_summary():
         )
 
 
+def update_loop():
+    LOOP_TEMPLATE = (BASE / "loop.tpl.tex").read_text()
+
+    for name, _ in REPORTS.items():
+        with open(BASE / f"loop-{name}.tex", "w") as f:
+            f.write(LOOP_TEMPLATE.replace("{{}}", extract_loop_summary(BASE / name)))
+
+
 if __name__ == "__main__":
     update_summary()
-    # print(extract_utilization("float_04_L2.rpt"))
+    update_loop()
