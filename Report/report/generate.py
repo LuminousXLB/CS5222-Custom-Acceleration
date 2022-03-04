@@ -33,7 +33,7 @@ def extract_latency(p):
     line[2] = normalize(line[2])
     line[3] = normalize(line[3])
 
-    return line[:-1]
+    return line
 
 
 def extract_utilization(p):
@@ -68,21 +68,36 @@ def extract_utilization(p):
 def update_summary():
     SUMMARY_TEMPLATE = (BASE / "summary.tpl.tex").read_text()
 
-    lines = ""
+    LAT_LINES = []
+    UTL_LINES = []
     for name, profile in REPORTS.items():
-        line = [
-            profile,
-            *extract_latency(BASE / name),
-            *extract_utilization(BASE / name),
-        ]
+        LAT_LINES.append(
+            " & ".join(
+                [
+                    profile,
+                    *extract_latency(BASE / name),
+                ]
+            )
+            + r" \\"
+        )
 
-        lines += " & ".join(line) + r" \\" + "\n"
+        UTL_LINES.append(
+            " & ".join(
+                [
+                    profile,
+                    *extract_utilization(BASE / name),
+                ]
+            )
+            + r" \\"
+        )
 
     with open(BASE / "summary.tex", "w") as f:
-        f.write(SUMMARY_TEMPLATE.replace("{{}}", lines.strip()))
+        f.write(
+            SUMMARY_TEMPLATE.replace(
+                "{{LATENCY}}", "\n".join(LAT_LINES).strip()
+            ).replace("{{UTILIZATION}}", "\n".join(UTL_LINES).strip())
+        )
 
-
-# def find_t
 
 if __name__ == "__main__":
     update_summary()
