@@ -72,9 +72,9 @@ LOAD_I_1:
 L1:
     for (int i = 0; i < BATCH; i++) {
     // Iterate over output classes
-#pragma HLS PIPELINE II = 1
     L2:
         for (int j = 0; j < CLASSES; j++) {
+#pragma HLS PIPELINE II = 1
             // Perform the dot product
             T tmp = offset_buf[j];
         L3:
