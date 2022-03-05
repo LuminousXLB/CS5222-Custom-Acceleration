@@ -1,0 +1,58 @@
+\begin{tabularx}{\textwidth}{cl*{7}{C}}
+    \toprule
+
+    \multicolumn{2}{c}{\multirow{2}{*}{Profile}} &
+    \multicolumn{2}{c}{Latency (cycles)}         &
+    \multicolumn{2}{c}{Latency (ms)}             &
+    \multicolumn{2}{c}{Interval (cycles)}        &
+    \multicolumn{1}{c}{\multirow{2}{*}{\makecell*{Pipeline
+    \\ Type}}}                                                                                                                \\
+
+    \cmidrule(lr){3-4}
+    \cmidrule(lr){5-6}
+    \cmidrule(lr){7-8}
+                                                 &
+                                                 &
+    \multicolumn{1}{c}{min}                      &
+    \multicolumn{1}{c}{max}                      &
+    \multicolumn{1}{c}{min}                      &
+    \multicolumn{1}{c}{max}                      &
+    \multicolumn{1}{c}{min}                      &
+    \multicolumn{1}{c}{max}                      & \\
+    \midrule
+    \ref{sec:1a} & Baseline (AutoPipe) & 85160 & 85160 & 1.236 & 1.236 & 85161 & 85161 & none \\
+\ref{sec:1a} & Baseline (NoPipe) & 228022 & 228022 & 2.280 & 2.280 & 228023 & 228023 & none \\
+\ref{sec:1bL3} & L3 Pipelining & 85286 & 85286 & 1.238 & 1.238 & 85287 & 85287 & none \\
+\ref{sec:1bL1} & L1 Pipelining & 6193 & 6193 & 0.062 & 0.062 & 6194 & 6194 & none \\
+\ref{sec:1bL2} & L2 Pipelining & 7341 & 7341 & 0.073 & 0.073 & 7342 & 7342 & none \\
+    \bottomrule
+\end{tabularx}
+
+\begin{tabularx}{\textwidth}{cl*{7}{C}}
+    \toprule
+
+    \multicolumn{2}{c}{\multirow{2}{*}{Profile}} &
+    \multicolumn{5}{c}{Utilization Summary}      &
+    \multicolumn{2}{c}{Instance}                                                                \\
+
+    \cmidrule(lr){3-7}
+    \cmidrule(lr){8-9}
+                                                 &
+                                                 &
+    \multicolumn{1}{c}{BRAM\_18K}                &
+    \multicolumn{1}{c}{DSP}                      &
+    \multicolumn{1}{c}{FF}                       &
+    \multicolumn{1}{c}{LUT}                      &
+    \multicolumn{1}{c}{URAM}                     &
+    \multicolumn{1}{c}{fadd}                     &
+    \multicolumn{1}{c}{fmul}                                                                    \\
+
+    \midrule
+                                                 & Available & 280 & 220 & 106400 & 53200 & 0 & \\
+    \ref{sec:1a} & Baseline (AutoPipe) & 13 & 5 & 1151 & 2058 & 0 & 1 & 1 \\
+\ref{sec:1a} & Baseline (NoPipe) & 14 & 5 & 817 & 1635 & 0 & 1 & 1 \\
+\ref{sec:1bL3} & L3 Pipelining & 14 & 5 & 921 & 1713 & 0 & 1 & 1 \\
+\ref{sec:1bL1} & L1 Pipelining & 70 & 800 & 415044 & 243128 & 0 & 160 & 160 \\
+\ref{sec:1bL2} & L2 Pipelining & 182 & 80 & 38357 & 34359 & 0 & 16 & 16 \\
+    \bottomrule
+\end{tabularx}

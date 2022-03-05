@@ -1,15 +1,24 @@
-\documentclass[screen,nonacm]{acmart}
+% \documentclass[screen,nonacm]{acmart}
+\documentclass{article}
 
-\usepackage{booktabs}
-\usepackage{hyperref}
-\usepackage{lipsum}
+\usepackage[letterpaper, total={7in, 9in}]{geometry}
+
+\usepackage[tt=false, type1=true]{libertine}
+\usepackage[varqu]{zi4}
+
+\usepackage{multirow}
 \usepackage{multicol}
+\usepackage{booktabs, tabularx, makecell}
+\usepackage[colorlinks]{hyperref}
+\usepackage{lipsum}
 \usepackage{tcolorbox}
 \usepackage{xcolor}
 \usepackage{subcaption}
-\usepackage{adjustbox}
+\usepackage{rotating}
 \usepackage{tikz}
 \usetikzlibrary{positioning,shapes,arrows}
+
+\newcolumntype{C}{>{\raggedleft\arraybackslash}X}
 
 \usepackage{minted}
 \setminted{
@@ -19,26 +28,30 @@
     xleftmargin=2em
 }
 
+\pagestyle{plain}
+\pagenumbering{gobble}
+
 
 \begin{document}
 
-\title{
-  Custom Acceleration with FPGAs
-}
-\subtitle{
-  CS5222 -- Project 2
+\title{\bfseries
+  CS5222 Project 2 \\
+  Custom Acceleration with FPGAs\\
 }
 
-\author{Shen Jiamin (A0209166A)}
-\email{shen_jiamin@u.nus.edu}
+\author{
+  Shen Jiamin \\
+  A0209166A \\
+  \href{mailto:shen_jiamin@u.nus.edu}{\nolinkurl{shen_jiamin@u.nus.edu}}
+}
+
+\maketitle
 
 \begin{abstract}
   In this project, I'm going to port the lab to \textbf{PYNQ 2.7} and \textbf{Vivado/Vitis 2020.2}.
-  The experiment is done on ASUS RS500-E8-PS4 V2, with operating system 
+  The experiment is done on ASUS RS500-E8-PS4 V2, with operating system
   Ubuntu 20.04.4 LTS (GNU/Linux 5.4.0-100-generic x86\_64).
 \end{abstract}
-
-\maketitle 
 
 \input{content/Part1}
 

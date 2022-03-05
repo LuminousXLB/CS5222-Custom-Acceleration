@@ -1,0 +1,10 @@
+--- mmult_float.cpp.orig	2022-03-04 16:59:04.734375380 +0800
++++ mmult_float.cpp.L2	2022-03-04 17:00:26.201027719 +0800
+@@ -74,6 +74,7 @@
+     // Iterate over output classes
+     L2:
+         for (int j = 0; j < CLASSES; j++) {
++#pragma HLS PIPELINE II = 1
+             // Perform the dot product
+             T tmp = offset_buf[j];
+         L3:

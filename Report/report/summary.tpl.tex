@@ -1,0 +1,50 @@
+\begin{tabularx}{\textwidth}{cl*{7}{C}}
+    \toprule
+
+    \multicolumn{2}{c}{\multirow{2}{*}{Profile}} &
+    \multicolumn{2}{c}{Latency (cycles)}         &
+    \multicolumn{2}{c}{Latency (ms)}             &
+    \multicolumn{2}{c}{Interval (cycles)}        &
+    \multicolumn{1}{c}{\multirow{2}{*}{\makecell*{Pipeline
+    \\ Type}}}                                                                                                                \\
+
+    \cmidrule(lr){3-4}
+    \cmidrule(lr){5-6}
+    \cmidrule(lr){7-8}
+                                                 &
+                                                 &
+    \multicolumn{1}{c}{min}                      &
+    \multicolumn{1}{c}{max}                      &
+    \multicolumn{1}{c}{min}                      &
+    \multicolumn{1}{c}{max}                      &
+    \multicolumn{1}{c}{min}                      &
+    \multicolumn{1}{c}{max}                      & \\
+    \midrule
+    {{LATENCY}}
+    \bottomrule
+\end{tabularx}
+
+\begin{tabularx}{\textwidth}{cl*{7}{C}}
+    \toprule
+
+    \multicolumn{2}{c}{\multirow{2}{*}{Profile}} &
+    \multicolumn{5}{c}{Utilization Summary}      &
+    \multicolumn{2}{c}{Instance}                                                                \\
+
+    \cmidrule(lr){3-7}
+    \cmidrule(lr){8-9}
+                                                 &
+                                                 &
+    \multicolumn{1}{c}{BRAM\_18K}                &
+    \multicolumn{1}{c}{DSP}                      &
+    \multicolumn{1}{c}{FF}                       &
+    \multicolumn{1}{c}{LUT}                      &
+    \multicolumn{1}{c}{URAM}                     &
+    \multicolumn{1}{c}{fadd}                     &
+    \multicolumn{1}{c}{fmul}                                                                    \\
+
+    \midrule
+                                                 & Available & 280 & 220 & 106400 & 53200 & 0 & \\
+    {{UTILIZATION}}
+    \bottomrule
+\end{tabularx}
