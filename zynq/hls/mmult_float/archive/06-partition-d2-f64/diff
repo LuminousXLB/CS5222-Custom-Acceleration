@@ -1,0 +1,14 @@
+diff --git a/zynq/hls/test_replica/mmult_float.cpp b/zynq/hls/test_replica/mmult_float.cpp
+index 346039d..44b565c 100644
+--- a/zynq/hls/test_replica/mmult_float.cpp
++++ b/zynq/hls/test_replica/mmult_float.cpp
+@@ -35,6 +35,9 @@ void mmult_hw(AXI_VAL in_stream[IS_SIZE], AXI_VAL out_stream[OS_SIZE])
+ #pragma HLS bind_storage variable = in_buf type = RAM_2P
+ #pragma HLS bind_storage variable = weight_buf type = RAM_2P
+ 
++#pragma HLS ARRAY_PARTITION variable = in_buf block factor = 64 dim = 2
++#pragma HLS ARRAY_PARTITION variable = weight_buf block factor = 64 dim = 2
++
+     // Input and output AXI stream indices
+     int is_idx = 0;
+     int os_idx = 0;

@@ -1,0 +1,212 @@
+==============================================================
+Vitis HLS - High-Level Synthesis from C, C++ and OpenCL v2020.2 (64-bit)
+Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+==============================================================
+INFO: [SYN 201-201] Setting up clock 'default' with a period of 10ns.
+INFO: [HLS 200-10] Setting target device to 'xc7z020-clg484-1'
+INFO: [HLS 200-1505] Using flow_target 'vivado'
+INFO: [HLS 200-1464] Running solution command: config_compile -complex-mul-dsp=0
+INFO: [HLS 200-1464] Running solution command: config_compile -pipeline_loops=0
+INFO: [XFORM 203-1171] Pipeline the innermost loop with trip count more than 0 or its parent loop when its trip count is less than or equal 0.
+INFO: [HLS 200-1510] Running: set_part xc7z020clg484-1 
+INFO: [XFORM 203-1171] Pipeline the innermost loop with trip count more than 0 or its parent loop when its trip count is less than or equal 0.
+INFO: [HLS 200-1510] Running: create_clock -period 10 -name default 
+INFO: [HLS 200-1510] Running: config_compile -pipeline_loops 0 
+INFO: [XFORM 203-1171] Pipeline the innermost loop with trip count more than 0 or its parent loop when its trip count is less than or equal 0.
+INFO: [HLS 200-1510] Running: csim_design -clean 
+INFO: [SIM 211-2] *************** CSIM start ***************
+INFO: [SIM 211-4] CSIM will launch GCC as the compiler.
+INFO: [SIM 211-1] CSim done with 0 errors.
+INFO: [SIM 211-3] *************** CSIM finish ***************
+INFO: [HLS 200-111] Finished Command csim_design CPU user time: 3.73 seconds. CPU system time: 0.49 seconds. Elapsed time: 2.7 seconds; current allocated memory: 70.064 MB.
+INFO: [HLS 200-1510] Running: csynth_design 
+INFO: [HLS 200-111] Finished File checks and directory preparation: CPU user time: 0 seconds. CPU system time: 0.01 seconds. Elapsed time: 0.01 seconds; current allocated memory: 70.172 MB.
+INFO: [HLS 200-10] Analyzing design file './mmult_float.cpp' ... 
+WARNING: [HLS 214-140] Array stream parameter 'in_stream' in function 'mmult_hw' may require the 'volatile' qualifier to prevent the compiler from altering array accesses and/or modifying the desired streaming order: /home/ubuntu/cs5222/workspace/zynq/hls/test_replica/mmult_float.cpp:8
+WARNING: [HLS 214-140] Array stream parameter 'out_stream' in function 'mmult_hw' may require the 'volatile' qualifier to prevent the compiler from altering array accesses and/or modifying the desired streaming order: /home/ubuntu/cs5222/workspace/zynq/hls/test_replica/mmult_float.cpp:8
+WARNING: [HLS 207-5284] unsequenced modification and access to 'os_idx': ./mmult_float.cpp:102:30
+INFO: [HLS 200-111] Finished Source Code Analysis and Preprocessing: CPU user time: 3.67 seconds. CPU system time: 0.32 seconds. Elapsed time: 3.99 seconds; current allocated memory: 71.685 MB.
+INFO: [HLS 200-777] Using interface defaults for 'Vivado' flow target.
+INFO: [HLS 214-131] Inlining function 'pop_stream(hls::axis<ap_uint<64>, 4ul, 5ul, 5ul> const&)' into 'mmult_hw(hls::axis<ap_uint<64>, 4ul, 5ul, 5ul>*, hls::axis<ap_uint<64>, 4ul, 5ul, 5ul>*)' (./mmult_float.cpp:48:28)
+INFO: [HLS 214-131] Inlining function 'push_stream(unsigned long long const&, bool)' into 'mmult_hw(hls::axis<ap_uint<64>, 4ul, 5ul, 5ul>*, hls::axis<ap_uint<64>, 4ul, 5ul, 5ul>*)' (./mmult_float.cpp:102:36)
+INFO: [HLS 214-131] Inlining function 'pop_stream(hls::axis<ap_uint<64>, 4ul, 5ul, 5ul> const&)' into 'mmult_hw(hls::axis<ap_uint<64>, 4ul, 5ul, 5ul>*, hls::axis<ap_uint<64>, 4ul, 5ul, 5ul>*)' (./mmult_float.cpp:71:32)
+INFO: [HLS 214-131] Inlining function 'pop_stream(hls::axis<ap_uint<64>, 4ul, 5ul, 5ul> const&)' into 'mmult_hw(hls::axis<ap_uint<64>, 4ul, 5ul, 5ul>*, hls::axis<ap_uint<64>, 4ul, 5ul, 5ul>*)' (./mmult_float.cpp:59:32)
+WARNING: [HLS 214-142] Implementing stream: may cause mismatch if read and write accesses are not in sequential order on port 'in_stream' (./mmult_float.cpp:9:0)
+WARNING: [HLS 214-142] Implementing stream: may cause mismatch if read and write accesses are not in sequential order on port 'out_stream' (./mmult_float.cpp:9:0)
+INFO: [HLS 214-131] Inlining function '_llvm.fpga.pack.none.i128.s_struct.hls::axiss' into 'mmult_hw(hls::axis<ap_uint<64>, 4ul, 5ul, 5ul>*, hls::axis<ap_uint<64>, 4ul, 5ul, 5ul>*)' (./mmult_float.cpp:102:34)
+INFO: [HLS 200-111] Finished Compiling Optimization and Transform: CPU user time: 4.02 seconds. CPU system time: 0.31 seconds. Elapsed time: 4.35 seconds; current allocated memory: 73.452 MB.
+INFO: [HLS 200-111] Finished Checking Pragmas: CPU user time: 0.01 seconds. CPU system time: 0 seconds. Elapsed time: 0.01 seconds; current allocated memory: 73.454 MB.
+INFO: [HLS 200-10] Starting code transformations ...
+INFO: [HLS 200-111] Finished Standard Transforms: CPU user time: 0.13 seconds. CPU system time: 0 seconds. Elapsed time: 0.13 seconds; current allocated memory: 80.446 MB.
+INFO: [HLS 200-10] Checking synthesizability ...
+INFO: [HLS 200-111] Finished Checking Synthesizability: CPU user time: 0.18 seconds. CPU system time: 0 seconds. Elapsed time: 0.18 seconds; current allocated memory: 88.364 MB.
+INFO: [XFORM 203-502] Unrolling all sub-loops inside loop 'L2' (./mmult_float.cpp:82) in function 'mmult_hw' for pipelining.
+INFO: [HLS 200-489] Unrolling loop 'L3' (./mmult_float.cpp:87) in function 'mmult_hw' completely with a factor of 256.
+INFO: [XFORM 203-101] Partitioning array 'in_buf' (./mmult_float.cpp:32) in dimension 2 with a block factor 64.
+INFO: [XFORM 203-101] Partitioning array 'weight_buf' (./mmult_float.cpp:31) in dimension 2 with a block factor 64.
+INFO: [HLS 200-111] Finished Loop, function and other optimizations: CPU user time: 1.1 seconds. CPU system time: 0.03 seconds. Elapsed time: 1.13 seconds; current allocated memory: 122.901 MB.
+INFO: [XFORM 203-541] Flattening a loop nest 'L1' (./mmult_float.cpp:79:14) in function 'mmult_hw'.
+INFO: [HLS 200-472] Inferring partial write operation for 'offset_buf' (./mmult_float.cpp:49:27)
+INFO: [HLS 200-472] Inferring partial write operation for 'offset_buf' (./mmult_float.cpp:50:27)
+INFO: [HLS 200-472] Inferring partial write operation for 'out_buf' (./mmult_float.cpp:90:27)
+INFO: [HLS 200-472] Inferring partial write operation for 'in_buf[0]' (./mmult_float.cpp:72:30)
+INFO: [HLS 200-472] Inferring partial write operation for 'in_buf[0]' (./mmult_float.cpp:73:30)
+INFO: [HLS 200-472] Inferring partial write operation for 'weight_buf[0]' (./mmult_float.cpp:60:34)
+INFO: [HLS 200-472] Inferring partial write operation for 'weight_buf[0]' (./mmult_float.cpp:61:34)
+INFO: [HLS 200-111] Finished Architecture Synthesis: CPU user time: 2.18 seconds. CPU system time: 0.02 seconds. Elapsed time: 2.2 seconds; current allocated memory: 135.981 MB.
+INFO: [HLS 200-10] Starting hardware synthesis ...
+INFO: [HLS 200-10] Synthesizing 'mmult_hw' ...
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-42] -- Implementing module 'mmult_hw' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [SCHED 204-11] Starting scheduling ...
+INFO: [SCHED 204-61] Pipelining loop 'L1_L2'.
+WARNING: [HLS 200-885] Unable to schedule 'load' operation ('in_buf_0_load_2', ./mmult_float.cpp:79) on array 'in_buf[0]', ./mmult_float.cpp:32 due to limited memory ports. Please consider using a memory core with more ports or partitioning the array 'in_buf_0'.
+INFO: [HLS 200-1470] Pipelining result : Target II = 1, Final II = 2, Depth = 1287, loop 'L1_L2'
+INFO: [SCHED 204-11] Finished scheduling.
+INFO: [HLS 200-111] Finished Scheduling: CPU user time: 9.1 seconds. CPU system time: 0.02 seconds. Elapsed time: 9.12 seconds; current allocated memory: 148.022 MB.
+INFO: [BIND 205-100] Starting micro-architecture generation ...
+INFO: [BIND 205-101] Performing variable lifetime analysis.
+INFO: [BIND 205-101] Exploring resource sharing.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight_buf_0' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight_buf_1' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight_buf_2' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight_buf_3' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight_buf_4' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight_buf_5' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight_buf_6' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight_buf_7' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight_buf_8' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight_buf_9' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight_buf_10' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight_buf_11' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight_buf_12' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight_buf_13' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight_buf_14' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight_buf_15' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight_buf_16' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight_buf_17' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight_buf_18' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight_buf_19' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight_buf_20' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight_buf_21' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight_buf_22' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight_buf_23' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight_buf_24' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight_buf_25' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight_buf_26' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight_buf_27' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight_buf_28' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight_buf_29' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight_buf_30' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight_buf_31' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight_buf_32' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight_buf_33' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight_buf_34' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight_buf_35' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight_buf_36' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight_buf_37' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight_buf_38' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight_buf_39' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight_buf_40' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight_buf_41' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight_buf_42' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight_buf_43' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight_buf_44' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight_buf_45' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight_buf_46' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight_buf_47' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight_buf_48' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight_buf_49' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight_buf_50' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight_buf_51' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight_buf_52' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight_buf_53' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight_buf_54' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight_buf_55' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight_buf_56' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight_buf_57' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight_buf_58' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight_buf_59' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight_buf_60' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight_buf_61' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight_buf_62' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight_buf_63' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'in_buf_0' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'in_buf_1' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'in_buf_2' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'in_buf_3' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'in_buf_4' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'in_buf_5' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'in_buf_6' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'in_buf_7' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'in_buf_8' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'in_buf_9' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'in_buf_10' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'in_buf_11' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'in_buf_12' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'in_buf_13' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'in_buf_14' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'in_buf_15' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'in_buf_16' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'in_buf_17' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'in_buf_18' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'in_buf_19' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'in_buf_20' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'in_buf_21' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'in_buf_22' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'in_buf_23' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'in_buf_24' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'in_buf_25' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'in_buf_26' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'in_buf_27' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'in_buf_28' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'in_buf_29' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'in_buf_30' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'in_buf_31' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'in_buf_32' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'in_buf_33' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'in_buf_34' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'in_buf_35' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'in_buf_36' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'in_buf_37' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'in_buf_38' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'in_buf_39' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'in_buf_40' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'in_buf_41' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'in_buf_42' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'in_buf_43' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'in_buf_44' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'in_buf_45' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'in_buf_46' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'in_buf_47' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'in_buf_48' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'in_buf_49' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'in_buf_50' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'in_buf_51' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'in_buf_52' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'in_buf_53' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'in_buf_54' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'in_buf_55' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'in_buf_56' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'in_buf_57' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'in_buf_58' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'in_buf_59' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'in_buf_60' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'in_buf_61' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'in_buf_62' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'in_buf_63' will be ignored if a simpler one can be used.
+INFO: [BIND 205-101] Binding ...
+INFO: [BIND 205-100] Finished micro-architecture generation.
+INFO: [HLS 200-111] Finished Binding: CPU user time: 13.1 seconds. CPU system time: 0.07 seconds. Elapsed time: 13.19 seconds; current allocated memory: 189.566 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-10] -- Generating RTL for module 'mmult_hw' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+WARNING: [RTGEN 206-101] Design contains AXI ports. Reset is fixed to synchronous and active low.
+INFO: [RTGEN 206-500] Setting interface mode on port 'mmult_hw/in_stream' to 'axis' (register, both mode).
+INFO: [RTGEN 206-500] Setting interface mode on port 'mmult_hw/out_stream' to 'axis' (register, both mode).
+INFO: [RTGEN 206-500] Setting interface mode on function 'mmult_hw' to 's_axilite & ap_ctrl_hs'.
+INFO: [RTGEN 206-100] Bundling port 'return' to AXI-Lite port CONTROL_BUS.
+INFO: [RTGEN 206-104] Estimated max fanout for 'mmult_hw' is 1317899 from HDL expression: ((1'b1 == ap_CS_fsm_pp0_stage0) & (1'b0 == ap_block_pp0_stage0_11001))
+INFO: [RTGEN 206-100] Generating core module 'fadd_32ns_32ns_32_5_full_dsp_1': 128 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'fmul_32ns_32ns_32_4_max_dsp_1': 128 instance(s).
