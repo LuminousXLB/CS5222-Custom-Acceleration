@@ -1,3 +1,5 @@
+{
+\centering
 \begin{tabularx}{\textwidth}{cl*{7}{C}}
     \toprule
 
@@ -6,7 +8,7 @@
     \multicolumn{2}{c}{Latency (ms)}             &
     \multicolumn{2}{c}{Interval (cycles)}        &
     \multicolumn{1}{c}{\multirow{2}{*}{\makecell*{Pipeline
-    \\ Type}}}                                                                                                                \\
+                \\ Type}}}                                                                                                                \\
 
     \cmidrule(lr){3-4}
     \cmidrule(lr){5-6}
@@ -29,22 +31,29 @@
 
     \multicolumn{2}{c}{\multirow{2}{*}{Profile}} &
     \multicolumn{5}{c}{Utilization Summary}      &
-    \multicolumn{2}{c}{Instance}                                                                \\
+    \multicolumn{2}{c}{Instance}                                                                   \\
 
     \cmidrule(lr){3-7}
     \cmidrule(lr){8-9}
                                                  &
                                                  &
-    \multicolumn{1}{c}{BRAM\_18K}                &
+    \multicolumn{1}{c}{BRAM}                     &
     \multicolumn{1}{c}{DSP}                      &
     \multicolumn{1}{c}{FF}                       &
     \multicolumn{1}{c}{LUT}                      &
     \multicolumn{1}{c}{URAM}                     &
     \multicolumn{1}{c}{fadd}                     &
-    \multicolumn{1}{c}{fmul}                                                                    \\
+    \multicolumn{1}{c}{fmul}                                                                       \\
 
     \midrule
-                                                 & Available & 280 & 220 & 106400 & 53200 & 0 & \\
+    \rowcolor{lime}                              & Available & 280 & 220 & 106400 & 53200 & 0 &  & \\
     {{UTILIZATION}}
     \bottomrule
 \end{tabularx}
+}
+
+\begin{enumerate}[nosep]
+    \footnotesize
+    \item ``\{L1, L2, L3\} Pipelining'' are based on Baseline (NoPipe).
+    \item ``L2/Partition'' are based on L2 Pipelining.
+\end{enumerate}

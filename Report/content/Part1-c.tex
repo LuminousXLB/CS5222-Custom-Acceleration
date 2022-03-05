@@ -1,0 +1,63 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Increasing Pipeline Parallelism by Repartitioning Memories (8 marks)}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+The work in this section is based on L2 pipelining with T2P memory.
+
+\begin{table}
+    \caption{Performance and utilization estimates for \texttt{mmult\_float}}\label{tab:float-summary}
+    \input{report/float-summary.tex}
+\end{table}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Understanding the \texttt{dim} parameter}\label{sec:1cDim}
+
+Instead of looking into the factor, which is of interest in this project,
+we try to choose an appropriate \texttt{dim}.
+The \texttt{dim} option is used to specify which dimension is partitioned.
+\autoref{fig:float-partition-dim} is a figure coming from \textit{Vitis HLS User Guide (ug1399)}, which clearly shows the idea of \texttt{dim}.
+In our application, the loop body of L2 is pipelined, which reads 256 elements from \texttt{in\_buf} and 256 elements from \texttt{weight\_buf}.
+In order to improve parallelism, it is obvious that we should distribute the one vector of 256 elements to several blocks of memory.
+That is, we need to set \texttt{dim} to 2.
+
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[scale=0.5]{images/float-partition-dim.png}
+    \caption{Partitioning Array Dimensions}
+    \label{fig:float-partition-dim}
+\end{figure}
+
+\begin{figure}[ht!]
+    % \centering
+    \begin{subfigure}[b]{\textwidth}
+        \inputminted[firstline=3]{diff}{program/05-partition-d1-f2.diff}
+        \caption{Setting array partition with \texttt{dim}=1}
+        \label{fig:05-partition-d1-f2.diff}
+    \end{subfigure}
+    \begin{subfigure}[b]{\textwidth}
+        \inputminted[firstline=3]{diff}{program/05-partition-d2-f2.diff}
+        \caption{Setting array partition with \texttt{dim}=2}
+        \label{fig:05-partition-d2-f2.diff}
+    \end{subfigure}
+    \caption{Comparing different setting of \texttt{dim}}\label{fig:05-partition-d12}
+\end{figure}
+
+I have also experimented on this, where the code is modified as \autoref{fig:05-partition-d12}.
+The HLS summary (\autoref{tab:float-summary}) shows setting \texttt{dim} to 1 introduces more resource usage but the latency is worse.
+On the contrary, setting \texttt{dim} to 2 leads to introducing more floating-point adders and multipliers and achieves a lower latency.
+The result also supports our conclusion above.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Trying different \texttt{factor}s}\label{sec:1cFac}
+
+As shown in \autoref{tab:float-summary}, adding the \texttt{factor} to 32 makes the utilization of DSP and LUT exceeds the resource budget.
+When \texttt{factor}=16, the latency is reduced to 9013, which means 25.3x improvement.
+In this design, 32 floating point adders and 32 floating point multipliers are used, which is 16 times of that when array partition is not used.
+From \autoref{tab:float-loop-06-partition-d2-f16}, it can be seen that the initiation interval is 8 cycles.
+
+\begin{table}[ht!]
+    \caption{Loop details for partition with \texttt{dim}=2 \texttt{factor}=16}
+    \label{tab:float-loop-06-partition-d2-f16}
+    \centering
+    \input{report/float-loop-06-partition-d2-f16.tex}
+\end{table}

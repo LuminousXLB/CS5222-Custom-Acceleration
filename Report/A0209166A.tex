@@ -6,14 +6,13 @@
 \usepackage[tt=false, type1=true]{libertine}
 \usepackage[varqu]{zi4}
 
-\usepackage{multirow}
-\usepackage{multicol}
-\usepackage{booktabs, tabularx, makecell}
+\usepackage{booktabs, tabularx, makecell, multirow, multicol}
+\usepackage{enumitem}
 \usepackage[colorlinks]{hyperref}
 \usepackage{lipsum}
 \usepackage{tcolorbox}
-\usepackage{xcolor}
-\usepackage{subcaption}
+\usepackage{xcolor, colortbl}
+\usepackage{caption, subcaption}
 \usepackage{rotating}
 \usepackage{tikz}
 \usetikzlibrary{positioning,shapes,arrows}
@@ -31,6 +30,10 @@
 \pagestyle{plain}
 \pagenumbering{gobble}
 
+\definecolor{rowhlt}{HTML}{B7D7D7}
+
+\renewcommand{\subsectionautorefname}{Section}%
+\renewcommand{\subsubsectionautorefname}{Section}%
 
 \begin{document}
 
@@ -53,8 +56,16 @@
   Ubuntu 20.04.4 LTS (GNU/Linux 5.4.0-100-generic x86\_64).
 \end{abstract}
 
-\input{content/Part1}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\section{Matrix Multiplication Pipeline Optimization in HLS}
+
+\input{content/Part1-a}
+\input{content/Part1-b}
+\input{content/Part1-c}
+\input{content/Part1-d}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Part 2: Fixed-Point Optimizations (30 marks)}
 
