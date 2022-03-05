@@ -52,8 +52,9 @@ The result also supports our conclusion above.
 
 As shown in \autoref{tab:float-summary}, adding the \texttt{factor} to 32 makes the utilization of DSP and LUT exceeds the resource budget.
 When \texttt{factor}=16, the latency is reduced to 9013, which means 25.3x improvement.
-In this design, 32 floating point adders and 32 floating point multipliers are used, which is 16 times of that when array partition is not used.
+In this design, 32 floating-point adders and 32 floating-point multipliers are used, which is 16 times of that when array partition is not used.
 From \autoref{tab:float-loop-06-partition-d2-f16}, it can be seen that the initiation interval is 8 cycles.
+A further inspection shows that the initiation interval is decreasing while the \texttt{factor} increasing.
 
 \begin{table}[ht!]
     \caption{Loop details for partition with \texttt{dim}=2 \texttt{factor}=16}

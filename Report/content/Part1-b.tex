@@ -12,7 +12,7 @@ As reported in \autoref{tab:float-loop-02-pipeline-L3}, pipelining L3 reduces it
 The L1 is flattened, but L2 cannot be flattened because L2 is not a perfect loop.
 Thus the result has 2-layer loops where the outer layer has 80 iterations, and the inner layer has 256 iterations.
 There is no parallelism in this condition.
-This design utilizes slightly more resources but no more floating point adders or multipliers.
+This design utilizes slightly more resources but no more floating-point adders or multipliers.
 The overall latency is 85285 cycles, which is about 2.67x speedup.
 Other statistics in detail can be found in \autoref{tab:float-summary}.
 
@@ -82,7 +82,7 @@ As the loop details in \autoref{tab:float-loop-03-pipeline-L2-T2P}, the initiati
 The code is modified as \autoref{fig:float-diff.L1}.
 The loop details are in \autoref{tab:float-loop-04-pipeline-L1-1WnR}.
 Pipelining L1 makes both L2 and L3 completely unrolled, which makes there only one loop with 8 iterations.
-The unrolled loop body is heavily paralleled \textbf{with 1WnR memory used}, which make use of 160 floating point adders and 160 floating point multipliers.
+The unrolled loop body is heavily paralleled \textbf{with 1WnR memory used}, which make use of 160 floating-point adders and 160 floating-point multipliers.
 The parallelism reduces the latency for one iteration from 28190 cycles to 1291 cycles.
 The pipelining further reduce the latency for L1 to 1402 cycles, although there are eight iterations.
 The overall latency is 6193 cycles, about 36.82x speedup relative to L3 pipelining and 1.19x speedup compared to L2 pipelining.
