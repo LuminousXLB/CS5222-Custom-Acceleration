@@ -29,7 +29,13 @@
 \ref{sec:1bL2}                     & L2 Pipelining (T2P) & 13885 & 13885 & 0.139 & 0.139 & 13886 & 13886 & none \\
 \ref{sec:1bL1}                     & L1 Pipelining (1WnR) & 6193 & 6193 & 0.062 & 0.062 & 6194 & 6194 & none \\
 \ref{sec:1bL1}                      & L1 Pipelining (T2P) & 5953 & 5953 & 0.060 & 0.060 & 5954 & 5954 & none \\
-\ref{sec:1c}  & Baseline (L2, AutoPipe, T2P) & 13759 & 13759 & 0.138 & 0.138 & 13760 & 13760 & none \\
+\rowcolor{rowhlt}\ref{sec:1c}  & Baseline (L2, AutoPipe, T2P) & 13759 & 13759 & 0.138 & 0.138 & 13760 & 13760 & none \\
+\ref{sec:1cDim}                     & Partition (\texttt{dim}=1, \texttt{factor}=2) & 13772 & 13772 & 0.138 & 0.138 & 13773 & 13773 & none \\
+\rowcolor{rowhlt}\ref{sec:1cDim}    & Partition (\texttt{dim}=2, \texttt{factor}=2) & 8703 & 8703 & 0.087 & 0.087 & 8704 & 8704 & none \\
+\ref{sec:1cFac}                     & Partition (\texttt{dim}=2, \texttt{factor}=4) & 6175 & 6175 & 0.062 & 0.062 & 6176 & 6176 & none \\
+\ref{sec:1cFac}                     & Partition (\texttt{dim}=2, \texttt{factor}=8) & 4911 & 4911 & 0.049 & 0.049 & 4912 & 4912 & none \\
+\rowcolor{rowhlt}\ref{sec:1cFac}   & Partition (\texttt{dim}=2, \texttt{factor}=16) & 4279 & 4279 & 0.043 & 0.043 & 4280 & 4280 & none \\
+\ref{sec:1cFac}                    & Partition (\texttt{dim}=2, \texttt{factor}=32) & 3963 & 3963 & 0.040 & 0.040 & 3964 & 3964 & none \\
     \bottomrule
 \end{tabularx}
 
@@ -60,7 +66,13 @@
 \ref{sec:1bL2}                     & L2 Pipelining (T2P) & 16 (5\%) & 10 (4\%) & 24710 (23\%) & 22359 (42\%) & 0 (0\%) & 2 & 2 \\
 \ref{sec:1bL1}                     & L1 Pipelining (1WnR) & 70 (25\%) & 800 (363\%) & 415044 (390\%) & 243128 (457\%) & 0 (0\%) & 160 & 160 \\
 \ref{sec:1bL1}                      & L1 Pipelining (T2P) & 16 (5\%) & 100 (45\%) & 312992 (294\%) & 120185 (225\%) & 0 (0\%) & 20 & 20 \\
-\ref{sec:1c}  & Baseline (L2, AutoPipe, T2P) & 16 (5\%) & 10 (4\%) & 24776 (23\%) & 22615 (42\%) & 0 (0\%) & 2 & 2 \\
+\rowcolor{rowhlt}\ref{sec:1c}  & Baseline (L2, AutoPipe, T2P) & 16 (5\%) & 10 (4\%) & 24776 (23\%) & 22615 (42\%) & 0 (0\%) & 2 & 2 \\
+\ref{sec:1cDim}                     & Partition (\texttt{dim}=1, \texttt{factor}=2) & 16 (5\%) & 10 (4\%) & 32491 (30\%) & 45788 (86\%) & 0 (0\%) & 2 & 2 \\
+\rowcolor{rowhlt}\ref{sec:1cDim}    & Partition (\texttt{dim}=2, \texttt{factor}=2) & 16 (5\%) & 20 (9\%) & 27306 (25\%) & 19326 (36\%) & 0 (0\%) & 4 & 4 \\
+\ref{sec:1cFac}                     & Partition (\texttt{dim}=2, \texttt{factor}=4) & 20 (7\%) & 40 (18\%) & 31022 (29\%) & 20786 (39\%) & 0 (0\%) & 8 & 8 \\
+\ref{sec:1cFac}                     & Partition (\texttt{dim}=2, \texttt{factor}=8) & 36 (12\%) & 80 (36\%) & 37606 (35\%) & 26782 (50\%) & 0 (0\%) & 16 & 16 \\
+\rowcolor{rowhlt}\ref{sec:1cFac}   & Partition (\texttt{dim}=2, \texttt{factor}=16) & 68 (24\%) & 160 (72\%) & 52606 (49\%) & 40402 (75\%) & 0 (0\%) & 32 & 32 \\
+\ref{sec:1cFac}                    & Partition (\texttt{dim}=2, \texttt{factor}=32) & 132 (47\%) & 320 (145\%) & 72201 (67\%) & 65294 (122\%) & 0 (0\%) & 64 & 64 \\
     \bottomrule
 \end{tabularx}
 }

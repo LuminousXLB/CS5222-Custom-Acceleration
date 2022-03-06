@@ -1,0 +1,12 @@
+--- ../history/1c0-baseline-ap-l2/mmult_float.cpp	2022-03-06 10:42:30.861284394 +0800
++++ ../history/1c1-partition-ap-d2-f2/mmult_float.cpp	2022-03-06 10:42:30.865284468 +0800
+@@ -37,6 +37,9 @@
+ #pragma HLS bind_storage variable = in_buf type = RAM_T2P
+ #pragma HLS bind_storage variable = out_buf type = RAM_T2P
+ 
++#pragma HLS array_partition variable = weight_buf block factor = 2 dim = 2
++#pragma HLS array_partition variable = in_buf block factor = 2 dim = 2
++
+     // Input and output AXI stream indices
+     int is_idx = 0;
+     int os_idx = 0;

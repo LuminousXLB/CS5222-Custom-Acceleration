@@ -12,23 +12,15 @@ FLOAT_REPORTS = {
     "1b2-pipeline-L2-T2P": r"\ref{sec:1bL2}                     & L2 Pipelining (T2P)",
     "1b3-pipeline-L1-1WnR": r"\ref{sec:1bL1}                     & L1 Pipelining (1WnR)",
     "1b3-pipeline-L1-T2P": r"\ref{sec:1bL1}                      & L1 Pipelining (T2P)",
-    "1c0-baseline-ap-l2": r"\ref{sec:1c}  & Baseline (L2, AutoPipe, T2P)",
-    # "1c1-partition-ap-d1-f2": r"",
-    # "1c1-partition-ap-d2-f2": r"",
-    # "1c2-partition-ap-d2-f16": r"",
-    # "1c2-partition-ap-d2-f32": r"",
-    # "1c2-partition-ap-d2-f4": r"",
-    # "1c2-partition-ap-d2-f8": r"",
+    "1c0-baseline-ap-l2": r"\rowcolor{rowhlt}\ref{sec:1c}  & Baseline (L2, AutoPipe, T2P)",
+    "1c1-partition-ap-d1-f2": r"\ref{sec:1cDim}                     & Partition (\texttt{dim}=1, \texttt{factor}=2)",
+    "1c1-partition-ap-d2-f2": r"\rowcolor{rowhlt}\ref{sec:1cDim}    & Partition (\texttt{dim}=2, \texttt{factor}=2)",
+    "1c2-partition-ap-d2-f4": r"\ref{sec:1cFac}                     & Partition (\texttt{dim}=2, \texttt{factor}=4)",
+    "1c2-partition-ap-d2-f8": r"\ref{sec:1cFac}                     & Partition (\texttt{dim}=2, \texttt{factor}=8)",
+    "1c2-partition-ap-d2-f16": r"\rowcolor{rowhlt}\ref{sec:1cFac}   & Partition (\texttt{dim}=2, \texttt{factor}=16)",
+    "1c2-partition-ap-d2-f32": r"\ref{sec:1cFac}                    & Partition (\texttt{dim}=2, \texttt{factor}=32)",
 }
 
-# FLOAT_REPORTS = {
-# "05-partition-d1-f2": r"\ref{sec:1cDim}                     & Partition (\texttt{dim}=1, \texttt{factor}=2)",
-# "05-partition-d2-f2": r"\rowcolor{rowhlt}\ref{sec:1cDim}    & Partition (\texttt{dim}=2, \texttt{factor}=2)",
-# "06-partition-d2-f4": r"\ref{sec:1cFac}                     & Partition (\texttt{dim}=2, \texttt{factor}=4)",
-# "06-partition-d2-f8": r"\ref{sec:1cFac}                     & Partition (\texttt{dim}=2, \texttt{factor}=8)",
-# "06-partition-d2-f16": r"\rowcolor{rowhlt}\ref{sec:1cFac}   & Partition (\texttt{dim}=2, \texttt{factor}=16)",
-# "06-partition-d2-f32": r"\ref{sec:1cFac}                    & Partition (\texttt{dim}=2, \texttt{factor}=32)",
-# }
 
 BASE = Path(__file__).parent
 
@@ -64,14 +56,16 @@ def generate_summary_table(reports, output_fn):
         utili_line = summary[summary.find("Utilization (%)") :].splitlines()[0]
 
         total = [c.strip() for c in total_line.split("|")[1:-1]]
-        utili = [c.strip().replace('~', r'\textasciitilde ') for c in utili_line.split("|")[1:-1]]
+        utili = [
+            c.strip().replace("~", r"\textasciitilde ")
+            for c in utili_line.split("|")[1:-1]
+        ]
 
         template = r"\multirow{2}{*}{\makecell*{TT \\ (PP\%)}}"
         template = r"TT (PP\%)"
         summary = [
             template.replace("TT", t).replace("PP", u) for t, u in zip(total, utili)
         ]
-
 
         instance = rpt[rpt.find("* Instance:") :].strip()
         instance = instance.splitlines()[4:-3]
