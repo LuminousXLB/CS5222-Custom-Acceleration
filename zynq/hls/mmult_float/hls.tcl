@@ -8,7 +8,7 @@ open_solution "solution0" -flow_target vivado
 set_part {xc7z020clg484-1}
 create_clock -period 10 -name default
 
-config_compile -pipeline_loops 0
+# config_compile -pipeline_loops 0
 set_clock_uncertainty 12.5%
 
 csim_design -clean
