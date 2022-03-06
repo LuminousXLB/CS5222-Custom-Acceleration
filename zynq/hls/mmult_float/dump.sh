@@ -5,7 +5,7 @@ set -e
 
 DIR=archive/$(date +%Y%m%d-%H%M%S)$1
 mkdir $DIR
-git diff mmult_float.cpp > $DIR/diff
+cp mmult_float.cpp $DIR
 
 vitis_hls -f hls.tcl
 
