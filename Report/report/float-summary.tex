@@ -23,20 +23,27 @@
     \multicolumn{1}{c}{min}                      &
     \multicolumn{1}{c}{max}                      & \\
     \midrule
-    \ref{sec:1a}                      & Baseline (AutoPipe) & 85160 & 85160 & 1.236 & 1.236 & 85161 & 85161 & none \\
-\rowcolor{rowhlt}\ref{sec:1a}       & Baseline (NoPipe) & 228022 & 228022 & 2.280 & 2.280 & 228023 & 228023 & none \\
-\ref{sec:1bL3}                          & L3 Pipelining & 85286 & 85286 & 1.238 & 1.238 & 85287 & 85287 & none \\
-\ref{sec:1bL2}                     & L2 Pipelining (1WnR) & 7341 & 7341 & 0.073 & 0.073 & 7342 & 7342 & none \\
-\ref{sec:1bL2}                     & L2 Pipelining (T2P) & 13885 & 13885 & 0.139 & 0.139 & 13886 & 13886 & none \\
-\ref{sec:1bL1}                     & L1 Pipelining (1WnR) & 6193 & 6193 & 0.062 & 0.062 & 6194 & 6194 & none \\
-\ref{sec:1bL1}                      & L1 Pipelining (T2P) & 5953 & 5953 & 0.060 & 0.060 & 5954 & 5954 & none \\
-\rowcolor{rowhlt}\ref{sec:1c}  & Baseline (L2, AutoPipe, T2P) & 13759 & 13759 & 0.138 & 0.138 & 13760 & 13760 & none \\
+    \ref{sec:1a}                          & Baseline (AutoPipe) & 85160 & 85160 & 1.236 & 1.236 & 85161 & 85161 & none \\
+\rowcolor{rowhlt}\ref{sec:1a}           & Baseline (NoPipe) & 228022 & 228022 & 2.280 & 2.280 & 228023 & 228023 & none \\
+\ref{sec:1bL3}                             & L3 Pipelining & 85286 & 85286 & 1.238 & 1.238 & 85287 & 85287 & none \\
+\ref{sec:1bL2}                        & L2 Pipelining (1WnR) & 7341 & 7341 & 0.073 & 0.073 & 7342 & 7342 & none \\
+\rowcolor{rowhlt}\ref{sec:1bL2}        & L2 Pipelining (T2P) & 13885 & 13885 & 0.139 & 0.139 & 13886 & 13886 & none \\
+\ref{sec:1bL1}                        & L1 Pipelining (1WnR) & 6193 & 6193 & 0.062 & 0.062 & 6194 & 6194 & none \\
+\ref{sec:1bL1}                         & L1 Pipelining (T2P) & 5953 & 5953 & 0.060 & 0.060 & 5954 & 5954 & none \\
+\rowcolor{rowhlt}\ref{sec:1c}           & Baseline (L2, AutoPipe, T2P) & 13759 & 13759 & 0.138 & 0.138 & 13760 & 13760 & none \\
 \ref{sec:1cDim}                     & Partition (\texttt{dim}=1, \texttt{factor}=2) & 13772 & 13772 & 0.138 & 0.138 & 13773 & 13773 & none \\
 \rowcolor{rowhlt}\ref{sec:1cDim}    & Partition (\texttt{dim}=2, \texttt{factor}=2) & 8703 & 8703 & 0.087 & 0.087 & 8704 & 8704 & none \\
 \ref{sec:1cFac}                     & Partition (\texttt{dim}=2, \texttt{factor}=4) & 6175 & 6175 & 0.062 & 0.062 & 6176 & 6176 & none \\
 \ref{sec:1cFac}                     & Partition (\texttt{dim}=2, \texttt{factor}=8) & 4911 & 4911 & 0.049 & 0.049 & 4912 & 4912 & none \\
 \rowcolor{rowhlt}\ref{sec:1cFac}   & Partition (\texttt{dim}=2, \texttt{factor}=16) & 4279 & 4279 & 0.043 & 0.043 & 4280 & 4280 & none \\
 \ref{sec:1cFac}                    & Partition (\texttt{dim}=2, \texttt{factor}=32) & 3963 & 3963 & 0.040 & 0.040 & 3964 & 3964 & none \\
+\ref{sec:1d}                             & Amortizing (\texttt{batch}=16) & 5983 & 5983 & 0.060 & 0.060 & 5984 & 5984 & none \\
+\ref{sec:1d}                             & Amortizing (\texttt{batch}=32) & 9391 & 9391 & 0.094 & 0.094 & 9392 & 9392 & none \\
+\ref{sec:1d}                             & Amortizing (\texttt{batch}=64) & 16207 & 16207 & 0.162 & 0.162 & 16208 & 16208 & none \\
+\ref{sec:1d}                            & Amortizing (\texttt{batch}=128) & 29839 & 29839 & 0.298 & 0.298 & 29840 & 29840 & none \\
+\rowcolor{rowhlt}\ref{sec:1d}           & Amortizing (\texttt{batch}=256) & 57103 & 57103 & 0.571 & 0.571 & 57104 & 57104 & none \\
+\ref{sec:1d}                            & Amortizing (\texttt{batch}=512) & 111631 & 111631 & 1.116 & 1.116 & 111632 & 111632 & none \\
+\ref{sec:1d}                              & Baseline (NoPipe, \texttt{batch}=256) & 29020446 & 29020446 & 290.000 & 290.000 & 29020447 & 29020447 & none \\
     \bottomrule
 \end{tabularx}
 
@@ -60,20 +67,27 @@
     \multicolumn{1}{c}{fmul}                       \\
 
     \midrule
-    \ref{sec:1a}                      & Baseline (AutoPipe) & 13 (4\%) & 5 (2\%) & 1050 (\textasciitilde 0\%) & 2000 (3\%) & 0 (0\%) & 1 & 1 \\
-\rowcolor{rowhlt}\ref{sec:1a}       & Baseline (NoPipe) & 14 (5\%) & 5 (2\%) & 817 (\textasciitilde 0\%) & 1635 (3\%) & 0 (0\%) & 1 & 1 \\
-\ref{sec:1bL3}                          & L3 Pipelining & 14 (5\%) & 5 (2\%) & 921 (\textasciitilde 0\%) & 1713 (3\%) & 0 (0\%) & 1 & 1 \\
-\ref{sec:1bL2}                     & L2 Pipelining (1WnR) & 182 (65\%) & 80 (36\%) & 38357 (36\%) & 34359 (64\%) & 0 (0\%) & 16 & 16 \\
-\ref{sec:1bL2}                     & L2 Pipelining (T2P) & 16 (5\%) & 10 (4\%) & 24710 (23\%) & 22359 (42\%) & 0 (0\%) & 2 & 2 \\
-\ref{sec:1bL1}                     & L1 Pipelining (1WnR) & 70 (25\%) & 800 (363\%) & 415044 (390\%) & 243128 (457\%) & 0 (0\%) & 160 & 160 \\
-\ref{sec:1bL1}                      & L1 Pipelining (T2P) & 16 (5\%) & 100 (45\%) & 312992 (294\%) & 120185 (225\%) & 0 (0\%) & 20 & 20 \\
-\rowcolor{rowhlt}\ref{sec:1c}  & Baseline (L2, AutoPipe, T2P) & 16 (5\%) & 10 (4\%) & 24776 (23\%) & 22615 (42\%) & 0 (0\%) & 2 & 2 \\
+    \ref{sec:1a}                          & Baseline (AutoPipe) & 13 (4\%) & 5 (2\%) & 1050 (\textasciitilde 0\%) & 2000 (3\%) & 0 (0\%) & 1 & 1 \\
+\rowcolor{rowhlt}\ref{sec:1a}           & Baseline (NoPipe) & 14 (5\%) & 5 (2\%) & 817 (\textasciitilde 0\%) & 1635 (3\%) & 0 (0\%) & 1 & 1 \\
+\ref{sec:1bL3}                             & L3 Pipelining & 14 (5\%) & 5 (2\%) & 921 (\textasciitilde 0\%) & 1713 (3\%) & 0 (0\%) & 1 & 1 \\
+\ref{sec:1bL2}                        & L2 Pipelining (1WnR) & 182 (65\%) & 80 (36\%) & 38357 (36\%) & 34359 (64\%) & 0 (0\%) & 16 & 16 \\
+\rowcolor{rowhlt}\ref{sec:1bL2}        & L2 Pipelining (T2P) & 16 (5\%) & 10 (4\%) & 24710 (23\%) & 22359 (42\%) & 0 (0\%) & 2 & 2 \\
+\ref{sec:1bL1}                        & L1 Pipelining (1WnR) & 70 (25\%) & 800 (363\%) & 415044 (390\%) & 243128 (457\%) & 0 (0\%) & 160 & 160 \\
+\ref{sec:1bL1}                         & L1 Pipelining (T2P) & 16 (5\%) & 100 (45\%) & 312992 (294\%) & 120185 (225\%) & 0 (0\%) & 20 & 20 \\
+\rowcolor{rowhlt}\ref{sec:1c}           & Baseline (L2, AutoPipe, T2P) & 16 (5\%) & 10 (4\%) & 24776 (23\%) & 22615 (42\%) & 0 (0\%) & 2 & 2 \\
 \ref{sec:1cDim}                     & Partition (\texttt{dim}=1, \texttt{factor}=2) & 16 (5\%) & 10 (4\%) & 32491 (30\%) & 45788 (86\%) & 0 (0\%) & 2 & 2 \\
 \rowcolor{rowhlt}\ref{sec:1cDim}    & Partition (\texttt{dim}=2, \texttt{factor}=2) & 16 (5\%) & 20 (9\%) & 27306 (25\%) & 19326 (36\%) & 0 (0\%) & 4 & 4 \\
 \ref{sec:1cFac}                     & Partition (\texttt{dim}=2, \texttt{factor}=4) & 20 (7\%) & 40 (18\%) & 31022 (29\%) & 20786 (39\%) & 0 (0\%) & 8 & 8 \\
 \ref{sec:1cFac}                     & Partition (\texttt{dim}=2, \texttt{factor}=8) & 36 (12\%) & 80 (36\%) & 37606 (35\%) & 26782 (50\%) & 0 (0\%) & 16 & 16 \\
 \rowcolor{rowhlt}\ref{sec:1cFac}   & Partition (\texttt{dim}=2, \texttt{factor}=16) & 68 (24\%) & 160 (72\%) & 52606 (49\%) & 40402 (75\%) & 0 (0\%) & 32 & 32 \\
 \ref{sec:1cFac}                    & Partition (\texttt{dim}=2, \texttt{factor}=32) & 132 (47\%) & 320 (145\%) & 72201 (67\%) & 65294 (122\%) & 0 (0\%) & 64 & 64 \\
+\ref{sec:1d}                             & Amortizing (\texttt{batch}=16) & 68 (24\%) & 160 (72\%) & 52634 (49\%) & 40446 (76\%) & 0 (0\%) & 32 & 32 \\
+\ref{sec:1d}                             & Amortizing (\texttt{batch}=32) & 68 (24\%) & 160 (72\%) & 52675 (49\%) & 40501 (76\%) & 0 (0\%) & 32 & 32 \\
+\ref{sec:1d}                             & Amortizing (\texttt{batch}=64) & 68 (24\%) & 160 (72\%) & 52708 (49\%) & 40547 (76\%) & 0 (0\%) & 32 & 32 \\
+\ref{sec:1d}                            & Amortizing (\texttt{batch}=128) & 102 (36\%) & 160 (72\%) & 52741 (49\%) & 40597 (76\%) & 0 (0\%) & 32 & 32 \\
+\rowcolor{rowhlt}\ref{sec:1d}           & Amortizing (\texttt{batch}=256) & 170 (60\%) & 160 (72\%) & 52774 (49\%) & 40646 (76\%) & 0 (0\%) & 32 & 32 \\
+\ref{sec:1d}                            & Amortizing (\texttt{batch}=512) & 306 (109\%) & 160 (72\%) & 52807 (49\%) & 40699 (76\%) & 0 (0\%) & 32 & 32 \\
+\ref{sec:1d}                              & Baseline (NoPipe, \texttt{batch}=256) & 552 (197\%) & 5 (2\%) & 940 (\textasciitilde 0\%) & 1724 (3\%) & 0 (0\%) & 1 & 1 \\
     \bottomrule
 \end{tabularx}
 }

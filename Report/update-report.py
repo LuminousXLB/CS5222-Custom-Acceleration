@@ -5,20 +5,27 @@ from collections import Counter
 
 
 FLOAT_REPORTS = {
-    "1a-baseline-autopipe": r"\ref{sec:1a}                      & Baseline (AutoPipe)",
-    "1a-baseline-nopipe": r"\rowcolor{rowhlt}\ref{sec:1a}       & Baseline (NoPipe)",
-    "1b1-pipeline-L3": r"\ref{sec:1bL3}                          & L3 Pipelining",
-    "1b2-pipeline-L2-1WnR": r"\ref{sec:1bL2}                     & L2 Pipelining (1WnR)",
-    "1b2-pipeline-L2-T2P": r"\ref{sec:1bL2}                     & L2 Pipelining (T2P)",
-    "1b3-pipeline-L1-1WnR": r"\ref{sec:1bL1}                     & L1 Pipelining (1WnR)",
-    "1b3-pipeline-L1-T2P": r"\ref{sec:1bL1}                      & L1 Pipelining (T2P)",
-    "1c0-baseline-ap-l2": r"\rowcolor{rowhlt}\ref{sec:1c}  & Baseline (L2, AutoPipe, T2P)",
+    "1a-baseline-autopipe": r"\ref{sec:1a}                          & Baseline (AutoPipe)",
+    "1a-baseline-nopipe": r"\rowcolor{rowhlt}\ref{sec:1a}           & Baseline (NoPipe)",
+    "1b1-pipeline-L3": r"\ref{sec:1bL3}                             & L3 Pipelining",
+    "1b2-pipeline-L2-1WnR": r"\ref{sec:1bL2}                        & L2 Pipelining (1WnR)",
+    "1b2-pipeline-L2-T2P": r"\rowcolor{rowhlt}\ref{sec:1bL2}        & L2 Pipelining (T2P)",
+    "1b3-pipeline-L1-1WnR": r"\ref{sec:1bL1}                        & L1 Pipelining (1WnR)",
+    "1b3-pipeline-L1-T2P": r"\ref{sec:1bL1}                         & L1 Pipelining (T2P)",
+    "1c0-baseline-ap-l2": r"\rowcolor{rowhlt}\ref{sec:1c}           & Baseline (L2, AutoPipe, T2P)",
     "1c1-partition-ap-d1-f2": r"\ref{sec:1cDim}                     & Partition (\texttt{dim}=1, \texttt{factor}=2)",
     "1c1-partition-ap-d2-f2": r"\rowcolor{rowhlt}\ref{sec:1cDim}    & Partition (\texttt{dim}=2, \texttt{factor}=2)",
     "1c2-partition-ap-d2-f4": r"\ref{sec:1cFac}                     & Partition (\texttt{dim}=2, \texttt{factor}=4)",
     "1c2-partition-ap-d2-f8": r"\ref{sec:1cFac}                     & Partition (\texttt{dim}=2, \texttt{factor}=8)",
     "1c2-partition-ap-d2-f16": r"\rowcolor{rowhlt}\ref{sec:1cFac}   & Partition (\texttt{dim}=2, \texttt{factor}=16)",
     "1c2-partition-ap-d2-f32": r"\ref{sec:1cFac}                    & Partition (\texttt{dim}=2, \texttt{factor}=32)",
+    "1d-amortizing-b16": r"\ref{sec:1d}                             & Amortizing (\texttt{batch}=16)",
+    "1d-amortizing-b32": r"\ref{sec:1d}                             & Amortizing (\texttt{batch}=32)",
+    "1d-amortizing-b64": r"\ref{sec:1d}                             & Amortizing (\texttt{batch}=64)",
+    "1d-amortizing-b128": r"\ref{sec:1d}                            & Amortizing (\texttt{batch}=128)",
+    "1d-amortizing-b256": r"\rowcolor{rowhlt}\ref{sec:1d}           & Amortizing (\texttt{batch}=256)",
+    "1d-amortizing-b512": r"\ref{sec:1d}                            & Amortizing (\texttt{batch}=512)",
+    "1d-baseline-b256": r"\ref{sec:1d}                              & Baseline (NoPipe, \texttt{batch}=256)",
 }
 
 
@@ -34,10 +41,12 @@ OUTPUT_DIR = BASE / "report"
 def generate_summary_table(reports, output_fn):
     def extract_latency(rpt_text):
         def normalize(latency):
-            if latency.endswith(" ms"):
-                lat = float(latency[:-3])
-            if latency.endswith(" us"):
-                lat = float(latency[:-3]) / 1000
+            if latency.endswith("ms"):
+                lat = float(latency.rstrip(" ms"))
+            if latency.endswith("us"):
+                lat = float(latency.rstrip(" us")) / 1000
+            if latency.endswith("sec"):
+                lat = float(latency.rstrip(" sec")) * 1000
             return f"{lat:0.3f}"
 
         rpt = rpt_text[rpt_text.find("+ Latency") : rpt_text.find("+ Detail")]
