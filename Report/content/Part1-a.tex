@@ -19,16 +19,31 @@ It turns out that the overall performance is a little bit worse than documented.
 This is because every iteration in L3 loop takes 11 cycles and thus
 2816 cycles in total to perform a single inner product.
 
-\begin{table}
-    \caption{Loop details for baseline with automatic pipelining}
-    \label{tab:float-loop-1a-baseline-autopipe}
-    \centering
-    \input{report/float-loop-1a-baseline-autopipe.tex}
+
+\begin{table}[ht!]
+
+    \caption{Loop details for baseline}
+
+    \begin{subtable}{\textwidth}
+        \caption{Baseline with automatic pipelining}
+        \label{tab:float-loop-1a-baseline-autopipe}
+        \centering
+        \input{report/float-loop-1a-baseline-autopipe.tex}
+    \end{subtable}
+
+    \begin{subtable}{\textwidth}
+        \caption{Baseline without automatic pipelining}
+        \label{tab:float-loop-1a-baseline-nopipe}
+        \centering
+        \input{report/float-loop-1a-baseline-nopipe.tex}
+    \end{subtable}
+
 \end{table}
 
-\begin{table}
-    \caption{Loop details for baseline without automatic pipelining}
-    \label{tab:float-loop-1a-baseline-nopipe}
+
+\begin{table}[ht!]
+    \caption{Loop details for baseline of array partition}
+    \label{tab:float-loop-1c0-baseline-ap-l2}
     \centering
-    \input{report/float-loop-1a-baseline-nopipe.tex}
+    \input{report/float-loop-1c0-baseline-ap-l2.tex}
 \end{table}
