@@ -1,0 +1,171 @@
+
+****** Vitis HLS - High-Level Synthesis from C, C++ and OpenCL v2020.2 (64-bit)
+  **** SW Build 3064766 on Wed Nov 18 09:12:47 MST 2020
+  **** IP Build 3064653 on Wed Nov 18 14:17:31 MST 2020
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+source /data/Xilinx/Vitis_HLS/2020.2/scripts/vitis_hls/hls.tcl -notrace
+INFO: [HLS 200-10] Running '/data/Xilinx/Vitis_HLS/2020.2/bin/unwrapped/lnx64.o/vitis_hls'
+INFO: [HLS 200-10] For user 'ubuntu' on host 'pc17' (Linux_x86_64 version 5.4.0-100-generic) on Sun Mar 06 15:56:13 +08 2022
+INFO: [HLS 200-10] On os Ubuntu 20.04.4 LTS
+INFO: [HLS 200-10] In directory '/home/ubuntu/cs5222/workspace/zynq/hls/mmult_float'
+Sourcing Tcl script 'hls.tcl'
+INFO: [HLS 200-1510] Running: open_project accel 
+INFO: [HLS 200-10] Creating and opening project '/home/ubuntu/cs5222/workspace/zynq/hls/mmult_float/accel'.
+INFO: [HLS 200-1510] Running: set_top mmult_hw 
+INFO: [HLS 200-1510] Running: add_files ./mmult_float.cpp 
+INFO: [HLS 200-10] Adding design file './mmult_float.cpp' to the project
+INFO: [HLS 200-1510] Running: add_files -tb ./mmult_test.cpp 
+INFO: [HLS 200-10] Adding test bench file './mmult_test.cpp' to the project
+INFO: [HLS 200-1510] Running: open_solution solution0 -flow_target vivado 
+INFO: [HLS 200-10] Creating and opening solution '/home/ubuntu/cs5222/workspace/zynq/hls/mmult_float/accel/solution0'.
+INFO: [HLS 200-1505] Using flow_target 'vivado'
+Resolution: For help on HLS 200-1505 see www.xilinx.com/cgi-bin/docs/rdoc?v=2020.2;t=hls+guidance;d=200-1505.html
+INFO: [HLS 200-1510] Running: set_part xc7z020clg484-1 
+INFO: [HLS 200-10] Setting target device to 'xc7z020-clg484-1'
+INFO: [HLS 200-1510] Running: create_clock -period 10 -name default 
+INFO: [SYN 201-201] Setting up clock 'default' with a period of 10ns.
+INFO: [HLS 200-1510] Running: set_clock_uncertainty 12.5% 
+INFO: [SYN 201-201] Setting up clock 'default' with an uncertainty of 1.25ns.
+INFO: [HLS 200-1510] Running: csim_design -clean 
+INFO: [SIM 211-2] *************** CSIM start ***************
+INFO: [SIM 211-4] CSIM will launch GCC as the compiler.
+   Compiling ../../../../mmult_test.cpp in debug mode
+   Compiling ../../../../mmult_float.cpp in debug mode
+   Generating csim.exe
+DEBUGGING AXI4 STREAMING DATA TYPES!
+Matrices identical ... Test successful!
+INFO: [SIM 211-1] CSim done with 0 errors.
+INFO: [SIM 211-3] *************** CSIM finish ***************
+INFO: [HLS 200-111] Finished Command csim_design CPU user time: 4.08 seconds. CPU system time: 0.49 seconds. Elapsed time: 2.98 seconds; current allocated memory: 69.200 MB.
+INFO: [HLS 200-1510] Running: csynth_design 
+INFO: [HLS 200-111] Finished File checks and directory preparation: CPU user time: 0 seconds. CPU system time: 0 seconds. Elapsed time: 0.01 seconds; current allocated memory: 69.383 MB.
+INFO: [HLS 200-10] Analyzing design file './mmult_float.cpp' ... 
+WARNING: [HLS 214-140] Array stream parameter 'in_stream' in function 'mmult_hw' may require the 'volatile' qualifier to prevent the compiler from altering array accesses and/or modifying the desired streaming order: /home/ubuntu/cs5222/workspace/zynq/hls/mmult_float/mmult_float.cpp:8
+WARNING: [HLS 214-140] Array stream parameter 'out_stream' in function 'mmult_hw' may require the 'volatile' qualifier to prevent the compiler from altering array accesses and/or modifying the desired streaming order: /home/ubuntu/cs5222/workspace/zynq/hls/mmult_float/mmult_float.cpp:8
+WARNING: [HLS 207-5284] unsequenced modification and access to 'os_idx': ./mmult_float.cpp:108:34
+INFO: [HLS 200-111] Finished Source Code Analysis and Preprocessing: CPU user time: 3.7 seconds. CPU system time: 0.33 seconds. Elapsed time: 4.02 seconds; current allocated memory: 71.083 MB.
+INFO: [HLS 200-777] Using interface defaults for 'Vivado' flow target.
+INFO: [HLS 214-131] Inlining function 'pop_stream(hls::axis<ap_uint<64>, 4ul, 5ul, 5ul> const&)' into 'mmult_hw(hls::axis<ap_uint<64>, 4ul, 5ul, 5ul>*, hls::axis<ap_uint<64>, 4ul, 5ul, 5ul>*)' (./mmult_float.cpp:50:28)
+INFO: [HLS 214-131] Inlining function 'push_stream(unsigned long long const&, bool)' into 'mmult_hw(hls::axis<ap_uint<64>, 4ul, 5ul, 5ul>*, hls::axis<ap_uint<64>, 4ul, 5ul, 5ul>*)' (./mmult_float.cpp:108:40)
+INFO: [HLS 214-131] Inlining function 'pop_stream(hls::axis<ap_uint<64>, 4ul, 5ul, 5ul> const&)' into 'mmult_hw(hls::axis<ap_uint<64>, 4ul, 5ul, 5ul>*, hls::axis<ap_uint<64>, 4ul, 5ul, 5ul>*)' (./mmult_float.cpp:77:36)
+INFO: [HLS 214-131] Inlining function 'pop_stream(hls::axis<ap_uint<64>, 4ul, 5ul, 5ul> const&)' into 'mmult_hw(hls::axis<ap_uint<64>, 4ul, 5ul, 5ul>*, hls::axis<ap_uint<64>, 4ul, 5ul, 5ul>*)' (./mmult_float.cpp:61:32)
+WARNING: [HLS 214-142] Implementing stream: may cause mismatch if read and write accesses are not in sequential order on port 'in_stream' (./mmult_float.cpp:9:0)
+Resolution: For help on HLS 214-142 see www.xilinx.com/cgi-bin/docs/rdoc?v=2020.2;t=hls+guidance;d=214-142.html
+WARNING: [HLS 214-142] Implementing stream: may cause mismatch if read and write accesses are not in sequential order on port 'out_stream' (./mmult_float.cpp:9:0)
+Resolution: For help on HLS 214-142 see www.xilinx.com/cgi-bin/docs/rdoc?v=2020.2;t=hls+guidance;d=214-142.html
+INFO: [HLS 214-131] Inlining function '_llvm.fpga.pack.none.i128.s_struct.hls::axiss' into 'mmult_hw(hls::axis<ap_uint<64>, 4ul, 5ul, 5ul>*, hls::axis<ap_uint<64>, 4ul, 5ul, 5ul>*)' (./mmult_float.cpp:108:38)
+INFO: [HLS 200-111] Finished Compiling Optimization and Transform: CPU user time: 4.02 seconds. CPU system time: 0.32 seconds. Elapsed time: 4.34 seconds; current allocated memory: 72.916 MB.
+INFO: [HLS 200-111] Finished Checking Pragmas: CPU user time: 0 seconds. CPU system time: 0 seconds. Elapsed time: 0 seconds; current allocated memory: 72.918 MB.
+INFO: [HLS 200-10] Starting code transformations ...
+INFO: [HLS 200-111] Finished Standard Transforms: CPU user time: 0.06 seconds. CPU system time: 0.01 seconds. Elapsed time: 0.06 seconds; current allocated memory: 79.724 MB.
+INFO: [HLS 200-10] Checking synthesizability ...
+INFO: [HLS 200-111] Finished Checking Synthesizability: CPU user time: 0.09 seconds. CPU system time: 0.01 seconds. Elapsed time: 0.1 seconds; current allocated memory: 87.601 MB.
+INFO: [XFORM 203-510] Pipelining loop 'LOAD_OFF_1' (./mmult_float.cpp:49) in function 'mmult_hw' automatically.
+INFO: [XFORM 203-510] Pipelining loop 'LOAD_W_2' (./mmult_float.cpp:59) in function 'mmult_hw' automatically.
+INFO: [XFORM 203-510] Pipelining loop 'LOAD_I_2' (./mmult_float.cpp:75) in function 'mmult_hw' automatically.
+INFO: [XFORM 203-510] Pipelining loop 'STORE_O_2' (./mmult_float.cpp:45) in function 'mmult_hw' automatically.
+INFO: [XFORM 203-502] Unrolling all sub-loops inside loop 'L2' (./mmult_float.cpp:88) in function 'mmult_hw' for pipelining.
+INFO: [HLS 200-489] Unrolling loop 'L3' (./mmult_float.cpp:93) in function 'mmult_hw' completely with a factor of 256.
+INFO: [XFORM 203-101] Partitioning array 'weight_buf' (./mmult_float.cpp:31) in dimension 2 with a block factor 16.
+INFO: [XFORM 203-101] Partitioning array 'in_buf' (./mmult_float.cpp:32) in dimension 2 with a block factor 16.
+INFO: [HLS 200-111] Finished Loop, function and other optimizations: CPU user time: 0.91 seconds. CPU system time: 0.03 seconds. Elapsed time: 0.95 seconds; current allocated memory: 120.475 MB.
+INFO: [XFORM 203-541] Flattening a loop nest 'LOAD_W_1' (./mmult_float.cpp:57:14) in function 'mmult_hw'.
+INFO: [XFORM 203-541] Flattening a loop nest 'LOAD_I_1' (./mmult_float.cpp:73:18) in function 'mmult_hw'.
+INFO: [XFORM 203-541] Flattening a loop nest 'L1' (./mmult_float.cpp:85:18) in function 'mmult_hw'.
+INFO: [XFORM 203-541] Flattening a loop nest 'STORE_O_1' (./mmult_float.cpp:45:9) in function 'mmult_hw'.
+WARNING: [HLS 200-960] Cannot flatten loop 'LT' (./mmult_float.cpp:69:14) in function 'mmult_hw' more than one sub loop.
+Resolution: For help on HLS 200-960 see www.xilinx.com/cgi-bin/docs/rdoc?v=2020.2;t=hls+guidance;d=200-960.html
+INFO: [HLS 200-472] Inferring partial write operation for 'offset_buf' (./mmult_float.cpp:51:27)
+INFO: [HLS 200-472] Inferring partial write operation for 'offset_buf' (./mmult_float.cpp:52:27)
+INFO: [HLS 200-472] Inferring partial write operation for 'out_buf' (./mmult_float.cpp:96:31)
+INFO: [HLS 200-472] Inferring partial write operation for 'weight_buf[0]' (./mmult_float.cpp:62:34)
+INFO: [HLS 200-472] Inferring partial write operation for 'weight_buf[0]' (./mmult_float.cpp:63:34)
+INFO: [HLS 200-472] Inferring partial write operation for 'in_buf[0]' (./mmult_float.cpp:78:34)
+INFO: [HLS 200-472] Inferring partial write operation for 'in_buf[0]' (./mmult_float.cpp:79:34)
+INFO: [HLS 200-111] Finished Architecture Synthesis: CPU user time: 0.86 seconds. CPU system time: 0.02 seconds. Elapsed time: 0.88 seconds; current allocated memory: 128.805 MB.
+INFO: [HLS 200-10] Starting hardware synthesis ...
+INFO: [HLS 200-10] Synthesizing 'mmult_hw' ...
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-42] -- Implementing module 'mmult_hw' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [SCHED 204-11] Starting scheduling ...
+INFO: [SCHED 204-61] Pipelining loop 'LOAD_OFF_1'.
+INFO: [HLS 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 1, loop 'LOAD_OFF_1'
+INFO: [SCHED 204-61] Pipelining loop 'LOAD_W_1_LOAD_W_2'.
+INFO: [HLS 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 1, loop 'LOAD_W_1_LOAD_W_2'
+INFO: [SCHED 204-61] Pipelining loop 'LOAD_I_1_LOAD_I_2'.
+INFO: [HLS 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 1, loop 'LOAD_I_1_LOAD_I_2'
+INFO: [SCHED 204-61] Pipelining loop 'L1_L2'.
+WARNING: [HLS 200-885] Unable to schedule 'load' operation ('in_buf_0_load_2', ./mmult_float.cpp:85) on array 'in_buf[0]', ./mmult_float.cpp:32 due to limited memory ports. Please consider using a memory core with more ports or partitioning the array 'in_buf_0'.
+Resolution: For help on HLS 200-885 see www.xilinx.com/cgi-bin/docs/rdoc?v=2020.2;t=hls+guidance;d=200-885.html
+INFO: [HLS 200-1470] Pipelining result : Target II = 1, Final II = 8, Depth = 1287, loop 'L1_L2'
+INFO: [SCHED 204-61] Pipelining loop 'STORE_O_1_STORE_O_2'.
+INFO: [HLS 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 4, loop 'STORE_O_1_STORE_O_2'
+INFO: [SCHED 204-11] Finished scheduling.
+INFO: [HLS 200-111] Finished Scheduling: CPU user time: 17.72 seconds. CPU system time: 0.03 seconds. Elapsed time: 17.76 seconds; current allocated memory: 138.842 MB.
+INFO: [BIND 205-100] Starting micro-architecture generation ...
+INFO: [BIND 205-101] Performing variable lifetime analysis.
+INFO: [BIND 205-101] Exploring resource sharing.
+WARNING: [BIND 205-102] The specified resource core for memory 'offset_buf' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight_buf_0' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight_buf_1' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight_buf_2' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight_buf_3' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight_buf_4' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight_buf_5' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight_buf_6' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight_buf_7' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight_buf_8' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight_buf_9' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight_buf_10' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight_buf_11' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight_buf_12' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight_buf_13' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight_buf_14' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight_buf_15' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'in_buf_0' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'in_buf_1' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'in_buf_2' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'in_buf_3' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'in_buf_4' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'in_buf_5' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'in_buf_6' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'in_buf_7' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'in_buf_8' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'in_buf_9' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'in_buf_10' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'in_buf_11' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'in_buf_12' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'in_buf_13' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'in_buf_14' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'in_buf_15' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'out_buf' will be ignored if a simpler one can be used.
+INFO: [BIND 205-101] Binding ...
+INFO: [BIND 205-100] Finished micro-architecture generation.
+INFO: [HLS 200-111] Finished Binding: CPU user time: 10.91 seconds. CPU system time: 0.03 seconds. Elapsed time: 10.94 seconds; current allocated memory: 163.438 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-10] -- Generating RTL for module 'mmult_hw' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+WARNING: [RTGEN 206-101] Design contains AXI ports. Reset is fixed to synchronous and active low.
+INFO: [RTGEN 206-500] Setting interface mode on port 'mmult_hw/in_stream' to 'axis' (register, both mode).
+INFO: [RTGEN 206-500] Setting interface mode on port 'mmult_hw/out_stream' to 'axis' (register, both mode).
+INFO: [RTGEN 206-500] Setting interface mode on function 'mmult_hw' to 's_axilite & ap_ctrl_hs'.
+INFO: [RTGEN 206-100] Bundling port 'return' to AXI-Lite port CONTROL_BUS.
+INFO: [RTGEN 206-104] Estimated max fanout for 'mmult_hw' is 84480 from HDL expression: ((1'b0 == ap_block_pp3_stage4_11001) & (1'b1 == ap_CS_fsm_pp3_stage4))
+INFO: [RTGEN 206-100] Generating core module 'fadd_32ns_32ns_32_5_full_dsp_1': 32 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'fmul_32ns_32ns_32_4_max_dsp_1': 32 instance(s).
+INFO: [RTGEN 206-100] Finished creating RTL model for 'mmult_hw'.
+INFO: [HLS 200-111] Finished Creating RTL model: CPU user time: 13.53 seconds. CPU system time: 0.06 seconds. Elapsed time: 13.59 seconds; current allocated memory: 205.941 MB.
+INFO: [RTMG 210-278] Implementing memory 'mmult_hw_offset_buf_ram (RAM_T2P_BRAM)' using block RAMs.
+INFO: [RTMG 210-278] Implementing memory 'mmult_hw_weight_buf_0_ram (RAM_T2P_BRAM)' using block RAMs.
+INFO: [RTMG 210-278] Implementing memory 'mmult_hw_in_buf_0_ram (RAM_T2P_BRAM)' using block RAMs.
+INFO: [RTMG 210-278] Implementing memory 'mmult_hw_out_buf_ram (RAM_T2P_BRAM)' using block RAMs.
+INFO: [HLS 200-111] Finished Generating all RTL models: CPU user time: 10.24 seconds. CPU system time: 0.21 seconds. Elapsed time: 10.45 seconds; current allocated memory: 247.035 MB.
+INFO: [VHDL 208-304] Generating VHDL RTL for mmult_hw.
+INFO: [VLOG 209-307] Generating Verilog RTL for mmult_hw.
+INFO: [HLS 200-790] **** Loop Constraint Status: All loop constraints were NOT satisfied.
+INFO: [HLS 200-789] **** Estimated Fmax: 130.95 MHz
+INFO: [HLS 200-111] Finished Command csynth_design CPU user time: 62.15 seconds. CPU system time: 1.06 seconds. Elapsed time: 63.21 seconds; current allocated memory: 247.277 MB.
+INFO: [HLS 200-112] Total CPU user time: 67.32 seconds. Total CPU system time: 1.94 seconds. Total elapsed time: 67.3 seconds; peak allocated memory: 247.035 MB.
+INFO: [Common 17-206] Exiting vitis_hls at Sun Mar  6 15:57:20 2022...
