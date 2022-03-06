@@ -32,6 +32,14 @@ void mmult_hw(AXI_VAL in_stream[IS_SIZE], AXI_VAL out_stream[OS_SIZE])
     T in_buf[BATCH][FEAT];
     T out_buf[BATCH][CLASSES];
 
+#pragma HLS bind_storage variable = offset_buf type = RAM_T2P
+#pragma HLS bind_storage variable = weight_buf type = RAM_T2P
+#pragma HLS bind_storage variable = in_buf type = RAM_T2P
+#pragma HLS bind_storage variable = out_buf type = RAM_T2P
+
+#pragma HLS array_partition variable = weight_buf block factor = 8 dim = 2
+#pragma HLS array_partition variable = in_buf block factor = 8 dim = 2
+
     // Input and output AXI stream indices
     int is_idx = 0;
     int os_idx = 0;
@@ -74,11 +82,11 @@ L1:
     // Iterate over output classes
     L2:
         for (int j = 0; j < CLASSES; j++) {
+#pragma HLS PIPELINE II = 1
             // Perform the dot product
             T tmp = offset_buf[j];
         L3:
             for (int k = 0; k < FEAT; k++) {
-#pragma HLS PIPELINE II = 1
                 tmp += in_buf[i][k] * weight_buf[j][k];
             }
             out_buf[i][j] = tmp;

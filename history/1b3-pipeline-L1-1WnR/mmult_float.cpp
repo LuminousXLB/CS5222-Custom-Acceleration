@@ -71,6 +71,7 @@ LOAD_I_1:
 // Iterate over batch elements
 L1:
     for (int i = 0; i < BATCH; i++) {
+#pragma HLS PIPELINE II = 1
     // Iterate over output classes
     L2:
         for (int j = 0; j < CLASSES; j++) {
@@ -78,7 +79,6 @@ L1:
             T tmp = offset_buf[j];
         L3:
             for (int k = 0; k < FEAT; k++) {
-#pragma HLS PIPELINE II = 1
                 tmp += in_buf[i][k] * weight_buf[j][k];
             }
             out_buf[i][j] = tmp;

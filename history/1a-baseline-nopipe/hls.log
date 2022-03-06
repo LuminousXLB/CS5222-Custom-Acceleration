@@ -1,0 +1,112 @@
+
+****** Vitis HLS - High-Level Synthesis from C, C++ and OpenCL v2020.2 (64-bit)
+  **** SW Build 3064766 on Wed Nov 18 09:12:47 MST 2020
+  **** IP Build 3064653 on Wed Nov 18 14:17:31 MST 2020
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+source /data/Xilinx/Vitis_HLS/2020.2/scripts/vitis_hls/hls.tcl -notrace
+INFO: [HLS 200-10] Running '/data/Xilinx/Vitis_HLS/2020.2/bin/unwrapped/lnx64.o/vitis_hls'
+INFO: [HLS 200-10] For user 'ubuntu' on host 'pc17' (Linux_x86_64 version 5.4.0-100-generic) on Sun Mar 06 10:13:17 +08 2022
+INFO: [HLS 200-10] On os Ubuntu 20.04.4 LTS
+INFO: [HLS 200-10] In directory '/home/ubuntu/cs5222/workspace/zynq/hls/test_replica2'
+Sourcing Tcl script 'hls.tcl'
+INFO: [HLS 200-1510] Running: open_project accel 
+INFO: [HLS 200-10] Opening project '/home/ubuntu/cs5222/workspace/zynq/hls/test_replica2/accel'.
+INFO: [HLS 200-1510] Running: set_top mmult_hw 
+INFO: [HLS 200-1510] Running: add_files ./mmult_float.cpp 
+INFO: [HLS 200-10] Adding design file './mmult_float.cpp' to the project
+INFO: [HLS 200-1510] Running: add_files -tb ./mmult_test.cpp 
+INFO: [HLS 200-10] Adding test bench file './mmult_test.cpp' to the project
+INFO: [HLS 200-1510] Running: open_solution solution0 -flow_target vivado 
+INFO: [HLS 200-10] Opening solution '/home/ubuntu/cs5222/workspace/zynq/hls/test_replica2/accel/solution0'.
+INFO: [SYN 201-201] Setting up clock 'default' with a period of 10ns.
+INFO: [SYN 201-201] Setting up clock 'default' with an uncertainty of 1.25ns.
+INFO: [HLS 200-10] Setting target device to 'xc7z020-clg484-1'
+INFO: [HLS 200-1505] Using flow_target 'vivado'
+Resolution: For help on HLS 200-1505 see www.xilinx.com/cgi-bin/docs/rdoc?v=2020.2;t=hls+guidance;d=200-1505.html
+INFO: [HLS 200-1510] Running: set_part xc7z020clg484-1 
+INFO: [HLS 200-1510] Running: create_clock -period 10 -name default 
+INFO: [HLS 200-1510] Running: config_compile -pipeline_loops 0 
+INFO: [XFORM 203-1171] Pipeline the innermost loop with trip count more than 0 or its parent loop when its trip count is less than or equal 0.
+INFO: [HLS 200-1510] Running: set_clock_uncertainty 12.5% 
+INFO: [HLS 200-1510] Running: csim_design -clean 
+INFO: [SIM 211-2] *************** CSIM start ***************
+INFO: [SIM 211-4] CSIM will launch GCC as the compiler.
+   Compiling ../../../../mmult_test.cpp in debug mode
+   Compiling ../../../../mmult_float.cpp in debug mode
+   Generating csim.exe
+DEBUGGING AXI4 STREAMING DATA TYPES!
+Matrices identical ... Test successful!
+INFO: [SIM 211-1] CSim done with 0 errors.
+INFO: [SIM 211-3] *************** CSIM finish ***************
+INFO: [HLS 200-111] Finished Command csim_design CPU user time: 3.72 seconds. CPU system time: 0.48 seconds. Elapsed time: 2.67 seconds; current allocated memory: 69.989 MB.
+INFO: [HLS 200-1510] Running: csynth_design 
+INFO: [HLS 200-111] Finished File checks and directory preparation: CPU user time: 0.01 seconds. CPU system time: 0 seconds. Elapsed time: 0.01 seconds; current allocated memory: 70.142 MB.
+INFO: [HLS 200-10] Analyzing design file './mmult_float.cpp' ... 
+WARNING: [HLS 214-140] Array stream parameter 'in_stream' in function 'mmult_hw' may require the 'volatile' qualifier to prevent the compiler from altering array accesses and/or modifying the desired streaming order: /home/ubuntu/cs5222/workspace/zynq/hls/test_replica2/mmult_float.cpp:8
+WARNING: [HLS 214-140] Array stream parameter 'out_stream' in function 'mmult_hw' may require the 'volatile' qualifier to prevent the compiler from altering array accesses and/or modifying the desired streaming order: /home/ubuntu/cs5222/workspace/zynq/hls/test_replica2/mmult_float.cpp:8
+WARNING: [HLS 207-5284] unsequenced modification and access to 'os_idx': ./mmult_float.cpp:95:30
+INFO: [HLS 200-111] Finished Source Code Analysis and Preprocessing: CPU user time: 3.72 seconds. CPU system time: 0.3 seconds. Elapsed time: 4.02 seconds; current allocated memory: 71.686 MB.
+INFO: [HLS 200-777] Using interface defaults for 'Vivado' flow target.
+INFO: [HLS 214-131] Inlining function 'pop_stream(hls::axis<ap_uint<64>, 4ul, 5ul, 5ul> const&)' into 'mmult_hw(hls::axis<ap_uint<64>, 4ul, 5ul, 5ul>*, hls::axis<ap_uint<64>, 4ul, 5ul, 5ul>*)' (./mmult_float.cpp:42:28)
+INFO: [HLS 214-131] Inlining function 'push_stream(unsigned long long const&, bool)' into 'mmult_hw(hls::axis<ap_uint<64>, 4ul, 5ul, 5ul>*, hls::axis<ap_uint<64>, 4ul, 5ul, 5ul>*)' (./mmult_float.cpp:95:36)
+INFO: [HLS 214-131] Inlining function 'pop_stream(hls::axis<ap_uint<64>, 4ul, 5ul, 5ul> const&)' into 'mmult_hw(hls::axis<ap_uint<64>, 4ul, 5ul, 5ul>*, hls::axis<ap_uint<64>, 4ul, 5ul, 5ul>*)' (./mmult_float.cpp:65:32)
+INFO: [HLS 214-131] Inlining function 'pop_stream(hls::axis<ap_uint<64>, 4ul, 5ul, 5ul> const&)' into 'mmult_hw(hls::axis<ap_uint<64>, 4ul, 5ul, 5ul>*, hls::axis<ap_uint<64>, 4ul, 5ul, 5ul>*)' (./mmult_float.cpp:53:32)
+WARNING: [HLS 214-142] Implementing stream: may cause mismatch if read and write accesses are not in sequential order on port 'in_stream' (./mmult_float.cpp:9:0)
+Resolution: For help on HLS 214-142 see www.xilinx.com/cgi-bin/docs/rdoc?v=2020.2;t=hls+guidance;d=214-142.html
+WARNING: [HLS 214-142] Implementing stream: may cause mismatch if read and write accesses are not in sequential order on port 'out_stream' (./mmult_float.cpp:9:0)
+Resolution: For help on HLS 214-142 see www.xilinx.com/cgi-bin/docs/rdoc?v=2020.2;t=hls+guidance;d=214-142.html
+INFO: [HLS 214-131] Inlining function '_llvm.fpga.pack.none.i128.s_struct.hls::axiss' into 'mmult_hw(hls::axis<ap_uint<64>, 4ul, 5ul, 5ul>*, hls::axis<ap_uint<64>, 4ul, 5ul, 5ul>*)' (./mmult_float.cpp:95:34)
+INFO: [HLS 200-111] Finished Compiling Optimization and Transform: CPU user time: 4.07 seconds. CPU system time: 0.29 seconds. Elapsed time: 4.38 seconds; current allocated memory: 73.396 MB.
+INFO: [HLS 200-111] Finished Checking Pragmas: CPU user time: 0 seconds. CPU system time: 0 seconds. Elapsed time: 0 seconds; current allocated memory: 73.397 MB.
+INFO: [HLS 200-10] Starting code transformations ...
+INFO: [HLS 200-111] Finished Standard Transforms: CPU user time: 0.13 seconds. CPU system time: 0.01 seconds. Elapsed time: 0.14 seconds; current allocated memory: 80.363 MB.
+INFO: [HLS 200-10] Checking synthesizability ...
+INFO: [HLS 200-111] Finished Checking Synthesizability: CPU user time: 0.17 seconds. CPU system time: 0 seconds. Elapsed time: 0.18 seconds; current allocated memory: 88.304 MB.
+INFO: [HLS 200-111] Finished Loop, function and other optimizations: CPU user time: 0.31 seconds. CPU system time: 0.01 seconds. Elapsed time: 0.31 seconds; current allocated memory: 117.359 MB.
+INFO: [HLS 200-472] Inferring partial write operation for 'offset_buf' (./mmult_float.cpp:43:27)
+INFO: [HLS 200-472] Inferring partial write operation for 'offset_buf' (./mmult_float.cpp:44:27)
+INFO: [HLS 200-472] Inferring partial write operation for 'weight_buf' (./mmult_float.cpp:54:34)
+INFO: [HLS 200-472] Inferring partial write operation for 'weight_buf' (./mmult_float.cpp:55:34)
+INFO: [HLS 200-472] Inferring partial write operation for 'in_buf' (./mmult_float.cpp:66:30)
+INFO: [HLS 200-472] Inferring partial write operation for 'in_buf' (./mmult_float.cpp:67:30)
+INFO: [HLS 200-472] Inferring partial write operation for 'out_buf' (./mmult_float.cpp:83:27)
+INFO: [HLS 200-111] Finished Architecture Synthesis: CPU user time: 0.37 seconds. CPU system time: 0.01 seconds. Elapsed time: 0.37 seconds; current allocated memory: 116.679 MB.
+INFO: [HLS 200-10] Starting hardware synthesis ...
+INFO: [HLS 200-10] Synthesizing 'mmult_hw' ...
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-42] -- Implementing module 'mmult_hw' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [SCHED 204-11] Starting scheduling ...
+INFO: [SCHED 204-11] Finished scheduling.
+INFO: [HLS 200-111] Finished Scheduling: CPU user time: 0.15 seconds. CPU system time: 0 seconds. Elapsed time: 0.15 seconds; current allocated memory: 117.369 MB.
+INFO: [BIND 205-100] Starting micro-architecture generation ...
+INFO: [BIND 205-101] Performing variable lifetime analysis.
+INFO: [BIND 205-101] Exploring resource sharing.
+INFO: [BIND 205-101] Binding ...
+INFO: [BIND 205-100] Finished micro-architecture generation.
+INFO: [HLS 200-111] Finished Binding: CPU user time: 0.2 seconds. CPU system time: 0 seconds. Elapsed time: 0.21 seconds; current allocated memory: 118.171 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-10] -- Generating RTL for module 'mmult_hw' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+WARNING: [RTGEN 206-101] Design contains AXI ports. Reset is fixed to synchronous and active low.
+INFO: [RTGEN 206-500] Setting interface mode on port 'mmult_hw/in_stream' to 'axis' (register, both mode).
+INFO: [RTGEN 206-500] Setting interface mode on port 'mmult_hw/out_stream' to 'axis' (register, both mode).
+INFO: [RTGEN 206-500] Setting interface mode on function 'mmult_hw' to 's_axilite & ap_ctrl_hs'.
+INFO: [RTGEN 206-100] Bundling port 'return' to AXI-Lite port CONTROL_BUS.
+INFO: [RTGEN 206-100] Generating core module 'fadd_32ns_32ns_32_5_full_dsp_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'fmul_32ns_32ns_32_4_max_dsp_1': 1 instance(s).
+INFO: [RTGEN 206-100] Finished creating RTL model for 'mmult_hw'.
+INFO: [HLS 200-111] Finished Creating RTL model: CPU user time: 0.22 seconds. CPU system time: 0.01 seconds. Elapsed time: 0.23 seconds; current allocated memory: 119.449 MB.
+INFO: [RTMG 210-278] Implementing memory 'mmult_hw_offset_buf_ram (RAM)' using auto RAMs.
+INFO: [RTMG 210-278] Implementing memory 'mmult_hw_weight_buf_ram (RAM)' using auto RAMs.
+INFO: [RTMG 210-278] Implementing memory 'mmult_hw_in_buf_ram (RAM)' using auto RAMs.
+INFO: [RTMG 210-278] Implementing memory 'mmult_hw_out_buf_ram (RAM)' using auto RAMs.
+INFO: [HLS 200-111] Finished Generating all RTL models: CPU user time: 1.21 seconds. CPU system time: 0.1 seconds. Elapsed time: 1.31 seconds; current allocated memory: 129.545 MB.
+INFO: [VHDL 208-304] Generating VHDL RTL for mmult_hw.
+INFO: [VLOG 209-307] Generating Verilog RTL for mmult_hw.
+INFO: [HLS 200-790] **** Loop Constraint Status: All loop constraints were satisfied.
+INFO: [HLS 200-789] **** Estimated Fmax: 137.82 MHz
+INFO: [HLS 200-111] Finished Command csynth_design CPU user time: 10.68 seconds. CPU system time: 0.73 seconds. Elapsed time: 11.42 seconds; current allocated memory: 129.851 MB.
+INFO: [HLS 200-112] Total CPU user time: 15.65 seconds. Total CPU system time: 1.61 seconds. Total elapsed time: 15.3 seconds; peak allocated memory: 129.545 MB.
+INFO: [Common 17-206] Exiting vitis_hls at Sun Mar  6 10:13:32 2022...
