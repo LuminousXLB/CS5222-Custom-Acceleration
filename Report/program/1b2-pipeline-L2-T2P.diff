@@ -1,0 +1,22 @@
+--- ../history/1a-baseline-autopipe/mmult_float.cpp	2022-03-06 10:42:30.857284319 +0800
++++ ../history/1b2-pipeline-L2-T2P/mmult_float.cpp	2022-03-06 11:54:48.893739993 +0800
+@@ -32,6 +32,11 @@
+     T in_buf[BATCH][FEAT];
+     T out_buf[BATCH][CLASSES];
+ 
++#pragma HLS bind_storage variable = offset_buf type = RAM_T2P
++#pragma HLS bind_storage variable = weight_buf type = RAM_T2P
++#pragma HLS bind_storage variable = in_buf type = RAM_T2P
++#pragma HLS bind_storage variable = out_buf type = RAM_T2P
++
+     // Input and output AXI stream indices
+     int is_idx = 0;
+     int os_idx = 0;
+@@ -74,6 +79,7 @@
+     // Iterate over output classes
+     L2:
+         for (int j = 0; j < CLASSES; j++) {
++#pragma HLS PIPELINE II = 1
+             // Perform the dot product
+             T tmp = offset_buf[j];
+         L3:

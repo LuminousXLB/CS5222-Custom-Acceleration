@@ -25,9 +25,11 @@
     \ref{sec:1a}                      & Baseline (AutoPipe) & 85160 & 85160 & 1.236 & 1.236 & 85161 & 85161 & none \\
 \rowcolor{rowhlt}\ref{sec:1a}       & Baseline (NoPipe) & 228022 & 228022 & 2.280 & 2.280 & 228023 & 228023 & none \\
 \ref{sec:1bL3}                          & L3 Pipelining & 85286 & 85286 & 1.238 & 1.238 & 85287 & 85287 & none \\
-\ref{sec:1bL2}                     & L2 Pipelining & 13759 & 13759 & 0.138 & 0.138 & 13760 & 13760 & none \\
+\ref{sec:1bL2}                     & L2 Pipelining (1WnR) & 7341 & 7341 & 0.073 & 0.073 & 7342 & 7342 & none \\
+\ref{sec:1bL2}                     & L2 Pipelining (T2P) & 13885 & 13885 & 0.139 & 0.139 & 13886 & 13886 & none \\
 \ref{sec:1bL1}                     & L1 Pipelining (1WnR) & 6193 & 6193 & 0.062 & 0.062 & 6194 & 6194 & none \\
 \ref{sec:1bL1}                      & L1 Pipelining (T2P) & 5953 & 5953 & 0.060 & 0.060 & 5954 & 5954 & none \\
+\ref{sec:1c}  & Baseline (L2, AutoPipe, T2P) & 13759 & 13759 & 0.138 & 0.138 & 13760 & 13760 & none \\
     \bottomrule
 \end{tabularx}
 
@@ -54,9 +56,11 @@
     \ref{sec:1a}                      & Baseline (AutoPipe) & 13 (4\%) & 5 (2\%) & 1050 (\textasciitilde 0\%) & 2000 (3\%) & 0 (0\%) & 1 & 1 \\
 \rowcolor{rowhlt}\ref{sec:1a}       & Baseline (NoPipe) & 14 (5\%) & 5 (2\%) & 817 (\textasciitilde 0\%) & 1635 (3\%) & 0 (0\%) & 1 & 1 \\
 \ref{sec:1bL3}                          & L3 Pipelining & 14 (5\%) & 5 (2\%) & 921 (\textasciitilde 0\%) & 1713 (3\%) & 0 (0\%) & 1 & 1 \\
-\ref{sec:1bL2}                     & L2 Pipelining & 13 (4\%) & 10 (4\%) & 24840 (23\%) & 22620 (42\%) & 0 (0\%) & 2 & 2 \\
+\ref{sec:1bL2}                     & L2 Pipelining (1WnR) & 182 (65\%) & 80 (36\%) & 38357 (36\%) & 34359 (64\%) & 0 (0\%) & 16 & 16 \\
+\ref{sec:1bL2}                     & L2 Pipelining (T2P) & 16 (5\%) & 10 (4\%) & 24710 (23\%) & 22359 (42\%) & 0 (0\%) & 2 & 2 \\
 \ref{sec:1bL1}                     & L1 Pipelining (1WnR) & 70 (25\%) & 800 (363\%) & 415044 (390\%) & 243128 (457\%) & 0 (0\%) & 160 & 160 \\
 \ref{sec:1bL1}                      & L1 Pipelining (T2P) & 16 (5\%) & 100 (45\%) & 312992 (294\%) & 120185 (225\%) & 0 (0\%) & 20 & 20 \\
+\ref{sec:1c}  & Baseline (L2, AutoPipe, T2P) & 16 (5\%) & 10 (4\%) & 24776 (23\%) & 22615 (42\%) & 0 (0\%) & 2 & 2 \\
     \bottomrule
 \end{tabularx}
 }
