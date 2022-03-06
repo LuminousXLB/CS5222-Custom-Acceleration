@@ -59,9 +59,18 @@ def generate_summary_table(reports, output_fn):
         rpt = rpt_text[rpt_text.find("Utilization Estimates") : rpt_text.find("* DSP")]
 
         summary = rpt[: rpt.find("+ Detail:")]
-        summary = summary[summary.find("Total") :]
-        summary = summary.splitlines()[0]
-        summary = [c.strip() for c in summary.split("|")[1:-1]]
+        total_line = summary[summary.find("Total") :].splitlines()[0]
+        utili_line = summary[summary.find("Utilization (%)") :].splitlines()[0]
+
+        total = [c.strip() for c in total_line.split("|")[1:-1]]
+        utili = [c.strip().replace('~', r'\textasciitilde ') for c in utili_line.split("|")[1:-1]]
+
+        template = r"\multirow{2}{*}{\makecell*{TT \\ (PP\%)}}"
+        template = r"TT (PP\%)"
+        summary = [
+            template.replace("TT", t).replace("PP", u) for t, u in zip(total, utili)
+        ]
+
 
         instance = rpt[rpt.find("* Instance:") :].strip()
         instance = instance.splitlines()[4:-3]

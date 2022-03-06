@@ -31,33 +31,32 @@
     \bottomrule
 \end{tabularx}
 
-\begin{tabularx}{\textwidth}{cl*{7}{C}}
+\begin{tabularx}{\textwidth}{cl*{5}{c}*{2}{C}}
     \toprule
 
     \multicolumn{2}{c}{\multirow{2}{*}{Profile}} &
     \multicolumn{5}{c}{Utilization Summary}      &
-    \multicolumn{2}{c}{Instance}                                                                   \\
+    \multicolumn{2}{c}{Instance}                   \\
 
     \cmidrule(lr){3-7}
     \cmidrule(lr){8-9}
                                                  &
                                                  &
-    \multicolumn{1}{c}{BRAM}                     &
+    \multicolumn{1}{c}{BRAM\_18K}                &
     \multicolumn{1}{c}{DSP}                      &
     \multicolumn{1}{c}{FF}                       &
     \multicolumn{1}{c}{LUT}                      &
     \multicolumn{1}{c}{URAM}                     &
     \multicolumn{1}{c}{fadd}                     &
-    \multicolumn{1}{c}{fmul}                                                                       \\
+    \multicolumn{1}{c}{fmul}                       \\
 
     \midrule
-    \rowcolor{lime}                              & Available & 280 & 220 & 106400 & 53200 & 0 &  & \\
-    \ref{sec:1a}                      & Baseline (AutoPipe) & 13 & 5 & 1050 & 2000 & 0 & 1 & 1 \\
-\rowcolor{rowhlt}\ref{sec:1a}       & Baseline (NoPipe) & 14 & 5 & 817 & 1635 & 0 & 1 & 1 \\
-\ref{sec:1bL3}                          & L3 Pipelining & 14 & 5 & 921 & 1713 & 0 & 1 & 1 \\
-\ref{sec:1bL2}                     & L2 Pipelining & 13 & 10 & 24840 & 22620 & 0 & 2 & 2 \\
-\ref{sec:1bL1}                     & L1 Pipelining (1WnR) & 70 & 800 & 415044 & 243128 & 0 & 160 & 160 \\
-\ref{sec:1bL1}                      & L1 Pipelining (T2P) & 16 & 100 & 312992 & 120185 & 0 & 20 & 20 \\
+    \ref{sec:1a}                      & Baseline (AutoPipe) & 13 (4\%) & 5 (2\%) & 1050 (\textasciitilde 0\%) & 2000 (3\%) & 0 (0\%) & 1 & 1 \\
+\rowcolor{rowhlt}\ref{sec:1a}       & Baseline (NoPipe) & 14 (5\%) & 5 (2\%) & 817 (\textasciitilde 0\%) & 1635 (3\%) & 0 (0\%) & 1 & 1 \\
+\ref{sec:1bL3}                          & L3 Pipelining & 14 (5\%) & 5 (2\%) & 921 (\textasciitilde 0\%) & 1713 (3\%) & 0 (0\%) & 1 & 1 \\
+\ref{sec:1bL2}                     & L2 Pipelining & 13 (4\%) & 10 (4\%) & 24840 (23\%) & 22620 (42\%) & 0 (0\%) & 2 & 2 \\
+\ref{sec:1bL1}                     & L1 Pipelining (1WnR) & 70 (25\%) & 800 (363\%) & 415044 (390\%) & 243128 (457\%) & 0 (0\%) & 160 & 160 \\
+\ref{sec:1bL1}                      & L1 Pipelining (T2P) & 16 (5\%) & 100 (45\%) & 312992 (294\%) & 120185 (225\%) & 0 (0\%) & 20 & 20 \\
     \bottomrule
 \end{tabularx}
 }
