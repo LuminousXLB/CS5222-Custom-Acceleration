@@ -44,6 +44,7 @@
 \rowcolor{rowhlt}\ref{sec:1d}           & Amortizing (\texttt{batch}=256) & 57103 & 57103 & 0.571 & 0.571 & 57104 & 57104 & none \\
 \ref{sec:1d}                            & Amortizing (\texttt{batch}=512) & 111631 & 111631 & 1.116 & 1.116 & 111632 & 111632 & none \\
 \ref{sec:1d}                              & Baseline (NoPipe, \texttt{batch}=256) & 29020446 & 29020446 & 290.000 & 290.000 & 29020447 & 29020447 & none \\
+\ref{sec:1e}                                     & Tiling (\texttt{batch}=2048, \texttt{tile}=128) & 458106 & 458106 & 4.581 & 4.581 & 458107 & 458107 & none \\
     \bottomrule
 \end{tabularx}
 
@@ -88,6 +89,7 @@
 \rowcolor{rowhlt}\ref{sec:1d}           & Amortizing (\texttt{batch}=256) & 170 (60\%) & 160 (72\%) & 52774 (49\%) & 40646 (76\%) & 0 (0\%) & 32 & 32 \\
 \ref{sec:1d}                            & Amortizing (\texttt{batch}=512) & 306 (109\%) & 160 (72\%) & 52807 (49\%) & 40699 (76\%) & 0 (0\%) & 32 & 32 \\
 \ref{sec:1d}                              & Baseline (NoPipe, \texttt{batch}=256) & 552 (197\%) & 5 (2\%) & 940 (\textasciitilde 0\%) & 1724 (3\%) & 0 (0\%) & 1 & 1 \\
+\ref{sec:1e}                                     & Tiling (\texttt{batch}=2048, \texttt{tile}=128) & 102 (36\%) & 160 (72\%) & 52864 (49\%) & 40805 (76\%) & 0 (0\%) & 32 & 32 \\
     \bottomrule
 \end{tabularx}
 }

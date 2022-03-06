@@ -1,19 +1,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{E. Extending Batch Size with Tiling (8 marks)}
+\subsection{E. Extending Batch Size with Tiling (8 marks)}\label{sec:1e}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-Report \begin{enumerate}
-    \item the design latency in cycles, and
-    \item the overall device utilization (as Total per Resource).
-\end{enumerate}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{F. Hardware compilation and FPGA testing on the PYNQ (8 marks)}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-Report
-\begin{enumerate}
-    \item the measured speedup and
-    \item measured classification accuracy.
-\end{enumerate}
+After tiling, the latency comes to 458106 cycles for 2048 batches, i.e., the latency per input is 223.7 cycles, which is almost the same as that in \autoref{sec:1d}.
+Without performance loss, the BRAM usage is reduced from 60\% to 36\%.
 

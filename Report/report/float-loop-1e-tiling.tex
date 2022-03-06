@@ -1,0 +1,29 @@
+\begin{tabularx}{\textwidth}{ p{4cm} *{7}{C}}
+    \toprule
+    \multicolumn{1}{c}{\multirow{2}{*}{Loop Name}} &
+    \multicolumn{2}{c}{Latency (cycles)}           &
+    \multicolumn{1}{c}{\multirow{2}{*}{\makecell*{Iteration \\
+    Latency}}}                                     &
+    \multicolumn{2}{c}{Initiation Interval}        &
+    \multicolumn{1}{c}{\multirow{2}{*}{\makecell*{Trip      \\
+    Count}}}                                       &
+    \multicolumn{1}{c}{\multirow{2}{*}{Pipelined}}          \\
+
+    \cmidrule(lr){2-3}
+    \cmidrule(lr){5-6}
+
+                                                   &
+    \multicolumn{1}{c}{min}                        &
+    \multicolumn{1}{c}{max}                        &
+                                                   &
+    \multicolumn{1}{c}{achieved}                   &
+    \multicolumn{1}{c}{target}                     &        \\
+    \midrule
+    \texttt{- LOAD\_OFF\_1} & 5 & 5 & 1 & 1 & 1 & 5 & yes \\
+\texttt{- LOAD\_W\_1\_LOAD\_W\_2} & 1280 & 1280 & 1 & 1 & 1 & 1280 & yes \\
+\texttt{- LT} & 456816 & 456816 & 28551 & - & - & 16 & no \\
+\texttt{ + LOAD\_I\_1\_LOAD\_I\_2} & 16384 & 16384 & 1 & 1 & 1 & 16384 & yes \\
+\texttt{ + L1\_L2} & 11518 & 11518 & 1287 & 8 & 1 & 1280 & yes \\
+\texttt{ + STORE\_O\_1\_STORE\_O\_2} & 642 & 642 & 4 & 1 & 1 & 640 & yes \\
+    \bottomrule
+\end{tabularx}
