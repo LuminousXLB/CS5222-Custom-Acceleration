@@ -7,98 +7,73 @@ The work in this section is done with auto pipelining disabled.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Pipelining the L3 (innermost) loop}\label{sec:1bL3}
 
-The code is modified as \autoref{fig:float-diff.L3}.
-As reported in \autoref{tab:float-loop-02-pipeline-L3}, pipelining L3 reduces its latency from 2816 cycles to 1031 cycles.
+The code is modified as \autoref{fig:1b1-pipeline-L3.diff}.
+As reported in \autoref{tab:float-loop-1b1-pipeline-L3}, pipelining L3 reduces its latency from 2816 cycles to 1031 cycles.
 The L1 is flattened, but L2 cannot be flattened because L2 is not a perfect loop.
 Thus the result has 2-layer loops where the outer layer has 80 iterations, and the inner layer has 256 iterations.
-There is no parallelism in this condition.
 This design utilizes slightly more resources but no more floating-point adders or multipliers.
-The overall latency is 85285 cycles, which is about 2.67x speedup.
+The overall latency is 85286 cycles, which is about 2.67x speedup.
 Other statistics in detail can be found in \autoref{tab:float-summary}.
 
 \begin{figure}[ht!]
     \centering
-    \inputminted{diff}{program/diff.L3}
-    \caption{Inserting HLS directive for L3 Pipelining.}\label{fig:float-diff.L3}
+    \inputminted[firstline=3]{diff}{program/1b1-pipeline-L3.diff}
+    \caption{Inserting HLS directive for L3 Pipelining}\label{fig:1b1-pipeline-L3.diff}
 \end{figure}
 
 \begin{table}[ht!]
-    \caption{Loop details for L3 pipelining}
-    \label{tab:float-loop-02-pipeline-L3}
+    \caption{Loop details for L3 Pipelining}
+    \label{tab:float-loop-1b1-pipeline-L3}
     \centering
-    \input{report/float-loop-02-pipeline-L3.tex}
+    \input{report/float-loop-1b1-pipeline-L3.tex}
 \end{table}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Pipelining the L2 loop}\label{sec:1bL2}
 
-The code is modified as \autoref{fig:float-diff.L2}.
-As reported in \autoref{tab:float-loop-03-pipeline-L2-1WnR}, pipelining the loop body of L2 unrolls L3 and introduces both pipelining and some parallelism, which reduces the iteration latency from 2816 cycles to 1287 cycles and the total latency for the matrix multiplication from 225536 to 2550.
-The design used 16 adders and 16 multipliers.
-The overall latency is 7341 cycles, about 31.06x speedup relative to baseline.
+The code is modified as \autoref{fig:1b2-pipeline-L2.diff}.
+As reported in \autoref{tab:float-loop-1b2-pipeline-L2}, pipelining the loop body of L2 unrolls L3 and flattens L1.
+The design introduced some parallelism, which uses two adders and two multipliers.
+The overall latency is reduced to 13759 cycles, which is about 16.57x speedup relative to the baseline, which has already achieved the goal for this section.
+The initiation interval has increased to 128 cycles, which is pretty heavy.
 Other statistics in detail can be found in \autoref{tab:float-summary}.
 
 \begin{figure}[ht!]
     \centering
-    \inputminted{diff}{program/diff.L2}
-    \caption{Inserting HLS directive for L2 Pipelining.}\label{fig:float-diff.L2}
+    \inputminted[firstline=3]{diff}{program/1b2-pipeline-L2.diff}
+    \caption{Inserting HLS directive for L2 Pipelining}\label{fig:1b2-pipeline-L2.diff}
 \end{figure}
 
 \begin{table}[ht!]
-    \caption{Loop details for L2 pipelining with 1WnR memory}
-    \label{tab:float-loop-03-pipeline-L2-1WnR}
+    \caption{Loop details for L2 pipelining}
+    \label{tab:float-loop-1b2-pipeline-L2}
     \centering
-    \input{report/float-loop-03-pipeline-L2-1WnR.tex}
-\end{table}
-
-An important observation is that the design can utilise 16 adders and 16 multipliers instead of being limited by the dual-port RAMs.
-The reason for that is Vitis HLS infers the RAM type as 1WnR, which is short for Multi-Ported Memory using Replication, and this type of memory has a single write port and multiple concurrent read ports.
-\begin{minted}{text}
-    INFO: [HLS 200-1457] Automatically inferring 1WnR RAM type for array 'weight_buf'. Use bind_storage pragma to overwrite if needed.
-    INFO: [HLS 200-1457] Automatically inferring 1WnR RAM type for array 'in_buf'. Use bind_storage pragma to overwrite if needed.
-\end{minted}
-
-In order to prepare for the following memory partition optimization, the memory type should be forced to the dual-port (T2P) RAM as \autoref{fig:03-pipeline-L2-T2P.diff}.
-\begin{figure}[ht!]
-    \centering
-    \inputminted[firstline=3]{diff}{program/03-pipeline-L2-T2P.diff}
-    \caption{Setting memory type to true dual-port RAM with L2 Pipelining.}\label{fig:03-pipeline-L2-T2P.diff}
-\end{figure}
-The result shows that the L2 pipelining with T2P RAM uses only two adders and two multipliers.
-The overall latency is 13885 cycles, which is a 16.4x improvement.
-That has already achieved the goal.
-As the loop details in \autoref{tab:float-loop-03-pipeline-L2-T2P}, the initiation interval is 128 cycles, which is slightly heavy.
-
-\begin{table}
-    \caption{Loop details for L2 Pipelining with T2P memory}
-    \label{tab:float-loop-03-pipeline-L2-T2P}
-    \centering
-    \input{report/float-loop-03-pipeline-L2-T2P.tex}
+    \input{report/float-loop-1b2-pipeline-L2.tex}
 \end{table}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Pipelining the L1 (outermost) loop}\label{sec:1bL1}
 
-The code is modified as \autoref{fig:float-diff.L1}.
-The loop details are in \autoref{tab:float-loop-04-pipeline-L1-1WnR}.
+The code is modified as \autoref{fig:1b3-pipeline-L1-1WnR.diff}.
+The loop details are in \autoref{tab:float-loop-1b3-pipeline-L1-1WnR}.
 Pipelining L1 makes both L2 and L3 completely unrolled, which makes there only one loop with 8 iterations.
 The unrolled loop body is heavily paralleled \textbf{with 1WnR memory used}, which make use of 160 floating-point adders and 160 floating-point multipliers.
-The parallelism reduces the latency for one iteration from 28190 cycles to 1291 cycles.
+The parallelism reduces the latency for one equivalent iteration from 28192 cycles to 1291 cycles.
 The pipelining further reduce the latency for L1 to 1402 cycles, although there are eight iterations.
-The overall latency is 6193 cycles, about 36.82x speedup relative to L3 pipelining and 1.19x speedup compared to L2 pipelining.
+The overall latency is 6193 cycles, about 36.82x speedup relative to L3 pipelining and 2.22x speedup compared to L2 pipelining.
 Other statistics in detail can be found in \autoref{tab:float-summary}.
 
 \begin{figure}[ht!]
     \centering
-    \inputminted{diff}{program/diff.L1}
-    \caption{Inserting HLS directive for L1 Pipelining.}\label{fig:float-diff.L1}
+    \inputminted[firstline=3]{diff}{program/1b3-pipeline-L1-1WnR.diff}
+    \caption{Inserting HLS directive for L1 Pipelining}\label{fig:1b3-pipeline-L1-1WnR.diff}
 \end{figure}
 
 \begin{table}[ht!]
     \caption{Loop details for L1 pipelining with 1WnR memory}
-    \label{tab:float-loop-04-pipeline-L1-1WnR}
+    \label{tab:float-loop-1b3-pipeline-L1-1WnR}
     \centering
-    \input{report/float-loop-04-pipeline-L1-1WnR.tex}
+    \input{report/float-loop-1b3-pipeline-L1-1WnR.tex}
 \end{table}
 
 Although L1 pipelining with 1WnR memory achieves some speedup compared to L2 pipelining, it takes 299.1 seconds to complete the whole building process, while the time for L2 pipelining is only 62.5 seconds.
@@ -106,22 +81,27 @@ At the same time, the hardware resource usage has exceeded those available on bo
     DSP (363\%), FF (390\%) , LUT (457\%)
 }
 
-As we did in \autoref{sec:1bL2}, we try using dual-port memory as well.
-The code is modified as \autoref{fig:04-pipeline-L1-T2P.diff}.
-The result shows that the overall latency and resource usage are lower than using 1WnR.
+An important observation is that the design can utilise 160 adders and 160 multipliers instead of being limited by the dual-port RAMs.
+The reason for that is Vitis HLS infers the RAM type as 1WnR, which is short for Multi-Ported Memory using Replication, and this type of memory has a single write port and multiple concurrent read ports.
+\begin{minted}{text}
+    INFO: [HLS 200-1457] Automatically inferring 1WnR RAM type for array 'in_buf'. Use bind_storage pragma to overwrite if needed.
+\end{minted}
+
+In order to prepare for the following memory partition optimization, the memory type should be forced to the dual-port (T2P) RAM as \autoref{fig:1b3-pipeline-L1-T2P.diff}.
+The result shows that both overall latency and resource usage are lower than using 1WnR.
 That is good, but the usage of FF and LUT still exceeds the resource budget.
 That might be due to the 20 adders and 20 multipliers, but I failed to figure out how the computation units are used since dual-port memory is used.
-As in \autoref{tab:float-loop-04-pipeline-L1-T2P}, the initiation interval is 128 cycles.
+As in \autoref{tab:float-loop-1b3-pipeline-L1-T2P}, the initiation interval is 128 cycles.
 
 \begin{figure}[ht!]
     \centering
-    \inputminted[firstline=3]{diff}{program/04-pipeline-L1-T2P.diff}
-    \caption{Setting memory type to true dual-port RAM with L1 Pipelining.}\label{fig:04-pipeline-L1-T2P.diff}
+    \inputminted[firstline=3]{diff}{program/1b3-pipeline-L1-T2P.diff}
+    \caption{Setting memory type to true dual-port RAM with L1 Pipelining.}\label{fig:1b3-pipeline-L1-T2P.diff}
 \end{figure}
 
 \begin{table}[ht!]
     \caption{Loop details for L1 pipelining with T2P memory}
-    \label{tab:float-loop-04-pipeline-L1-T2P}
+    \label{tab:float-loop-1b3-pipeline-L1-T2P}
     \centering
-    \input{report/float-loop-04-pipeline-L1-T2P.tex}
+    \input{report/float-loop-1b3-pipeline-L1-T2P.tex}
 \end{table}

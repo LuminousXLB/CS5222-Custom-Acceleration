@@ -1,5 +1,5 @@
---- mmult_float.cpp.orig	2022-03-04 16:59:04.734375380 +0800
-+++ mmult_float.cpp.L2	2022-03-04 17:00:26.201027719 +0800
+--- ../history/1a-baseline-autopipe/mmult_float.cpp	2022-03-06 10:42:30.857284319 +0800
++++ ../history/1b2-pipeline-L2/mmult_float.cpp	2022-03-06 10:42:30.857284319 +0800
 @@ -74,6 +74,7 @@
      // Iterate over output classes
      L2:

@@ -1,5 +1,5 @@
---- mmult_float.cpp.orig	2022-03-04 16:59:04.734375380 +0800
-+++ mmult_float.cpp.L3	2022-03-04 16:58:59.566207094 +0800
+--- ../history/1a-baseline-autopipe/mmult_float.cpp	2022-03-06 10:42:30.857284319 +0800
++++ ../history/1b1-pipeline-L3/mmult_float.cpp	2022-03-06 10:42:30.857284319 +0800
 @@ -78,6 +78,7 @@
              T tmp = offset_buf[j];
          L3:

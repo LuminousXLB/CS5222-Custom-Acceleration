@@ -1,13 +1,20 @@
 #!/bin/bash
 
 SRC=mmult_float.cpp
+SRC_DIR=../history
 
-# 1a-baseline-autopipe
+DST_DIR=program
+
+DIFF="diff -u"
+
+BASE1=$SRC_DIR/1a-baseline-autopipe/$SRC
 # 1a-baseline-nopipe
-# 1b1-pipeline-L3
-# 1b2-pipeline-L2
-# 1b3-pipeline-L1-1WnR
-# 1b3-pipeline-L1-T2P
+
+$DIFF $BASE1 $SRC_DIR/1b1-pipeline-L3/$SRC >$DST_DIR/1b1-pipeline-L3.diff
+$DIFF $BASE1 $SRC_DIR/1b2-pipeline-L2/$SRC >$DST_DIR/1b2-pipeline-L2.diff
+$DIFF $BASE1 $SRC_DIR/1b3-pipeline-L1-1WnR/$SRC >$DST_DIR/1b3-pipeline-L1-1WnR.diff
+$DIFF $BASE1 $SRC_DIR/1b3-pipeline-L1-T2P/$SRC >$DST_DIR/1b3-pipeline-L1-T2P.diff
+
 # 1c0-baseline-ap-l2
 # 1c1-partition-ap-d1-f2
 # 1c1-partition-ap-d2-f2

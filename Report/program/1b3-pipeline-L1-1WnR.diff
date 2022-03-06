@@ -1,0 +1,10 @@
+--- ../history/1a-baseline-autopipe/mmult_float.cpp	2022-03-06 10:42:30.857284319 +0800
++++ ../history/1b3-pipeline-L1-1WnR/mmult_float.cpp	2022-03-06 10:42:30.857284319 +0800
+@@ -71,6 +71,7 @@
+ // Iterate over batch elements
+ L1:
+     for (int i = 0; i < BATCH; i++) {
++#pragma HLS PIPELINE II = 1
+     // Iterate over output classes
+     L2:
+         for (int j = 0; j < CLASSES; j++) {
