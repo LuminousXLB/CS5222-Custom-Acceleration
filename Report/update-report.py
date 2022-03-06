@@ -5,20 +5,29 @@ from collections import Counter
 
 
 FLOAT_REPORTS = {
-    "00-baseline-autopipe": r"\ref{sec:1a}                      & Baseline (AutoPipe)",
-    "01-baseline-nopipe": r"\rowcolor{rowhlt}\ref{sec:1a}       & Baseline (NoPipe)",
-    "02-pipeline-L3": r"\ref{sec:1bL3}                          & L3 Pipelining",
-    "03-pipeline-L2-1WnR": r"\ref{sec:1bL2}                     & L2 Pipelining (1WnR)",
-    "03-pipeline-L2-T2P": r"\rowcolor{rowhlt}\ref{sec:1bL2}     & L2 Pipelining (T2P)",
-    "04-pipeline-L1-1WnR": r"\ref{sec:1bL1}                     & L1 Pipelining (1WnR)",
-    "04-pipeline-L1-T2P": r"\ref{sec:1bL1}                      & L1 Pipelining (T2P)",
-    "05-partition-d1-f2": r"\ref{sec:1cDim}                     & Partition (\texttt{dim}=1, \texttt{factor}=2)",
-    "05-partition-d2-f2": r"\rowcolor{rowhlt}\ref{sec:1cDim}    & Partition (\texttt{dim}=2, \texttt{factor}=2)",
-    "06-partition-d2-f4": r"\ref{sec:1cFac}                     & Partition (\texttt{dim}=2, \texttt{factor}=4)",
-    "06-partition-d2-f8": r"\ref{sec:1cFac}                     & Partition (\texttt{dim}=2, \texttt{factor}=8)",
-    "06-partition-d2-f16": r"\rowcolor{rowhlt}\ref{sec:1cFac}   & Partition (\texttt{dim}=2, \texttt{factor}=16)",
-    "06-partition-d2-f32": r"\ref{sec:1cFac}                    & Partition (\texttt{dim}=2, \texttt{factor}=32)",
+    "1a-baseline-autopipe": r"\ref{sec:1a}                      & Baseline (AutoPipe)",
+    "1a-baseline-nopipe": r"\rowcolor{rowhlt}\ref{sec:1a}       & Baseline (NoPipe)",
+    "1b1-pipeline-L3": r"\ref{sec:1bL3}                          & L3 Pipelining",
+    "1b2-pipeline-L2": r"\ref{sec:1bL2}                     & L2 Pipelining",
+    "1b3-pipeline-L1-1WnR": r"\ref{sec:1bL1}                     & L1 Pipelining (1WnR)",
+    "1b3-pipeline-L1-T2P": r"\ref{sec:1bL1}                      & L1 Pipelining (T2P)",
+    # "1c0-baseline-ap-l2": r"",
+    # "1c1-partition-ap-d1-f2": r"",
+    # "1c1-partition-ap-d2-f2": r"",
+    # "1c2-partition-ap-d2-f16": r"",
+    # "1c2-partition-ap-d2-f32": r"",
+    # "1c2-partition-ap-d2-f4": r"",
+    # "1c2-partition-ap-d2-f8": r"",
 }
+
+# FLOAT_REPORTS = {
+# "05-partition-d1-f2": r"\ref{sec:1cDim}                     & Partition (\texttt{dim}=1, \texttt{factor}=2)",
+# "05-partition-d2-f2": r"\rowcolor{rowhlt}\ref{sec:1cDim}    & Partition (\texttt{dim}=2, \texttt{factor}=2)",
+# "06-partition-d2-f4": r"\ref{sec:1cFac}                     & Partition (\texttt{dim}=2, \texttt{factor}=4)",
+# "06-partition-d2-f8": r"\ref{sec:1cFac}                     & Partition (\texttt{dim}=2, \texttt{factor}=8)",
+# "06-partition-d2-f16": r"\rowcolor{rowhlt}\ref{sec:1cFac}   & Partition (\texttt{dim}=2, \texttt{factor}=16)",
+# "06-partition-d2-f32": r"\ref{sec:1cFac}                    & Partition (\texttt{dim}=2, \texttt{factor}=32)",
+# }
 
 BASE = Path(__file__).parent
 
@@ -132,7 +141,7 @@ if __name__ == "__main__":
 
     BASE = Path(__file__).parent
 
-    FLOAT_REPORT_DIR = BASE / "../zynq/hls/mmult_float/archive"
+    FLOAT_REPORT_DIR = BASE / "../history"
 
     float_reports = []
 

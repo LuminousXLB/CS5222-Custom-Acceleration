@@ -19,13 +19,11 @@
     \multicolumn{1}{c}{achieved}                   &
     \multicolumn{1}{c}{target}                     &        \\
     \midrule
-    \texttt{- LOAD\_OFF\_1} & 5 & 5 & 1 & - & - & 5 & no \\
-\texttt{- LOAD\_W\_1} & 1300 & 1300 & 130 & - & - & 10 & no \\
-\texttt{ + LOAD\_W\_2} & 128 & 128 & 1 & - & - & 128 & no \\
-\texttt{- LOAD\_I\_1} & 1040 & 1040 & 130 & - & - & 8 & no \\
-\texttt{ + LOAD\_I\_2} & 128 & 128 & 1 & - & - & 128 & no \\
-\texttt{- L1\_L2} & 11398 & 11398 & 1287 & 128 & 1 & 80 & yes \\
-\texttt{- STORE\_O\_1} & 136 & 136 & 17 & - & - & 8 & no \\
-\texttt{ + STORE\_O\_2} & 15 & 15 & 3 & - & - & 5 & no \\
+    \texttt{- LOAD\_OFF\_1} & 5 & 5 & 1 & 1 & 1 & 5 & yes \\
+\texttt{- LOAD\_W\_1\_LOAD\_W\_2} & 1280 & 1280 & 1 & 1 & 1 & 1280 & yes \\
+\texttt{- LOAD\_I\_1\_LOAD\_I\_2} & 1024 & 1024 & 1 & 1 & 1 & 1024 & yes \\
+\texttt{- L1\_L2} & 82800 & 82800 & 1035 & - & - & 80 & no \\
+\texttt{ + L3} & 1031 & 1031 & 12 & 4 & 1 & 256 & yes \\
+\texttt{- STORE\_O\_1\_STORE\_O\_2} & 42 & 42 & 4 & 1 & 1 & 40 & yes \\
     \bottomrule
 \end{tabularx}
