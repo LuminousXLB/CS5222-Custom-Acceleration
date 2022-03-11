@@ -27,6 +27,7 @@ FLOAT_REPORTS = {
     "1d-amortizing-b512": r"\ref{sec:1d}                            & Amortizing (\texttt{batch}=512)",
     "1d-baseline-b256": r"\ref{sec:1d}                              & Baseline (NoPipe, \texttt{batch}=256)",
     "1e-tiling": r"\ref{sec:1e}                                     & Tiling (\texttt{batch}=2048, \texttt{tile}=128)",
+    "1f-compilation": r"\ref{sec:1f}                                & Hardware Compilation",
 }
 
 

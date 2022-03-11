@@ -1,10 +1,37 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{F. Hardware compilation and FPGA testing on the PYNQ (8 marks)}
+\subsection{Hardware compilation and FPGA testing on the PYNQ (8 marks)}\label{sec:1f}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-Report
-\begin{enumerate}
-    \item the measured speedup and
-    \item measured classification accuracy.
-\end{enumerate}
+In this section, we met some problems.
 
+The first problem that I met is when exporting the IP, which has been sovled in: \href{https://support.xilinx.com/s/question/0D52E00006uxy49SAA/vivado-fails-to-export-ips-with-the-error-message-bad-lexical-cast-source-type-value-could-not-be-interpreted-as-target}{Vivado fails to export IPs with the error message "Bad lexical cast: source type value could not be interpreted as target"}.
+
+The second problem occurs when validating the system design, which reports a critical warning as \autoref{fig:tlast}.
+As this signla shall be provided by Vitis HLS when implementing the AXI Stream interface, I changed the signature of the top function from C array to \texttt{hls::stream}.
+That fixes the problem.
+
+\begin{figure}
+    \begin{minted}{text}
+        [xilinx.com:ip:axi_dma:7.1-9] /axi_dma_1
+        ########################################################### 
+        Interface connected to S_AXIS_S2MM does not have TLAST port
+        ###########################################################
+    \end{minted}    
+    \caption{Critical Warning from validating the design}
+    \label{fig:tlast}
+\end{figure}
+
+After building, move the bitstream files to the board.
+
+\begin{minted}{console}
+    $ scp `find -name "*.bit"` xilinx@<pynq-ip-addr>:~/classifier.bit 
+    $ scp `find -name "*.hwh"` xilinx@<pynq-ip-addr>:~/classifier.hwh
+\end{minted}
+
+According to the different versions of PYNQ, I have to modify the notebook as well.
+The new version is attached in the submission.
+
+The measured classificationde accuracy is 13.04\% for both FPGA and CPU, which indicates that our implementation is correct.
+The running time on FPGA is around 16.16ms, while 78.04ms on CPU.
+That is, speedup on FPGA is 4.83x, a little bit smaller than required.
+This may due to the optimization between different versions of python and numpy.
