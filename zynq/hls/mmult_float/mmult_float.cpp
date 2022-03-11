@@ -29,16 +29,16 @@ void mmult_hw(AXI_VAL in_stream[IS_SIZE], AXI_VAL out_stream[OS_SIZE])
     // Hardware buffers
     T offset_buf[CLASSES];
     T weight_buf[CLASSES][FEAT];
-    T in_buf[BATCH][FEAT];
-    T out_buf[BATCH][CLASSES];
+    T in_buf[TILE][FEAT];
+    T out_buf[TILE][CLASSES];
 
 #pragma HLS bind_storage variable = offset_buf type = RAM_T2P
 #pragma HLS bind_storage variable = weight_buf type = RAM_T2P
 #pragma HLS bind_storage variable = in_buf type = RAM_T2P
 #pragma HLS bind_storage variable = out_buf type = RAM_T2P
 
-#pragma HLS array_partition variable = weight_buf block factor = 16 dim = 2
-#pragma HLS array_partition variable = in_buf block factor = 16 dim = 2
+#pragma HLS array_partition variable = weight_buf block factor = 4 dim = 2
+#pragma HLS array_partition variable = in_buf block factor = 4 dim = 2
 
     // Input and output AXI stream indices
     int is_idx = 0;
@@ -64,46 +64,52 @@ LOAD_W_1:
         }
     }
 
-// Stream in input matrix
-LOAD_I_1:
-    for (int i = 0; i < BATCH; i++) {
-    LOAD_I_2:
-        for (int j = 0; j < FEAT; j += WIDTH_RATIO) {
-            // Pop AXI data packet
-            converter.packet = pop_stream(in_stream[is_idx++]);
-            in_buf[i][j + 0] = converter.val.f0;
-            in_buf[i][j + 1] = converter.val.f1;
-        }
-    }
+LT:
+    /*************************************************************************/
+    for (int t = 0; t < BATCH; t += TILE) {
 
-// Iterate over batch elements
-L1:
-    for (int i = 0; i < BATCH; i++) {
-    // Iterate over output classes
-    L2:
-        for (int j = 0; j < CLASSES; j++) {
-#pragma HLS PIPELINE II = 1
-            // Perform the dot product
-            T tmp = offset_buf[j];
-        L3:
-            for (int k = 0; k < FEAT; k++) {
-                tmp += in_buf[i][k] * weight_buf[j][k];
+    // Stream in input matrix
+    LOAD_I_1:
+        for (int i = 0; i < TILE; i++) {
+        LOAD_I_2:
+            for (int j = 0; j < FEAT; j += WIDTH_RATIO) {
+                // Pop AXI data packet
+                converter.packet = pop_stream(in_stream[is_idx++]);
+                in_buf[i][j + 0] = converter.val.f0;
+                in_buf[i][j + 1] = converter.val.f1;
             }
-            out_buf[i][j] = tmp;
         }
-    }
 
-// Stream out output matrix
-STORE_O_1:
-    for (int i = 0; i < BATCH; i++) {
-    STORE_O_2:
-        for (int j = 0; j < CLASSES; j += WIDTH_RATIO) {
-            // Push output element into AXI stream
-            converter.val.f0 = out_buf[i][j + 0];
-            converter.val.f1 = out_buf[i][j + 1];
-            out_stream[os_idx++] = push_stream(converter.packet, os_idx == (OS_SIZE));
+    // Iterate over batch elements
+    L1:
+        for (int i = 0; i < TILE; i++) {
+        // Iterate over output classes
+        L2:
+            for (int j = 0; j < CLASSES; j++) {
+#pragma HLS PIPELINE II = 1
+                // Perform the dot product
+                T tmp = offset_buf[j];
+            L3:
+                for (int k = 0; k < FEAT; k++) {
+                    tmp += in_buf[i][k] * weight_buf[j][k];
+                }
+                out_buf[i][j] = tmp;
+            }
+        }
+
+    // Stream out output matrix
+    STORE_O_1:
+        for (int i = 0; i < TILE; i++) {
+        STORE_O_2:
+            for (int j = 0; j < CLASSES; j += WIDTH_RATIO) {
+                // Push output element into AXI stream
+                converter.val.f0 = out_buf[i][j + 0];
+                converter.val.f1 = out_buf[i][j + 1];
+                out_stream[os_idx++] = push_stream(converter.packet, os_idx == (OS_SIZE));
+            }
         }
     }
+    /*************************************************************************/
 }
 
 // --------------------------------------------------------

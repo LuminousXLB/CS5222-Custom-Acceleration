@@ -3,9 +3,10 @@
 set -x
 set -e
 
-DIR=archive/$(date +%Y%m%d-%H%M%S)$1
+DIR=./archive/$(date +%Y%m%d-%H%M%S)$1
 mkdir $DIR
 cp mmult_float.cpp $DIR
+cp mmult.h $DIR
 
 vitis_hls -f hls.tcl
 
