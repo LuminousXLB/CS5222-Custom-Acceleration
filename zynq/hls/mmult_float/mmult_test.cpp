@@ -58,8 +58,8 @@ int main(void)
     printf("DEBUGGING AXI4 STREAMING DATA TYPES!\r\n");
 
     // prepare data for the DUT
-    AXI_VAL in_stream[IS_SIZE];
-    AXI_VAL out_stream[OS_SIZE];
+    hls::stream<AXI_VAL> in_stream;
+    hls::stream<AXI_VAL> out_stream;
 
     // input and output stream indices
     int is_idx = 0;
@@ -69,7 +69,8 @@ int main(void)
     for (int i = 0; i < CLASSES; i += WIDTH_RATIO) {
         converter.val.f0 = offsets[i + 0];
         converter.val.f1 = offsets[i + 1];
-        in_stream[is_idx++] = push_stream(converter.packet, 0);
+        is_idx++;
+        in_stream.write(push_stream(converter.packet, 0));
     }
 
     // stream in the weigth matrix
@@ -77,7 +78,8 @@ int main(void)
         for (int j = 0; j < FEAT; j += WIDTH_RATIO) {
             converter.val.f0 = weights[i][j + 0];
             converter.val.f1 = weights[i][j + 1];
-            in_stream[is_idx++] = push_stream(converter.packet, 0);
+            is_idx++;
+            in_stream.write(push_stream(converter.packet, 0));
         }
     }
 
@@ -86,7 +88,8 @@ int main(void)
         for (int j = 0; j < FEAT; j += WIDTH_RATIO) {
             converter.val.f0 = inputs[i][j + 0];
             converter.val.f1 = inputs[i][j + 1];
-            in_stream[is_idx++] = push_stream(converter.packet, is_idx == (IS_SIZE));
+            is_idx++;
+            in_stream.write(push_stream(converter.packet, is_idx == (IS_SIZE)));
         }
     }
 
@@ -94,9 +97,11 @@ int main(void)
     mmult_hw(in_stream, out_stream);
 
     // extract the output matrix from the out stream
+    AXI_VAL tmp;
     for (int i = 0; i < BATCH; i++) {
         for (int j = 0; j < CLASSES; j += WIDTH_RATIO) {
-            converter.packet = pop_stream(out_stream[os_idx++]);
+            out_stream.read(tmp);
+            converter.packet = pop_stream(tmp);
             matMult_hw[i][j + 0] = converter.val.f0;
             matMult_hw[i][j + 1] = converter.val.f1;
         }

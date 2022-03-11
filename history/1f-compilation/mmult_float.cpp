@@ -5,7 +5,7 @@
 
 // --------------------------------------------------------------------
 // function to be accelerated in HW wrapped with AXI4-Stream interface
-void mmult_hw(AXI_VAL in_stream[IS_SIZE], AXI_VAL out_stream[OS_SIZE])
+void mmult_hw(hls::stream<AXI_VAL> &in_stream, hls::stream<AXI_VAL> &out_stream)
 {
 #pragma HLS INTERFACE s_axilite port = return bundle = CONTROL_BUS
 #pragma HLS INTERFACE axis port = in_stream
@@ -45,40 +45,52 @@ void mmult_hw(AXI_VAL in_stream[IS_SIZE], AXI_VAL out_stream[OS_SIZE])
     int os_idx = 0;
 
 // Stream in offset vector
-LOAD_OFF_1:
+LOAD_OFF_1 : {
+    AXI_VAL tmp;
+
     for (int i = 0; i < CLASSES; i += WIDTH_RATIO) {
-        converter.packet = pop_stream(in_stream[is_idx++]);
+        in_stream.read(tmp);
+        converter.packet = pop_stream(tmp);
         offset_buf[i + 0] = converter.val.f0;
         offset_buf[i + 1] = converter.val.f1;
     }
+}
 
 // Stream in weight matrix
-LOAD_W_1:
+LOAD_W_1 : {
+    AXI_VAL tmp;
+
     for (int i = 0; i < CLASSES; i++) {
     LOAD_W_2:
         for (int j = 0; j < FEAT; j += WIDTH_RATIO) {
             // Pop AXI data packet
-            converter.packet = pop_stream(in_stream[is_idx++]);
+            in_stream.read(tmp);
+            converter.packet = pop_stream(tmp);
             weight_buf[i][j + 0] = converter.val.f0;
             weight_buf[i][j + 1] = converter.val.f1;
         }
     }
+}
 
 LT:
     /*************************************************************************/
     for (int t = 0; t < BATCH; t += TILE) {
 
     // Stream in input matrix
-    LOAD_I_1:
+    LOAD_I_1 : {
+        AXI_VAL tmp;
+
         for (int i = 0; i < TILE; i++) {
         LOAD_I_2:
             for (int j = 0; j < FEAT; j += WIDTH_RATIO) {
                 // Pop AXI data packet
-                converter.packet = pop_stream(in_stream[is_idx++]);
+                in_stream.read(tmp);
+                converter.packet = pop_stream(tmp);
                 in_buf[i][j + 0] = converter.val.f0;
                 in_buf[i][j + 1] = converter.val.f1;
             }
         }
+    }
 
     // Iterate over batch elements
     L1:
@@ -105,7 +117,8 @@ LT:
                 // Push output element into AXI stream
                 converter.val.f0 = out_buf[i][j + 0];
                 converter.val.f1 = out_buf[i][j + 1];
-                out_stream[os_idx++] = push_stream(converter.packet, os_idx == (OS_SIZE));
+                os_idx++;
+                out_stream.write(push_stream(converter.packet, os_idx == (OS_SIZE)));
             }
         }
     }

@@ -1,5 +1,6 @@
 #include <ap_axi_sdata.h>
 #include <assert.h>
+#include <hls_stream.h>
 
 typedef unsigned long long axi_T;
 typedef float T;
@@ -27,7 +28,7 @@ typedef float T;
 typedef ap_axiu<AXI_DATA, AXI_U, AXI_TI, AXI_TD> AXI_VAL;
 
 // Matrix Multiply prototype
-void mmult_hw(AXI_VAL in_stream[IS_SIZE], AXI_VAL out_stream[OS_SIZE]);
+void mmult_hw(hls::stream<AXI_VAL> &in_stream, hls::stream<AXI_VAL> &out_stream);
 
 // AXI stream push and pop
 axi_T pop_stream(AXI_VAL const &e);

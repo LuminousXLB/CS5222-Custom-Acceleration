@@ -18,7 +18,7 @@
     "in_stream": {
       "index": "0",
       "direction": "in",
-      "srcType": "axis<ap_uint<64>, 4, 5, 5>*",
+      "srcType": "stream<hls::axis<ap_uint<64>, 4, 5, 5>, 0>&",
       "srcSize": "128",
       "hwRefs": [{
           "type": "interface",
@@ -31,7 +31,7 @@
     "out_stream": {
       "index": "1",
       "direction": "out",
-      "srcType": "axis<ap_uint<64>, 4, 5, 5>*",
+      "srcType": "stream<hls::axis<ap_uint<64>, 4, 5, 5>, 0>&",
       "srcSize": "128",
       "hwRefs": [{
           "type": "interface",
@@ -160,7 +160,13 @@
       "portPrefix": "in_stream_",
       "ports": [
         "in_stream_TDATA",
+        "in_stream_TDEST",
+        "in_stream_TID",
+        "in_stream_TKEEP",
+        "in_stream_TLAST",
         "in_stream_TREADY",
+        "in_stream_TSTRB",
+        "in_stream_TUSER",
         "in_stream_TVALID"
       ],
       "constraints": [{
@@ -184,11 +190,17 @@
       "type": "axi4stream",
       "busTypeName": "axis",
       "mode": "master",
-      "dataWidth": "128",
+      "dataWidth": "64",
       "portPrefix": "out_stream_",
       "ports": [
         "out_stream_TDATA",
+        "out_stream_TDEST",
+        "out_stream_TID",
+        "out_stream_TKEEP",
+        "out_stream_TLAST",
         "out_stream_TREADY",
+        "out_stream_TSTRB",
+        "out_stream_TUSER",
         "out_stream_TVALID"
       ],
       "constraints": [{
@@ -483,9 +495,34 @@
       "dir": "out",
       "width": "1"
     },
+    "in_stream_TDEST": {
+      "dir": "in",
+      "width": "5"
+    },
+    "in_stream_TKEEP": {
+      "dir": "in",
+      "width": "8"
+    },
+    "in_stream_TSTRB": {
+      "dir": "in",
+      "width": "8"
+    },
+    "in_stream_TUSER": {
+      "dir": "in",
+      "width": "4"
+    },
+    "in_stream_TLAST": {
+      "dir": "in",
+      "width": "1",
+      "isVector": "true"
+    },
+    "in_stream_TID": {
+      "dir": "in",
+      "width": "5"
+    },
     "out_stream_TDATA": {
       "dir": "out",
-      "width": "128"
+      "width": "64"
     },
     "out_stream_TVALID": {
       "dir": "out",
@@ -494,6 +531,31 @@
     "out_stream_TREADY": {
       "dir": "in",
       "width": "1"
+    },
+    "out_stream_TDEST": {
+      "dir": "out",
+      "width": "5"
+    },
+    "out_stream_TKEEP": {
+      "dir": "out",
+      "width": "8"
+    },
+    "out_stream_TSTRB": {
+      "dir": "out",
+      "width": "8"
+    },
+    "out_stream_TUSER": {
+      "dir": "out",
+      "width": "4"
+    },
+    "out_stream_TLAST": {
+      "dir": "out",
+      "width": "1",
+      "isVector": "true"
+    },
+    "out_stream_TID": {
+      "dir": "out",
+      "width": "5"
     }
   },
   "ModuleInfo": {
@@ -521,14 +583,14 @@
         },
         "Loops": [
           {
-            "Name": "LOAD_OFF_1",
+            "Name": "VITIS_LOOP_51_1",
             "TripCount": "5",
             "Latency": "5",
             "PipelineII": "1",
             "PipelineDepth": "1"
           },
           {
-            "Name": "LOAD_W_1_LOAD_W_2",
+            "Name": "VITIS_LOOP_63_2_LOAD_W_2",
             "TripCount": "1280",
             "Latency": "1280",
             "PipelineII": "1",
@@ -542,7 +604,7 @@
             "PipelineDepth": "59247",
             "Loops": [
               {
-                "Name": "LOAD_I_1_LOAD_I_2",
+                "Name": "VITIS_LOOP_83_3_LOAD_I_2",
                 "TripCount": "16384",
                 "Latency": "16384",
                 "PipelineII": "1",
@@ -572,12 +634,12 @@
           "DSP": "40",
           "AVAIL_DSP": "220",
           "UTIL_DSP": "18",
-          "FF": "31458",
+          "FF": "31406",
           "AVAIL_FF": "106400",
           "UTIL_FF": "29",
-          "LUT": "21570",
+          "LUT": "21252",
           "AVAIL_LUT": "53200",
-          "UTIL_LUT": "40",
+          "UTIL_LUT": "39",
           "URAM": "0",
           "AVAIL_URAM": "0",
           "UTIL_URAM": "0"
@@ -587,7 +649,7 @@
   "GenerateBdFiles": "1",
   "GenData": {
     "DataVersion": "0.2",
-    "Time": "2022-03-06 16:13:12 +08",
+    "Time": "2022-03-11 16:34:58 +08",
     "ToolName": "vivado_hls",
     "ToolVersion": "2020.2"
   }
