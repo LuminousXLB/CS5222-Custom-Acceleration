@@ -1,2 +1,7 @@
 **/accel
 **/vitis_hls.log
+build
+.Xil
+/*.jou
+/*.log
+/*.str
