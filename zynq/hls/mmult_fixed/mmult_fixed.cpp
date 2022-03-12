@@ -27,6 +27,9 @@ void mmult_hw(hls::stream<AXI_VAL> &in_stream, hls::stream<AXI_VAL> &out_stream)
     in_T in_buf[TILING][FEAT];
     out_T out_buf[TILING][CLASSES];
 
+#pragma HLS array_partition variable = weight_buf block factor = 32 dim = 2
+#pragma HLS array_partition variable = in_buf block factor = 32 dim = 2
+
     // Input and output AXI stream indices
     int is_idx = 0;
     int os_idx = 0;
@@ -84,6 +87,7 @@ LT:
         // Iterate over output classes
         L2:
             for (int j = 0; j < CLASSES; j++) {
+#pragma HLS PIPELINE II = 1
                 // Perform the dot product
                 out_T tmp = offset_buf[j];
             L3:

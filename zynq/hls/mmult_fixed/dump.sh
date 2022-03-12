@@ -3,7 +3,7 @@
 set -x
 set -e
 
-DIR=./archive/$(date +%Y%m%d-%H%M%S)$1
+DIR=../archive/$(date +%Y%m%d-%H%M%S)$1
 mkdir -p $DIR
 cp mmult*.cpp $DIR
 cp mmult.h $DIR
