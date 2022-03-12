@@ -33,7 +33,7 @@ void mmult_hw(hls::stream<AXI_VAL> &in_stream, hls::stream<AXI_VAL> &out_stream)
 
 // Stream in offset vector
 // CSE548 TODO
-LOAD_OFFSET : {
+LOAD_OFFSET:
     for (int i = 0; i < CLASSES; i += OUT_WIDTH_RATIO) {
         AXI_VAL tmp;
         in_stream.read(tmp);
@@ -43,11 +43,10 @@ LOAD_OFFSET : {
             offset_buf[i + w] = (packet >> (w * OUT_WIDTH)) & OUT_MASK;
         };
     }
-}
 
 // Stream in weight matrix
 // CSE548 TODO
-LOAD_WEIGHT : {
+LOAD_WEIGHT:
     for (int i = 0; i < CLASSES; i++) {
         for (int j = 0; j < FEAT; j += W_WIDTH_RATIO) {
             AXI_VAL tmp;
@@ -59,7 +58,6 @@ LOAD_WEIGHT : {
             };
         }
     }
-}
 
 // Iterate over tiles
 LT:
@@ -67,7 +65,7 @@ LT:
 
     // Stream in input tile
     // CSE548 TODO
-    LOAD_INPUT : {
+    LOAD_INPUT:
         for (int i = 0; i < TILING; i++) {
             for (int j = 0; j < FEAT; j += IN_WIDTH_RATIO) {
                 AXI_VAL tmp;
@@ -79,7 +77,6 @@ LT:
                 };
             }
         }
-    }
 
     // Perform matrix multiplication
     L1:
@@ -100,19 +97,18 @@ LT:
 
     // Stream out output matrix
     // CSE548 TODO
-    STORE_OUTPUT : {
+    STORE_OUTPUT:
         for (int i = 0; i < TILING; i++) {
             for (int j = 0; j < CLASSES; j += OUT_WIDTH_RATIO) {
                 axi_T packet = 0;
                 for (int w = 0; w < OUT_WIDTH_RATIO; w++) {
                     out_bit_T bits = *((out_bit_T *)&out_buf[i][j + w]);
-                    packet |= (bits & OUT_MASK << (w * W_WIDTH));
+                    packet |= (bits & OUT_MASK) << (w * OUT_WIDTH);
                 }
                 os_idx++;
                 out_stream.write(push_stream(packet, os_idx == (OS_SIZE)));
             }
         }
-    }
     }
 }
 
