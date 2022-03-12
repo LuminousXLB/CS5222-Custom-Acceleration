@@ -4,7 +4,11 @@
 
 #include "mmult.h"
 
-void matrix_multiply_ref(T offsets[CLASSES], T weights[CLASSES][FEAT], T in[BATCH][FEAT], T out[BATCH][CLASSES])
+void matrix_multiply_ref(
+    T offsets[CLASSES],
+    T weights[CLASSES][FEAT],
+    T in[BATCH][FEAT],
+    T out[BATCH][CLASSES])
 {
     // matrix multiplication of a A*B matrix
     for (int i = 0; i < BATCH; ++i) {
@@ -116,8 +120,8 @@ int main(void)
         for (j = 0; j < CLASSES; j++) {
             if (matMult_sw[i][j] != matMult_hw[i][j]) {
                 err++;
-                std::cout << i << "," << j << ": expected " << matMult_sw[i][j] << " but got " << matMult_hw[i][j]
-                          << std::endl;
+                std::cout << i << "," << j << ": expected " << matMult_sw[i][j] << " but got "
+                          << matMult_hw[i][j] << std::endl;
             }
         }
     }

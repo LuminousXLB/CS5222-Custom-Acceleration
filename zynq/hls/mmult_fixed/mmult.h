@@ -1,6 +1,6 @@
-
 #include <ap_axi_sdata.h>
 #include <assert.h>
+#include <hls_stream.h>
 
 // Type definition of matrix elements
 typedef ap_int<8> w_T;
@@ -31,11 +31,12 @@ typedef unsigned long long axi_T;
 
 // Input matrix tiling factor
 // CSE548: TODO
-// #define TILING
+#define TILING 128
 
 // Input/Output Stream Size
-#define IS_SIZE \
-    ((CLASSES + OUT_WIDTH_RATIO - 1) / OUT_WIDTH_RATIO + CLASSES * FEAT / W_WIDTH_RATIO + BATCH * FEAT / IN_WIDTH_RATIO)
+#define IS_SIZE                                                                           \
+    ((CLASSES + OUT_WIDTH_RATIO - 1) / OUT_WIDTH_RATIO + CLASSES * FEAT / W_WIDTH_RATIO + \
+     BATCH * FEAT / IN_WIDTH_RATIO)
 #define OS_SIZE (BATCH * ((CLASSES + OUT_WIDTH_RATIO - 1) / OUT_WIDTH_RATIO))
 
 // AXI settings (leave it fixed)
@@ -48,7 +49,7 @@ typedef unsigned long long axi_T;
 typedef ap_axiu<AXI_DATA, AXI_U, AXI_TI, AXI_TD> AXI_VAL;
 
 // Matrix Multiply prototype
-void mmult_hw(AXI_VAL in_stream[IS_SIZE], AXI_VAL out_stream[OS_SIZE]);
+void mmult_hw(hls::stream<AXI_VAL> &in_stream, hls::stream<AXI_VAL> &out_stream);
 
 // AXI stream push and pop
 axi_T pop_stream(AXI_VAL const &e);

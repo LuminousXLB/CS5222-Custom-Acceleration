@@ -3,9 +3,13 @@
 
 #include "mmult.h"
 
+#define OUT_MASK ((1ULL << OUT_WIDTH) - 1)
+#define W_MASK ((1ULL << W_WIDTH) - 1)
+#define IN_MASK ((1ULL << IN_WIDTH) - 1)
+
 // --------------------------------------------------------------------
 // function to be accelerated in HW wrapped with AXI4-Stream interface
-void mmult_hw(AXI_VAL in_stream[IS_SIZE], AXI_VAL out_stream[OS_SIZE])
+void mmult_hw(hls::stream<AXI_VAL> &in_stream, hls::stream<AXI_VAL> &out_stream)
 {
 #pragma HLS INTERFACE s_axilite port = return bundle = CONTROL_BUS
 #pragma HLS INTERFACE axis port = in_stream
@@ -29,9 +33,33 @@ void mmult_hw(AXI_VAL in_stream[IS_SIZE], AXI_VAL out_stream[OS_SIZE])
 
 // Stream in offset vector
 // CSE548 TODO
+LOAD_OFFSET : {
+    for (int i = 0; i < CLASSES; i += OUT_WIDTH_RATIO) {
+        AXI_VAL tmp;
+        in_stream.read(tmp);
+        axi_T packet = pop_stream(tmp);
+
+        for (int w = 0; w < OUT_WIDTH_RATIO; w++) {
+            offset_buf[i + w] = (packet >> (w * OUT_WIDTH)) & OUT_MASK;
+        };
+    }
+}
 
 // Stream in weight matrix
 // CSE548 TODO
+LOAD_WEIGHT : {
+    for (int i = 0; i < CLASSES; i++) {
+        for (int j = 0; j < FEAT; j += W_WIDTH_RATIO) {
+            AXI_VAL tmp;
+            in_stream.read(tmp);
+            axi_T packet = pop_stream(tmp);
+
+            for (int w = 0; w < W_WIDTH_RATIO; w++) {
+                weight_buf[i][j + w] = (packet >> (w * W_WIDTH)) & W_MASK;
+            };
+        }
+    }
+}
 
 // Iterate over tiles
 LT:
@@ -39,6 +67,19 @@ LT:
 
     // Stream in input tile
     // CSE548 TODO
+    LOAD_INPUT : {
+        for (int i = 0; i < TILING; i++) {
+            for (int j = 0; j < FEAT; j += IN_WIDTH_RATIO) {
+                AXI_VAL tmp;
+                in_stream.read(tmp);
+                axi_T packet = pop_stream(tmp);
+
+                for (int w = 0; w < IN_WIDTH_RATIO; w++) {
+                    in_buf[i][j + w] = (packet >> (w * IN_WIDTH)) & IN_MASK;
+                };
+            }
+        }
+    }
 
     // Perform matrix multiplication
     L1:
@@ -57,8 +98,21 @@ LT:
             }
         }
 
-        // Stream out output matrix
-        // CSE548 TODO
+    // Stream out output matrix
+    // CSE548 TODO
+    STORE_OUTPUT : {
+        for (int i = 0; i < TILING; i++) {
+            for (int j = 0; j < CLASSES; j += OUT_WIDTH_RATIO) {
+                axi_T packet = 0;
+                for (int w = 0; w < OUT_WIDTH_RATIO; w++) {
+                    out_bit_T bits = *((out_bit_T *)&out_buf[i][j + w]);
+                    packet |= (bits & OUT_MASK << (w * W_WIDTH));
+                }
+                os_idx++;
+                out_stream.write(push_stream(packet, os_idx == (OS_SIZE)));
+            }
+        }
+    }
     }
 }
 
