@@ -101,7 +101,7 @@ def getDataSet(args, mode):
         lab = t[0]
         img = t[1]
         # Resize the image
-        img = resize(img, (args.dim, args.dim))
+        img = resize(img, (args.dim, args.dim), preserve_range=True)
         # Reshape
         datum = np.divide(img.reshape((args.dim * args.dim,)), 1)
         # Prepare the labels (one-hot encoded)
