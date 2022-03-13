@@ -89,7 +89,7 @@ if { ${design_name} eq "" } {
    set errMsg "Design <$design_name> already exists in your project, please set the variable <design_name> to another value."
    set nRet 1
 } elseif { [get_files -quiet ${design_name}.bd] ne "" } {
-   # USE CASES: 
+   # USE CASES:
    #    6) Current opened design, has components, but diff names, design_name exists in project.
    #    7) No opened design, design_name exists in project.
 
@@ -1595,8 +1595,8 @@ update_compile_order -fileset sources_1
 update_compile_order -fileset sim_1
 
 # Run bistream generation on 4 threads
-launch_runs impl_1 -to_step write_bitstream -jobs 4
-wait_on_run impl_1 
+launch_runs impl_1 -to_step write_bitstream -jobs 24
+wait_on_run impl_1
 puts "Implementation done!"
 
 # Export hardware description file and bitstream files to export/ dir
