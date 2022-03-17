@@ -29,6 +29,7 @@ The fixed-point validation accuracy reported by \nolinkurl{mnist.py} is as \auto
 \subsubsection{Timing}
 
 The overall latency, as reported in \autoref{tab:fixed-latency}, is 386378 cycles for 8192 batches, which means 47.17 cycles for each input on average.
+It is a 604.25x speedup over our baseline without auto pipelining.
 The pipelined loop has an initiation interval of 1 cycle achieved, as reported in \autoref{tab:fixed-loop}.
 
 \begin{table}[ht!]
