@@ -49,23 +49,42 @@ The pipelined loop has an initiation interval of 1 cycle achieved, as reported i
 \end{table}
 
 
+
 \begin{table}
     \centering
-    \caption{Loop detail of the pipelined loop}\label{tab:fixed-loop}
-    \begin{tabular}{ll|c}
-        \toprule
-                            &          & \verb+L1_L2+ \\
-        \midrule
-        Latency (cycles)    & min      & 1287                   \\
-        Latency (cycles)    & max      & 1287                   \\
-        Iteration Latency   &          & 9                      \\
-        Initiation Interval & achieved & 1                      \\
-        Initiation Interval & target   & 1                      \\
-        Trip Count          &          & 1280                   \\
-        Trip Count          &          & 1280                   \\
-        Pipelined           &          & yes                    \\
-        \bottomrule
-    \end{tabular}
+    \begin{minipage}{0.48\linewidth}
+        \centering
+        \caption{Loop detail of the pipelined loop}\label{tab:fixed-loop}
+        \begin{tabular}{ll|c}
+            \toprule
+                                &          & \verb+L1_L2+ \\
+            \midrule
+            Latency (cycles)    & min      & 1287                   \\
+            Latency (cycles)    & max      & 1287                   \\
+            Iteration Latency   &          & 9                      \\
+            Initiation Interval & achieved & 1                      \\
+            Initiation Interval & target   & 1                      \\
+            Trip Count          &          & 1280                   \\
+            Trip Count          &          & 1280                   \\
+            Pipelined           &          & yes                    \\
+            \bottomrule
+        \end{tabular}
+    \end{minipage}
+    \begin{minipage}{0.48\linewidth}
+        \centering
+        \caption{Loop Latency of load, compute and store}
+        \label{tab:fixed-loop-latency}
+        \begin{tabular}{lcc}
+            \toprule
+            \multicolumn{1}{c}{\multirow{2}{*}{Loop Name}} & \multicolumn{2}{c}{Latency (cycles)}        \\
+                                                           & min                                  & max  \\
+            \midrule
+            \verb+LOAD_INPUT_VITIS_LOOP_73_4+                         & 4096                                 & 4096 \\
+            \verb+L1_L2+                         & 1287                                 & 1287 \\
+            \verb+STORE_OUTPUT_VITIS_LOOP_106_6+                         & 642                                  & 642  \\
+            \bottomrule
+        \end{tabular}
+    \end{minipage}
 \end{table}
 
 
@@ -99,7 +118,6 @@ We have 128 multipliers implemented by LUT and 129 multiply-accumulate operator 
     \end{tabular}
 \end{table}
 
-
 \subsection{Evaluation}
 
 The measured system speedup over the fixed-point CPU implementation is 34.94x.
@@ -107,28 +125,10 @@ The measured classification accuracy on the 8k MNIST test sample is 19.96\% both
 
 \subsection{Reflection}
 
-
 The width of TDATA signal in AXI Stream interface is 64bit.
 Each input data has 256 bytes, i.e., 32 words, and a tile of 128 inputs has 4096 words.
 Our design, as reported in \autoref{tab:fixed-loop-latency}, took exactly 4096 cycles to load the 4096 words, but the following computation took another 1287 cycles.
 Thus I believe the design is compute-limited.
-
-
-\begin{table}
-    \centering
-    \caption{Loop Latency of load, compute and store}
-    \label{tab:fixed-loop-latency}
-    \begin{tabular}{lcc}
-        \toprule
-        \multicolumn{1}{c}{\multirow{2}{*}{Loop Name}} & \multicolumn{2}{c}{Latency (cycles)}        \\
-                                                       & min                                  & max  \\
-        \midrule
-        \verb+LOAD_INPUT_VITIS_LOOP_73_4+                         & 4096                                 & 4096 \\
-        \verb+L1_L2+                         & 1287                                 & 1287 \\
-        \verb+STORE_OUTPUT_VITIS_LOOP_106_6+                         & 642                                  & 642  \\
-        \bottomrule
-    \end{tabular}
-\end{table}
 
 A further inspection shows that the load-compute-store workflow is not fully pipelined.
 That is because we cannot pipeline at L1, which will lead to resource utilization exceeding the budget with the current parameter.
