@@ -14,7 +14,7 @@ The fixed-point validation accuracy reported by \nolinkurl{mnist.py} is as \auto
 
 \begin{figure}[ht!]
     \begin{minted}{console}
-        $ python3 mnist.py 
+        $ python3 mnist.py
         Min/Max of coefficient values [-0.49227501415123354, 0.3931926418998524]
         Min/Max of intersect values [-0.12369156945342877, 0.2528140743366973]
         Misclassifications (float) = 14.05%
@@ -127,9 +127,10 @@ The measured classification accuracy on the 8k MNIST test sample is 19.96\% both
 
 The width of TDATA signal in AXI Stream interface is 64bit.
 Each input data has 256 bytes, i.e., 32 words, and a tile of 128 inputs has 4096 words.
-Our design, as reported in \autoref{tab:fixed-loop-latency}, took exactly 4096 cycles to load the 4096 words, but the following computation took another 1287 cycles.
-Thus I believe the design is compute-limited.
+Our design, as reported in \autoref{tab:fixed-loop-latency}, took exactly 4096 cycles to load the 4096 words, but the following computation took only another 1287 cycles.
+Thus I believe the design is memory-bandwidth limited.
+That is, if we can load more data at a single cycle, we can achieve a higher overall throughput.
 
-A further inspection shows that the load-compute-store workflow is not fully pipelined.
-That is because we cannot pipeline at L1, which will lead to resource utilization exceeding the budget with the current parameter.
-A potential optimization could be reducing the tile size so that the three inner loops can be merged and pipelined.
+% A further inspection shows that the load-compute-store workflow is not fully pipelined.
+% That is because we cannot pipeline at L1, which will lead to resource utilization exceeding the budget with the current parameter.
+% A potential optimization could be reducing the tile size so that the three inner loops can be merged and pipelined.
