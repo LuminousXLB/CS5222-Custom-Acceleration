@@ -30,14 +30,11 @@ void mmult_hw(hls::stream<AXI_VAL> &in_stream, hls::stream<AXI_VAL> &out_stream)
 #pragma HLS array_partition variable = weight_buf block factor = 32 dim = 2
 #pragma HLS array_partition variable = in_buf block factor = 32 dim = 2
 
-    // Input and output AXI stream indices
-    int is_idx = 0;
-    int os_idx = 0;
-
 // Stream in offset vector
 // CSE548 TODO
 LOAD_OFFSET:
     for (int i = 0; i < CLASSES; i += OUT_WIDTH_RATIO) {
+#pragma HLS PIPELINE II = 1
         AXI_VAL tmp;
         in_stream.read(tmp);
         axi_T packet = pop_stream(tmp);
@@ -51,6 +48,7 @@ LOAD_OFFSET:
 // CSE548 TODO
 LOAD_WEIGHT:
     for (int i = 0; i < CLASSES; i++) {
+#pragma HLS PIPELINE II = 1
         for (int j = 0; j < FEAT; j += W_WIDTH_RATIO) {
             AXI_VAL tmp;
             in_stream.read(tmp);
@@ -70,6 +68,7 @@ LT:
     // CSE548 TODO
     LOAD_INPUT:
         for (int i = 0; i < TILING; i++) {
+#pragma HLS PIPELINE II = 1
             for (int j = 0; j < FEAT; j += IN_WIDTH_RATIO) {
                 AXI_VAL tmp;
                 in_stream.read(tmp);
@@ -103,13 +102,13 @@ LT:
     // CSE548 TODO
     STORE_OUTPUT:
         for (int i = 0; i < TILING; i++) {
+#pragma HLS PIPELINE II = 1
             for (int j = 0; j < CLASSES; j += OUT_WIDTH_RATIO) {
                 axi_T packet;
                 for (int w = 0; w < OUT_WIDTH_RATIO; w++) {
                     packet.o[w] = out_buf[i][j + w];
                 }
-                os_idx++;
-                out_stream.write(push_stream(packet, os_idx == (OS_SIZE)));
+                out_stream.write(push_stream(packet, (i == TILING - 1) && (j == CLASSES - 1)));
             }
         }
     }
