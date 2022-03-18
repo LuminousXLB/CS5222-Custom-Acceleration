@@ -14,14 +14,13 @@ typedef ap_int<32> out_T;
 #define OUT_WIDTH (sizeof(out_T) * 8)
 
 // Data type ratio between data type and axi width
-#define AXI_WIDTH (128)
+#define AXI_WIDTH (256)
 
 #define W_WIDTH_RATIO (AXI_WIDTH / W_WIDTH)
 #define IN_WIDTH_RATIO (AXI_WIDTH / IN_WIDTH)
 #define OUT_WIDTH_RATIO (AXI_WIDTH / OUT_WIDTH)
 
 // AXI width
-// typedef unsigned long long axi_T;
 union axi_T {
     int8_t w[W_WIDTH_RATIO];
     uint8_t i[IN_WIDTH_RATIO];
@@ -33,12 +32,6 @@ union axi_T {
 #define FEAT 256
 #define CLASSES 10
 #define TILING 128
-
-// Input/Output Stream Size
-#define IS_SIZE                                                                           \
-    ((CLASSES + OUT_WIDTH_RATIO - 1) / OUT_WIDTH_RATIO + CLASSES * FEAT / W_WIDTH_RATIO + \
-     BATCH * FEAT / IN_WIDTH_RATIO)
-#define OS_SIZE (BATCH * ((CLASSES + OUT_WIDTH_RATIO - 1) / OUT_WIDTH_RATIO))
 
 // AXI settings (leave it fixed)
 #define AXI_DATA (sizeof(axi_T) * 8)

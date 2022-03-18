@@ -3,10 +3,6 @@
 
 #include "mmult.h"
 
-#define OUT_MASK ((1ULL << OUT_WIDTH) - 1)
-#define W_MASK ((1ULL << W_WIDTH) - 1)
-#define IN_MASK ((1ULL << IN_WIDTH) - 1)
-
 // --------------------------------------------------------------------
 // function to be accelerated in HW wrapped with AXI4-Stream interface
 void mmult_hw(hls::stream<AXI_VAL> &in_stream, hls::stream<AXI_VAL> &out_stream)
@@ -140,8 +136,8 @@ AXI_VAL push_stream(axi_T const &v, bool last = false)
     AXI_VAL e;
 
     *(axi_T *)(&e.data) = v;
-    e.strb = (1 << sizeof(axi_T)) - 1;
-    e.keep = (1 << sizeof(axi_T)) - 1;
+    e.strb = -1;
+    e.keep = -1;
     e.user = 0;
     e.last = last ? 1 : 0;
     e.id = 0;

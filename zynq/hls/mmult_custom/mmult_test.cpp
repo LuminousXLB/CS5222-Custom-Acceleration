@@ -57,10 +57,6 @@ int main(void)
     hls::stream<AXI_VAL> in_stream;
     hls::stream<AXI_VAL> out_stream;
 
-    // Input and output stream indices
-    int is_idx = 0;
-    int os_idx = 0;
-
     // stream in the offset vector
     for (int i = 0; i < CLASSES; i += OUT_WIDTH_RATIO) {
         axi_T packet;
@@ -68,7 +64,6 @@ int main(void)
         for (int w = 0; w < OUT_WIDTH_RATIO; w++) {
             packet.o[w] = offsets[i + w];
         };
-        is_idx++;
         in_stream.write(push_stream(packet, 0));
     }
 
@@ -80,7 +75,6 @@ int main(void)
             for (int w = 0; w < W_WIDTH_RATIO; w++) {
                 packet.w[w] = weights[i][j + w];
             };
-            is_idx++;
             in_stream.write(push_stream(packet, 0));
         }
     }
@@ -93,8 +87,7 @@ int main(void)
             for (int w = 0; w < IN_WIDTH_RATIO; w++) {
                 packet.i[w] = inputs[i][j + w];
             };
-            is_idx++;
-            in_stream.write(push_stream(packet, is_idx == (IS_SIZE)));
+            in_stream.write(push_stream(packet, (i == BATCH - 1) && (j == FEAT - 1)));
         }
     }
 
