@@ -1,7 +1,9 @@
-**/accel
-**/vitis_hls.log
-build
+.cache
 .Xil
 /*.jou
 /*.log
 /*.str
+accel
+build
+compile_commands.json
+vitis_hls.log
