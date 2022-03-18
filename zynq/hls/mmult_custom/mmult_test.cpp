@@ -1,3 +1,5 @@
+#include <cassert>
+#include <cstdint>
 #include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
@@ -5,21 +7,36 @@
 #include "mmult.h"
 
 void matrix_multiply_ref(
+    in_T inputs[BATCH][FEAT],
+    w_T weight1[HIDDEN][FEAT],
+    w_T weight2[CLASSES][HIDDEN],
     out_T offsets[CLASSES],
-    w_T weights[CLASSES][FEAT],
-    in_T in[BATCH][FEAT],
     out_T out[BATCH][CLASSES])
 {
+
+    out_T hidden[BATCH][HIDDEN];
+
     // matrix multiplication of a A*B matrix
     for (int i = 0; i < BATCH; ++i) {
-        for (int j = 0; j < CLASSES; ++j) {
-            out_T sum = offsets[j];
+        for (int j = 0; j < HIDDEN; ++j) {
+            int16_t sum = 0;
             for (int k = 0; k < FEAT; ++k) {
-                sum += in[i][k] * weights[j][k];
+                sum += inputs[i][k] * weight1[j][k];
+            }
+            hidden[i][j] = sum > 0 ? sum : 0;
+        }
+    }
+
+    for (int i = 0; i < BATCH; ++i) {
+        for (int j = 0; j < CLASSES; ++j) {
+            int16_t sum = offsets[j];
+            for (int k = 0; k < HIDDEN; ++k) {
+                sum += hidden[i][k] * weight2[j][k];
             }
             out[i][j] = sum;
         }
     }
+
     return;
 }
 
@@ -27,89 +44,109 @@ int main(void)
 {
     int i, j, err;
 
-    out_T offsets[CLASSES];
-    w_T weights[CLASSES][FEAT];
     in_T inputs[BATCH][FEAT];
+    w_T weight1[HIDDEN][FEAT];
+    w_T weight2[CLASSES][HIDDEN];
+    out_T offsets[CLASSES];
+
     out_T output_sw[BATCH][CLASSES];
     out_T output_hw[BATCH][CLASSES];
 
     /** Matrix Initiation */
-    for (i = 0; i < CLASSES; i++) {
-        offsets[i] = (out_T)((rand() % (1ULL << OUT_WIDTH)) - (1ULL << (OUT_WIDTH - 1)));
-    }
-
-    for (i = 0; i < CLASSES; i++) {
-        for (j = 0; j < FEAT; j++) {
-            weights[i][j] = (w_T)((rand() % (1ULL << W_WIDTH)) - (1ULL << (W_WIDTH - 1)));
-        }
-    }
-
     for (i = 0; i < BATCH; i++) {
         for (j = 0; j < FEAT; j++) {
             inputs[i][j] = (in_T)(rand() % (1ULL << IN_WIDTH));
         }
     }
+
+    for (i = 0; i < HIDDEN; i++) {
+        for (j = 0; j < FEAT; j++) {
+            weight1[i][j] = (w_T)((rand() % (1ULL << W_WIDTH)) - (1ULL << (W_WIDTH - 1)));
+        }
+    }
+
+    for (i = 0; i < CLASSES; i++) {
+        for (j = 0; j < HIDDEN; j++) {
+            weight2[i][j] = (w_T)((rand() % (1ULL << W_WIDTH)) - (1ULL << (W_WIDTH - 1)));
+        }
+    }
+
+    for (i = 0; i < CLASSES; i++) {
+        offsets[i] = (out_T)((rand() % (1ULL << OUT_WIDTH)) - (1ULL << (OUT_WIDTH - 1)));
+    }
+
     /** End of Initiation */
 
     printf("DEBUGGING AXI4 STREAMING DATA TYPES!\r\n");
 
     // prepare data for the DUT
-    hls::stream<AXI_VAL> in_stream;
-    hls::stream<AXI_VAL> out_stream;
+    hls::stream<AXI_VAL> istream;
+    hls::stream<AXI_VAL> ostream;
 
     // stream in the offset vector
-    for (int i = 0; i < CLASSES; i += OUT_WIDTH_RATIO) {
-        axi_T packet;
-    PACK_OFF:
-        for (int w = 0; w < OUT_WIDTH_RATIO; w++) {
-            packet.o[w] = offsets[i + w];
-        };
-        in_stream.write(push_stream(packet, 0));
+PACK_OFF : {
+    assert(CLASSES < OUT_WIDTH_RATIO);
+    axi_T packet;
+    for (int i = 0; i < CLASSES; i++) {
+        packet.o[i] = offsets[i];
     }
+    push_stream(istream, packet, 0);
+}
 
     // stream in the weigth matrix
-    for (int i = 0; i < CLASSES; i++) {
+PACK_W1:
+    assert(W_WIDTH_RATIO <= FEAT);
+    for (int i = 0; i < HIDDEN; i++) {
         for (int j = 0; j < FEAT; j += W_WIDTH_RATIO) {
             axi_T packet;
-        PACK_W:
             for (int w = 0; w < W_WIDTH_RATIO; w++) {
-                packet.w[w] = weights[i][j + w];
+                packet.w[w] = weight1[i][j + w];
             };
-            in_stream.write(push_stream(packet, 0));
+            push_stream(istream, packet, 0);
+        }
+    }
+
+PACK_W2:
+    assert(W_WIDTH_RATIO <= HIDDEN);
+    for (int i = 0; i < CLASSES; i++) {
+        for (int j = 0; j < HIDDEN; j += W_WIDTH_RATIO) {
+            axi_T packet;
+            for (int w = 0; w < W_WIDTH_RATIO; w++) {
+                packet.w[w] = weight2[i][j + w];
+            };
+            push_stream(istream, packet, 0);
         }
     }
 
     // stream in the input matrix
+PACK_IN:
+    assert(IN_WIDTH_RATIO <= FEAT);
     for (int i = 0; i < BATCH; i++) {
         for (int j = 0; j < FEAT; j += IN_WIDTH_RATIO) {
             axi_T packet;
-        PACK_IN:
-            for (int w = 0; w < IN_WIDTH_RATIO; w++) {
-                packet.i[w] = inputs[i][j + w];
+            for (int w = 0; w < IN_WIDTH_RATIO / 2; w++) {
+                packet.i[w].a0 = (uint8_t)inputs[i][j + 2 * w];
+                packet.i[w].a1 = (uint8_t)inputs[i][j + 2 * w + 1];
             };
-            in_stream.write(push_stream(packet, (i == BATCH - 1) && (j == FEAT - 1)));
+            push_stream(istream, packet, (i == BATCH - 1) && (j == FEAT - IN_WIDTH_RATIO));
         }
     }
 
     // call the DUT
-    mmult_hw(in_stream, out_stream);
-
-    AXI_VAL tmp;
+    mmult_hw(istream, ostream);
 
     // extract the output matrix from the out stream
+    assert(CLASSES <= OUT_WIDTH_RATIO);
+UNPACK_OUT : {
     for (int i = 0; i < BATCH; i++) {
-        for (int j = 0; j < CLASSES; j += OUT_WIDTH_RATIO) {
-            out_stream.read(tmp);
-            axi_T packet = pop_stream(tmp);
-        UNPACK_OUT:
-            for (int w = 0; w < OUT_WIDTH_RATIO; w++) {
-                output_hw[i][j + w] = packet.o[w];
-            }
+        axi_T packet = pop_stream(ostream);
+        for (int j = 0; j < CLASSES; j++) {
+            output_hw[i][j] = packet.o[j];
         }
     }
-
+}
     /* reference Matrix Multiplication */
-    matrix_multiply_ref(offsets, weights, inputs, output_sw);
+    matrix_multiply_ref(inputs, weight1, weight2, offsets, output_sw);
 
     /** Matrix comparison */
     err = 0;

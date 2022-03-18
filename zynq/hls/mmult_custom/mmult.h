@@ -3,15 +3,15 @@
 #include <hls_stream.h>
 #include <stdint.h>
 
-// Type definition of matrix elements
-typedef ap_int<8> w_T;
-typedef ap_uint<8> in_T;
-typedef ap_int<32> out_T;
-
 // Datatype widths in bits
-#define W_WIDTH (sizeof(w_T) * 8)
-#define IN_WIDTH (sizeof(in_T) * 8)
-#define OUT_WIDTH (sizeof(out_T) * 8)
+#define W_WIDTH 8
+#define IN_WIDTH 4
+#define OUT_WIDTH 16
+
+// Type definition of matrix elements
+typedef ap_int<W_WIDTH> w_T;
+typedef ap_uint<IN_WIDTH> in_T;
+typedef ap_int<OUT_WIDTH> out_T;
 
 // Data type ratio between data type and axi width
 #define AXI_WIDTH (256)
@@ -23,13 +23,17 @@ typedef ap_int<32> out_T;
 // AXI width
 union axi_T {
     int8_t w[W_WIDTH_RATIO];
-    uint8_t i[IN_WIDTH_RATIO];
-    int32_t o[OUT_WIDTH_RATIO];
+    struct {
+        uint8_t a0 : 4;
+        uint8_t a1 : 4;
+    } i[IN_WIDTH_RATIO / 2];
+    int16_t o[OUT_WIDTH_RATIO];
 };
 
 // Matrix dimensions specifications
 #define BATCH 8192
-#define FEAT 256
+#define FEAT 64
+#define HIDDEN 32
 #define CLASSES 10
 #define TILING 128
 
@@ -46,5 +50,5 @@ typedef ap_axiu<AXI_DATA, AXI_U, AXI_TI, AXI_TD> AXI_VAL;
 void mmult_hw(hls::stream<AXI_VAL> &in_stream, hls::stream<AXI_VAL> &out_stream);
 
 // AXI stream push and pop
-axi_T pop_stream(AXI_VAL const &e);
-AXI_VAL push_stream(axi_T const &v, bool last);
+axi_T pop_stream(hls::stream<AXI_VAL> &is);
+void push_stream(hls::stream<AXI_VAL> &is, axi_T const &v, bool last);
