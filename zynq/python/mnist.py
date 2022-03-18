@@ -43,11 +43,11 @@ def download(args):
         or (not os.path.exists(TEST_DAT))
         or (not os.path.exists(TEST_LAB))
     ):
-        import urllib
+        import urllib.request
         import zipfile
 
         zippath = os.path.join(os.getcwd(), "mnist.zip")
-        urllib.urlretrieve("http://data.mxnet.io/mxnet/data/mnist.zip", zippath)
+        urllib.request.urlretrieve("http://data.mxnet.io/mxnet/data/mnist.zip", zippath)
         zf = zipfile.ZipFile(zippath, "r")
         zf.extractall()
         zf.close()
