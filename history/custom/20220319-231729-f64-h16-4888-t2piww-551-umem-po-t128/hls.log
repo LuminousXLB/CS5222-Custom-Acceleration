@@ -1,0 +1,364 @@
+
+****** Vitis HLS - High-Level Synthesis from C, C++ and OpenCL v2020.2 (64-bit)
+  **** SW Build 3064766 on Wed Nov 18 09:12:47 MST 2020
+  **** IP Build 3064653 on Wed Nov 18 14:17:31 MST 2020
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+source /data/Xilinx/Vitis_HLS/2020.2/scripts/vitis_hls/hls.tcl -notrace
+INFO: [HLS 200-10] Running '/data/Xilinx/Vitis_HLS/2020.2/bin/unwrapped/lnx64.o/vitis_hls'
+INFO: [HLS 200-10] For user 'ubuntu' on host 'pc17' (Linux_x86_64 version 5.4.0-104-generic) on Sat Mar 19 23:17:31 +08 2022
+INFO: [HLS 200-10] On os Ubuntu 20.04.4 LTS
+INFO: [HLS 200-10] In directory '/home/ubuntu/cs5222/workspace/zynq/hls/mmult_custom'
+Sourcing Tcl script 'hls.tcl'
+INFO: [HLS 200-1510] Running: open_project accel 
+INFO: [HLS 200-10] Opening project '/home/ubuntu/cs5222/workspace/zynq/hls/mmult_custom/accel'.
+INFO: [HLS 200-1510] Running: set_top mmult_hw 
+INFO: [HLS 200-1510] Running: add_files ./mmult_custom.cpp 
+INFO: [HLS 200-10] Adding design file './mmult_custom.cpp' to the project
+INFO: [HLS 200-1510] Running: add_files -tb ./mmult_test.cpp 
+INFO: [HLS 200-10] Adding test bench file './mmult_test.cpp' to the project
+INFO: [HLS 200-1510] Running: open_solution solution0 -flow_target vivado 
+INFO: [HLS 200-10] Opening solution '/home/ubuntu/cs5222/workspace/zynq/hls/mmult_custom/accel/solution0'.
+INFO: [SYN 201-201] Setting up clock 'default' with a period of 10ns.
+INFO: [SYN 201-201] Setting up clock 'default' with an uncertainty of 1.25ns.
+INFO: [HLS 200-10] Setting target device to 'xc7z020-clg484-1'
+INFO: [HLS 200-1505] Using flow_target 'vivado'
+Resolution: For help on HLS 200-1505 see www.xilinx.com/cgi-bin/docs/rdoc?v=2020.2;t=hls+guidance;d=200-1505.html
+INFO: [HLS 200-1510] Running: set_part xc7z020clg484-1 
+INFO: [HLS 200-1510] Running: create_clock -period 10 -name default 
+INFO: [HLS 200-1510] Running: set_clock_uncertainty 12.5% 
+INFO: [HLS 200-1510] Running: csim_design -clean 
+INFO: [SIM 211-2] *************** CSIM start ***************
+INFO: [SIM 211-4] CSIM will launch GCC as the compiler.
+   Compiling ../../../../mmult_test.cpp in debug mode
+   Compiling ../../../../mmult_custom.cpp in debug mode
+   Generating csim.exe
+DEBUGGING AXI4 STREAMING DATA TYPES!
+Matrices identical ... Test successful!
+The maximum depth reached by any of the 2 hls::stream() instances in the design is 0
+INFO: [SIM 211-1] CSim done with 0 errors.
+INFO: [SIM 211-3] *************** CSIM finish ***************
+INFO: [HLS 200-111] Finished Command csim_design CPU user time: 8.83 seconds. CPU system time: 0.63 seconds. Elapsed time: 7.97 seconds; current allocated memory: 69.968 MB.
+INFO: [HLS 200-1510] Running: csynth_design 
+INFO: [HLS 200-111] Finished File checks and directory preparation: CPU user time: 0.01 seconds. CPU system time: 0 seconds. Elapsed time: 0 seconds; current allocated memory: 70.105 MB.
+INFO: [HLS 200-10] Analyzing design file './mmult_custom.cpp' ... 
+INFO: [HLS 200-111] Finished Source Code Analysis and Preprocessing: CPU user time: 3.89 seconds. CPU system time: 0.39 seconds. Elapsed time: 4.27 seconds; current allocated memory: 71.577 MB.
+INFO: [HLS 200-777] Using interface defaults for 'Vivado' flow target.
+INFO: [HLS 214-131] Inlining function 'hls::axis<ap_uint<512>, 0ul, 0ul, 0ul>::get_user_ptr()' into 'hls::stream<hls::axis<ap_uint<512>, 0ul, 0ul, 0ul>, 0>::read(hls::axis<ap_uint<512>, 0ul, 0ul, 0ul>&)' (/data/Xilinx/Vitis_HLS/2020.2/common/technology/autopilot/ap_axi_sdata.h:283:50)
+INFO: [HLS 214-131] Inlining function 'hls::axis<ap_uint<512>, 0ul, 0ul, 0ul>::get_dest_ptr()' into 'hls::stream<hls::axis<ap_uint<512>, 0ul, 0ul, 0ul>, 0>::read(hls::axis<ap_uint<512>, 0ul, 0ul, 0ul>&)' (/data/Xilinx/Vitis_HLS/2020.2/common/technology/autopilot/ap_axi_sdata.h:286:25)
+INFO: [HLS 214-131] Inlining function 'hls::axis<ap_uint<512>, 0ul, 0ul, 0ul>::get_id_ptr()' into 'hls::stream<hls::axis<ap_uint<512>, 0ul, 0ul, 0ul>, 0>::read(hls::axis<ap_uint<512>, 0ul, 0ul, 0ul>&)' (/data/Xilinx/Vitis_HLS/2020.2/common/technology/autopilot/ap_axi_sdata.h:285:67)
+INFO: [HLS 214-131] Inlining function 'hls::axis<ap_uint<512>, 0ul, 0ul, 0ul>::get_user_ptr()' into 'hls::stream<hls::axis<ap_uint<512>, 0ul, 0ul, 0ul>, 0>::read(hls::axis<ap_uint<512>, 0ul, 0ul, 0ul>&)' (/data/Xilinx/Vitis_HLS/2020.2/common/technology/autopilot/ap_axi_sdata.h:285:36)
+INFO: [HLS 214-131] Inlining function 'hls::axis<ap_uint<512>, 0ul, 0ul, 0ul>::get_dest_ptr()' into 'hls::stream<hls::axis<ap_uint<512>, 0ul, 0ul, 0ul>, 0>::read(hls::axis<ap_uint<512>, 0ul, 0ul, 0ul>&)' (/data/Xilinx/Vitis_HLS/2020.2/common/technology/autopilot/ap_axi_sdata.h:284:39)
+INFO: [HLS 214-131] Inlining function 'hls::axis<ap_uint<512>, 0ul, 0ul, 0ul>::get_id_ptr()' into 'hls::stream<hls::axis<ap_uint<512>, 0ul, 0ul, 0ul>, 0>::read(hls::axis<ap_uint<512>, 0ul, 0ul, 0ul>&)' (/data/Xilinx/Vitis_HLS/2020.2/common/technology/autopilot/ap_axi_sdata.h:284:23)
+INFO: [HLS 214-131] Inlining function 'hls::stream<hls::axis<ap_uint<512>, 0ul, 0ul, 0ul>, 0>::read(hls::axis<ap_uint<512>, 0ul, 0ul, 0ul>&)' into 'pop_stream(hls::stream<hls::axis<ap_uint<512>, 0ul, 0ul, 0ul>, 0>&)' (./mmult_custom.cpp:152:8)
+INFO: [HLS 214-131] Inlining function 'hls::axis<ap_uint<512>, 0ul, 0ul, 0ul>::get_user_ptr()' into 'hls::stream<hls::axis<ap_uint<512>, 0ul, 0ul, 0ul>, 0>::write(hls::axis<ap_uint<512>, 0ul, 0ul, 0ul> const&)' (/data/Xilinx/Vitis_HLS/2020.2/common/technology/autopilot/ap_axi_sdata.h:304:51)
+INFO: [HLS 214-131] Inlining function 'hls::axis<ap_uint<512>, 0ul, 0ul, 0ul>::get_dest_ptr()' into 'hls::stream<hls::axis<ap_uint<512>, 0ul, 0ul, 0ul>, 0>::write(hls::axis<ap_uint<512>, 0ul, 0ul, 0ul> const&)' (/data/Xilinx/Vitis_HLS/2020.2/common/technology/autopilot/ap_axi_sdata.h:307:26)
+INFO: [HLS 214-131] Inlining function 'hls::axis<ap_uint<512>, 0ul, 0ul, 0ul>::get_id_ptr()' into 'hls::stream<hls::axis<ap_uint<512>, 0ul, 0ul, 0ul>, 0>::write(hls::axis<ap_uint<512>, 0ul, 0ul, 0ul> const&)' (/data/Xilinx/Vitis_HLS/2020.2/common/technology/autopilot/ap_axi_sdata.h:306:68)
+INFO: [HLS 214-131] Inlining function 'hls::axis<ap_uint<512>, 0ul, 0ul, 0ul>::get_user_ptr()' into 'hls::stream<hls::axis<ap_uint<512>, 0ul, 0ul, 0ul>, 0>::write(hls::axis<ap_uint<512>, 0ul, 0ul, 0ul> const&)' (/data/Xilinx/Vitis_HLS/2020.2/common/technology/autopilot/ap_axi_sdata.h:306:37)
+INFO: [HLS 214-131] Inlining function 'hls::axis<ap_uint<512>, 0ul, 0ul, 0ul>::get_dest_ptr()' into 'hls::stream<hls::axis<ap_uint<512>, 0ul, 0ul, 0ul>, 0>::write(hls::axis<ap_uint<512>, 0ul, 0ul, 0ul> const&)' (/data/Xilinx/Vitis_HLS/2020.2/common/technology/autopilot/ap_axi_sdata.h:305:40)
+INFO: [HLS 214-131] Inlining function 'hls::axis<ap_uint<512>, 0ul, 0ul, 0ul>::get_id_ptr()' into 'hls::stream<hls::axis<ap_uint<512>, 0ul, 0ul, 0ul>, 0>::write(hls::axis<ap_uint<512>, 0ul, 0ul, 0ul> const&)' (/data/Xilinx/Vitis_HLS/2020.2/common/technology/autopilot/ap_axi_sdata.h:305:24)
+INFO: [HLS 214-131] Inlining function 'hls::stream<hls::axis<ap_uint<512>, 0ul, 0ul, 0ul>, 0>::write(hls::axis<ap_uint<512>, 0ul, 0ul, 0ul> const&)' into 'push_stream(hls::stream<hls::axis<ap_uint<512>, 0ul, 0ul, 0ul>, 0>&, axi_T const&, bool)' (./mmult_custom.cpp:168:8)
+INFO: [HLS 214-131] Inlining function 'push_stream(hls::stream<hls::axis<ap_uint<512>, 0ul, 0ul, 0ul>, 0>&, axi_T const&, bool)' into 'mmult_hw(hls::stream<hls::axis<ap_uint<512>, 0ul, 0ul, 0ul>, 0>&, hls::stream<hls::axis<ap_uint<512>, 0ul, 0ul, 0ul>, 0>&)' (./mmult_custom.cpp:139:13)
+INFO: [HLS 214-131] Inlining function 'pop_stream(hls::stream<hls::axis<ap_uint<512>, 0ul, 0ul, 0ul>, 0>&)' into 'mmult_hw(hls::stream<hls::axis<ap_uint<512>, 0ul, 0ul, 0ul>, 0>&, hls::stream<hls::axis<ap_uint<512>, 0ul, 0ul, 0ul>, 0>&)' (./mmult_custom.cpp:93:32)
+INFO: [HLS 214-131] Inlining function 'pop_stream(hls::stream<hls::axis<ap_uint<512>, 0ul, 0ul, 0ul>, 0>&)' into 'mmult_hw(hls::stream<hls::axis<ap_uint<512>, 0ul, 0ul, 0ul>, 0>&, hls::stream<hls::axis<ap_uint<512>, 0ul, 0ul, 0ul>, 0>&)' (./mmult_custom.cpp:76:17)
+INFO: [HLS 214-131] Inlining function 'pop_stream(hls::stream<hls::axis<ap_uint<512>, 0ul, 0ul, 0ul>, 0>&)' into 'mmult_hw(hls::stream<hls::axis<ap_uint<512>, 0ul, 0ul, 0ul>, 0>&, hls::stream<hls::axis<ap_uint<512>, 0ul, 0ul, 0ul>, 0>&)' (./mmult_custom.cpp:51:28)
+INFO: [HLS 214-131] Inlining function 'pop_stream(hls::stream<hls::axis<ap_uint<512>, 0ul, 0ul, 0ul>, 0>&)' into 'mmult_hw(hls::stream<hls::axis<ap_uint<512>, 0ul, 0ul, 0ul>, 0>&, hls::stream<hls::axis<ap_uint<512>, 0ul, 0ul, 0ul>, 0>&)' (./mmult_custom.cpp:40:20)
+INFO: [HLS 200-111] Finished Compiling Optimization and Transform: CPU user time: 7.97 seconds. CPU system time: 0.42 seconds. Elapsed time: 8.43 seconds; current allocated memory: 76.827 MB.
+INFO: [HLS 200-111] Finished Checking Pragmas: CPU user time: 0 seconds. CPU system time: 0.01 seconds. Elapsed time: 0 seconds; current allocated memory: 76.829 MB.
+INFO: [HLS 200-10] Starting code transformations ...
+INFO: [HLS 200-111] Finished Standard Transforms: CPU user time: 0.27 seconds. CPU system time: 0.03 seconds. Elapsed time: 0.3 seconds; current allocated memory: 87.593 MB.
+INFO: [HLS 200-10] Checking synthesizability ...
+INFO: [HLS 200-111] Finished Checking Synthesizability: CPU user time: 0.62 seconds. CPU system time: 0.01 seconds. Elapsed time: 0.64 seconds; current allocated memory: 98.014 MB.
+INFO: [XFORM 203-502] Unrolling all sub-loops inside loop 'LOAD_WEIGHT1' (./mmult_custom.cpp:154) in function 'mmult_hw' for pipelining.
+INFO: [XFORM 203-502] Unrolling all sub-loops inside loop 'LOAD_WEIGHT2' (./mmult_custom.cpp:154) in function 'mmult_hw' for pipelining.
+INFO: [XFORM 203-502] Unrolling all sub-loops inside loop 'LOAD_INPUT' (./mmult_custom.cpp:154) in function 'mmult_hw' for pipelining.
+INFO: [XFORM 203-502] Unrolling all sub-loops inside loop 'H_INNER1' in function 'mmult_hw' for pipelining.
+INFO: [XFORM 203-502] Unrolling all sub-loops inside loop 'COMPUTE_OUTPUT' (./mmult_custom.cpp:118) in function 'mmult_hw' for pipelining.
+INFO: [XFORM 203-502] Unrolling all sub-loops inside loop 'STORE_OUTPUT' (./mmult_custom.cpp:164) in function 'mmult_hw' for pipelining.
+INFO: [HLS 200-489] Unrolling loop 'VITIS_LOOP_50_2' (./mmult_custom.cpp:154) in function 'mmult_hw' completely with a factor of 2.
+INFO: [HLS 200-489] Unrolling loop 'VITIS_LOOP_58_3' (./mmult_custom.cpp:58) in function 'mmult_hw' completely with a factor of 32.
+INFO: [HLS 200-489] Unrolling loop 'VITIS_LOOP_77_4' (./mmult_custom.cpp:77) in function 'mmult_hw' completely with a factor of 16.
+INFO: [HLS 200-489] Unrolling loop 'VITIS_LOOP_94_5' (./mmult_custom.cpp:94) in function 'mmult_hw' completely with a factor of 32.
+INFO: [HLS 200-489] Unrolling loop 'H_INNER2' (./mmult_custom.cpp:108) in function 'mmult_hw' completely with a factor of 64.
+INFO: [HLS 200-489] Unrolling loop 'O_INNER1' (./mmult_custom.cpp:121) in function 'mmult_hw' completely with a factor of 10.
+INFO: [HLS 200-489] Unrolling loop 'O_INNER2' (./mmult_custom.cpp:125) in function 'mmult_hw' completely with a factor of 16.
+INFO: [HLS 200-489] Unrolling loop 'VITIS_LOOP_136_6' (./mmult_custom.cpp:136) in function 'mmult_hw' completely with a factor of 10.
+INFO: [XFORM 203-102] Partitioning array 'out_buf.V' (./mmult_custom.cpp:28) in dimension 2 automatically.
+INFO: [XFORM 203-102] Partitioning array 'v.assign' automatically.
+INFO: [XFORM 203-101] Partitioning array 'input.V' (./mmult_custom.cpp:23) in dimension 2 with a block factor 32.
+INFO: [XFORM 203-101] Partitioning array 'weight1.V' (./mmult_custom.cpp:24) in dimension 2 with a block factor 32.
+INFO: [XFORM 203-101] Partitioning array 'weight2.V' (./mmult_custom.cpp:25) in dimension 2 with a block factor 2.
+INFO: [XFORM 203-11] Balancing expressions in function 'mmult_hw' (./mmult_custom.cpp:23:35)...346 expression(s) balanced.
+INFO: [HLS 200-111] Finished Loop, function and other optimizations: CPU user time: 2.89 seconds. CPU system time: 0.03 seconds. Elapsed time: 2.92 seconds; current allocated memory: 136.956 MB.
+INFO: [XFORM 203-541] Flattening a loop nest 'COMPUTE_HIDDEN' (./mmult_custom.cpp:103:18) in function 'mmult_hw'.
+WARNING: [HLS 200-960] Cannot flatten loop 'LT' (./mmult_custom.cpp:164:10) in function 'mmult_hw' more than one sub loop.
+Resolution: For help on HLS 200-960 see www.xilinx.com/cgi-bin/docs/rdoc?v=2020.2;t=hls+guidance;d=200-960.html
+INFO: [HLS 200-472] Inferring partial write operation for 'hidden.V' 
+INFO: [HLS 200-472] Inferring partial write operation for 'packet' (./mmult_custom.cpp:154:17)
+INFO: [HLS 200-472] Inferring partial write operation for 'offset.V' (./mmult_custom.cpp:43:12)
+INFO: [HLS 200-472] Inferring partial write operation for 'weight1.V[0]' (./mmult_custom.cpp:59:35)
+INFO: [HLS 200-472] Inferring partial write operation for 'weight2.V[0]' (./mmult_custom.cpp:78:27)
+INFO: [HLS 200-472] Inferring partial write operation for 'input.V[0]' (./mmult_custom.cpp:95:41)
+INFO: [HLS 200-472] Inferring partial write operation for 'input.V[0]' (./mmult_custom.cpp:96:45)
+INFO: [HLS 200-472] Inferring partial write operation for 'hidden.V' (./mmult_custom.cpp:113:30)
+INFO: [HLS 200-472] Inferring partial write operation for 'out_buf.V[0]' 
+INFO: [HLS 200-111] Finished Architecture Synthesis: CPU user time: 3.07 seconds. CPU system time: 0.01 seconds. Elapsed time: 3.08 seconds; current allocated memory: 150.075 MB.
+INFO: [HLS 200-10] Starting hardware synthesis ...
+INFO: [HLS 200-10] Synthesizing 'mmult_hw' ...
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-42] -- Implementing module 'mmult_hw' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [SCHED 204-11] Starting scheduling ...
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_63) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_30) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_28) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_26) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_24) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_22) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_20) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_18) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_16) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_14) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_12) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_10) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_8) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_6) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_4) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_2) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_45) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_43) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_41) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_39) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_37) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_35) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_33) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_31) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_53) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_51) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_49) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_47) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_57) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_55) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_59) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_62) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_220) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_222) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_219) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_217) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_215) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_213) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_211) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_209) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_207) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_204) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_206) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_203) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_201) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_199) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_197) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_195) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_193) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_191) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_188) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_190) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_187) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_185) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_183) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_181) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_179) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_177) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_175) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_172) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_174) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_171) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_169) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_167) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_165) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_163) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_161) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_159) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_156) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_158) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_155) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_153) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_151) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_149) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_147) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_145) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_143) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_140) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_142) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_139) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_137) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_135) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_133) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_131) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_129) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_127) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_124) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_126) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_123) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_121) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_119) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_117) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_115) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_112) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_110) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_107) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_109) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_106) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_104) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_102) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_100) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_98) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_96) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_94) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_91) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_93) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_90) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_88) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_86) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_84) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_82) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_80) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_78) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_75) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_77) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_74) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_72) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_70) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_68) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_66) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691_64) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP48 latency (root=mul_ln691) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-1457] Automatically inferring 1WnR RAM type for array 'hidden_V'. Use bind_storage pragma to overwrite if needed.
+INFO: [SCHED 204-61] Pipelining loop 'VITIS_LOOP_41_1'.
+INFO: [HLS 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 2, loop 'VITIS_LOOP_41_1'
+INFO: [SCHED 204-61] Pipelining loop 'LOAD_WEIGHT1'.
+WARNING: [HLS 200-880] The II Violation in module 'mmult_hw' (loop 'LOAD_WEIGHT1'): Unable to enforce a carried dependence constraint (II = 1, distance = 1, offset = 1) between axis read on port 'in_stream_V_data_V' and axis read on port 'in_stream_V_data_V'.
+Resolution: For help on HLS 200-880 see www.xilinx.com/cgi-bin/docs/rdoc?v=2020.2;t=hls+guidance;d=200-880.html
+INFO: [HLS 200-1470] Pipelining result : Target II = 1, Final II = 2, Depth = 2, loop 'LOAD_WEIGHT1'
+INFO: [SCHED 204-61] Pipelining loop 'LOAD_WEIGHT2'.
+WARNING: [HLS 200-885] Unable to schedule 'store' operation ('weight2_V_0_addr_2_write_ln78', ./mmult_custom.cpp:78) of variable 'trunc_ln78_2', ./mmult_custom.cpp:78 on array 'weight2.V[0]', ./mmult_custom.cpp:25 due to limited memory ports. Please consider using a memory core with more ports or partitioning the array 'weight2_V_0'.
+Resolution: For help on HLS 200-885 see www.xilinx.com/cgi-bin/docs/rdoc?v=2020.2;t=hls+guidance;d=200-885.html
+INFO: [HLS 200-1470] Pipelining result : Target II = 1, Final II = 4, Depth = 5, loop 'LOAD_WEIGHT2'
+INFO: [SCHED 204-61] Pipelining loop 'LOAD_INPUT'.
+INFO: [HLS 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 1, loop 'LOAD_INPUT'
+INFO: [SCHED 204-61] Pipelining loop 'COMPUTE_HIDDEN_H_INNER1'.
+INFO: [HLS 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 8, loop 'COMPUTE_HIDDEN_H_INNER1'
+INFO: [SCHED 204-61] Pipelining loop 'COMPUTE_OUTPUT'.
+INFO: [HLS 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 7, loop 'COMPUTE_OUTPUT'
+INFO: [SCHED 204-61] Pipelining loop 'STORE_OUTPUT'.
+INFO: [HLS 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 3, loop 'STORE_OUTPUT'
+INFO: [SCHED 204-11] Finished scheduling.
+INFO: [HLS 200-111] Finished Scheduling: CPU user time: 2.41 seconds. CPU system time: 0.21 seconds. Elapsed time: 2.62 seconds; current allocated memory: 158.409 MB.
+INFO: [BIND 205-100] Starting micro-architecture generation ...
+INFO: [BIND 205-101] Performing variable lifetime analysis.
+INFO: [BIND 205-101] Exploring resource sharing.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight1_V_0' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight1_V_1' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight1_V_2' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight1_V_3' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight1_V_4' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight1_V_5' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight1_V_6' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight1_V_7' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight1_V_8' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight1_V_9' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight1_V_10' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight1_V_11' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight1_V_12' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight1_V_13' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight1_V_14' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight1_V_15' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight1_V_16' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight1_V_17' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight1_V_18' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight1_V_19' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight1_V_20' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight1_V_21' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight1_V_22' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight1_V_23' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight1_V_24' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight1_V_25' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight1_V_26' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight1_V_27' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight1_V_28' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight1_V_29' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight1_V_30' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight1_V_31' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight2_V_0' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'weight2_V_1' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'input_V_0' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'input_V_1' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'input_V_2' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'input_V_3' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'input_V_4' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'input_V_5' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'input_V_6' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'input_V_7' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'input_V_8' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'input_V_9' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'input_V_10' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'input_V_11' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'input_V_12' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'input_V_13' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'input_V_14' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'input_V_15' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'input_V_16' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'input_V_17' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'input_V_18' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'input_V_19' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'input_V_20' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'input_V_21' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'input_V_22' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'input_V_23' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'input_V_24' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'input_V_25' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'input_V_26' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'input_V_27' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'input_V_28' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'input_V_29' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'input_V_30' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'input_V_31' will be ignored if a simpler one can be used.
+INFO: [BIND 205-101] Binding ...
+INFO: [BIND 205-100] Finished micro-architecture generation.
+INFO: [HLS 200-111] Finished Binding: CPU user time: 2.2 seconds. CPU system time: 0.18 seconds. Elapsed time: 2.37 seconds; current allocated memory: 168.587 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-10] -- Generating RTL for module 'mmult_hw' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+WARNING: [RTGEN 206-101] Design contains AXI ports. Reset is fixed to synchronous and active low.
+INFO: [RTGEN 206-500] Setting interface mode on port 'mmult_hw/in_stream_V_data_V' to 'axis' (register, both mode).
+INFO: [RTGEN 206-500] Setting interface mode on port 'mmult_hw/in_stream_V_keep_V' to 'axis' (register, both mode).
+INFO: [RTGEN 206-500] Setting interface mode on port 'mmult_hw/in_stream_V_strb_V' to 'axis' (register, both mode).
+INFO: [RTGEN 206-500] Setting interface mode on port 'mmult_hw/in_stream_V_last_V' to 'axis' (register, both mode).
+INFO: [RTGEN 206-500] Setting interface mode on port 'mmult_hw/out_stream_V_data_V' to 'axis' (register, both mode).
+INFO: [RTGEN 206-500] Setting interface mode on port 'mmult_hw/out_stream_V_keep_V' to 'axis' (register, both mode).
+INFO: [RTGEN 206-500] Setting interface mode on port 'mmult_hw/out_stream_V_strb_V' to 'axis' (register, both mode).
+INFO: [RTGEN 206-500] Setting interface mode on port 'mmult_hw/out_stream_V_last_V' to 'axis' (register, both mode).
+INFO: [RTGEN 206-500] Setting interface mode on function 'mmult_hw' to 's_axilite & ap_ctrl_hs'.
+INFO: [RTGEN 206-100] Bundling port 'return' to AXI-Lite port CONTROL_BUS.
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_8s_4ns_8ns_8_4_1': 32 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_8s_8s_8ns_8_4_1': 80 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_8s_8s_8s_8_4_1': 10 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mul_8s_4ns_8_1_1': 32 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mul_8s_8s_8_1_1': 70 instance(s).
+INFO: [RTGEN 206-100] Finished creating RTL model for 'mmult_hw'.
+INFO: [HLS 200-111] Finished Creating RTL model: CPU user time: 2.79 seconds. CPU system time: 0.18 seconds. Elapsed time: 2.98 seconds; current allocated memory: 184.607 MB.
+INFO: [RTMG 210-282] Generating pipelined core: 'mmult_hw_mul_8s_4ns_8_1_1_Multiplier_0'
+INFO: [RTMG 210-282] Generating pipelined core: 'mmult_hw_mul_8s_8s_8_1_1_Multiplier_1'
+INFO: [RTMG 210-278] Implementing memory 'mmult_hw_input_V_0_ram (RAM_T2P_BRAM)' using block RAMs.
+INFO: [RTMG 210-278] Implementing memory 'mmult_hw_weight1_V_0_ram (RAM_T2P_BRAM)' using block RAMs.
+INFO: [RTMG 210-278] Implementing memory 'mmult_hw_weight2_V_0_ram (RAM_T2P_BRAM)' using block RAMs.
+INFO: [RTMG 210-278] Implementing memory 'mmult_hw_hidden_V_ram (RAM_1WnR)' using auto RAMs.
+INFO: [RTMG 210-278] Implementing memory 'mmult_hw_offset_V_ram (RAM)' using auto RAMs.
+INFO: [RTMG 210-278] Implementing memory 'mmult_hw_out_buf_V_0_ram (RAM)' using auto RAMs.
+INFO: [RTMG 210-278] Implementing memory 'mmult_hw_packet_ram (RAM)' using auto RAMs.
+INFO: [HLS 200-111] Finished Generating all RTL models: CPU user time: 7.19 seconds. CPU system time: 0.29 seconds. Elapsed time: 7.5 seconds; current allocated memory: 225.645 MB.
+INFO: [VHDL 208-304] Generating VHDL RTL for mmult_hw.
+INFO: [VLOG 209-307] Generating Verilog RTL for mmult_hw.
+INFO: [HLS 200-790] **** Loop Constraint Status: All loop constraints were NOT satisfied.
+INFO: [HLS 200-789] **** Estimated Fmax: 130.14 MHz
+INFO: [HLS 200-111] Finished Command csynth_design CPU user time: 33.42 seconds. CPU system time: 1.78 seconds. Elapsed time: 35.25 seconds; current allocated memory: 226.184 MB.
+INFO: [HLS 200-112] Total CPU user time: 43.58 seconds. Total CPU system time: 2.95 seconds. Total elapsed time: 44.57 seconds; peak allocated memory: 225.645 MB.
+INFO: [Common 17-206] Exiting vitis_hls at Sat Mar 19 23:18:15 2022...
