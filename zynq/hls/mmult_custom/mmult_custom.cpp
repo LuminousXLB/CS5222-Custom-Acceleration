@@ -32,8 +32,8 @@ void mmult_hw(hls::stream<AXI_VAL> &in_stream, hls::stream<AXI_VAL> &out_stream)
 #pragma HLS bind_storage variable = offset type = RAM_T2P
 #pragma HLS bind_storage variable = out_buf type = RAM_T2P
 
-#pragma HLS array_partition variable = input block factor = 2 dim = 2
-#pragma HLS array_partition variable = weight1 block factor = 2 dim = 2
+#pragma HLS array_partition variable = input block factor = 32 dim = 2
+#pragma HLS array_partition variable = weight1 block factor = 32 dim = 2
 #pragma HLS array_partition variable = weight2 block factor = 2 dim = 2
 
 // Stream in offset vector
