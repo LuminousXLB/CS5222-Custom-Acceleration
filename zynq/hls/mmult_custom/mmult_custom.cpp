@@ -23,14 +23,13 @@ void mmult_hw(hls::stream<AXI_VAL> &in_stream, hls::stream<AXI_VAL> &out_stream)
     in_T input[BATCH][FEAT];
     w1_T weight1[HIDDEN][FEAT];
     w2_T weight2[CLASSES][HIDDEN];
+    out_T hidden[TILING][HIDDEN] = {0};
     out_T offset[CLASSES];
     out_T out_buf[TILING][CLASSES];
 
 #pragma HLS bind_storage variable = input type = RAM_T2P
 #pragma HLS bind_storage variable = weight1 type = RAM_T2P
 #pragma HLS bind_storage variable = weight2 type = RAM_T2P
-#pragma HLS bind_storage variable = offset type = RAM_T2P
-#pragma HLS bind_storage variable = out_buf type = RAM_T2P
 
 #pragma HLS array_partition variable = input block factor = 32 dim = 2
 #pragma HLS array_partition variable = weight1 block factor = 32 dim = 2
@@ -98,8 +97,6 @@ LT:
                 };
             }
         }
-
-        w1_T hidden[TILING][HIDDEN] = {0};
 
         // FORWARD_COMPUTE:
     COMPUTE_HIDDEN:

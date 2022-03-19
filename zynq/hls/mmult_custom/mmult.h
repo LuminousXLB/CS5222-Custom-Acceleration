@@ -7,7 +7,7 @@
 #define IN_WIDTH 4
 #define W1_WIDTH 8
 #define W2_WIDTH 8
-#define OUT_WIDTH 8
+#define OUT_WIDTH 16
 
 // Type definition of matrix elements
 typedef ap_uint<IN_WIDTH> in_T;
@@ -46,7 +46,7 @@ union axi_T {
 #define FEAT 64
 #define HIDDEN 16
 #define CLASSES 10
-#define TILING 32
+#define TILING 128
 
 // AXI settings (leave it fixed)
 #define AXI_DATA (sizeof(axi_T) * 8)
