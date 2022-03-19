@@ -8,7 +8,7 @@ mkdir -p $DIR
 cp mmult*.cpp $DIR
 cp mmult.h $DIR
 
-vitis_hls -f hls.tcl
+time vitis_hls -f hls.tcl
 
 mv vitis_hls.log $DIR/hls.log
 cp accel/solution0/syn/report/mmult_hw_csynth.rpt $DIR
