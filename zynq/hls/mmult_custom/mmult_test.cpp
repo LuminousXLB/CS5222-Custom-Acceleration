@@ -115,8 +115,8 @@ PACK_W1:
     }
 
 PACK_W2:
-    assert(W2_WIDTH_RATIO <= HIDDEN);
     for (int i = 0; i < CLASSES; i++) {
+#if W2_WIDTH_RATIO <= HIDDEN
         for (int j = 0; j < HIDDEN; j += W2_WIDTH_RATIO) {
             axi_T packet;
             for (int w = 0; w < W2_WIDTH_RATIO; w++) {
@@ -124,6 +124,13 @@ PACK_W2:
             }
             push_stream(istream, packet, 0);
         }
+#else
+        axi_T packet;
+        for (int j = 0; j < HIDDEN; j++) {
+            packet.w2[j] = weight2[i][j];
+        }
+        push_stream(istream, packet, 0);
+#endif
     }
 
     // stream in the input matrix

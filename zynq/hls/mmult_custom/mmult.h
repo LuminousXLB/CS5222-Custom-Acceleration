@@ -43,16 +43,16 @@ union axi_T {
 
 // Matrix dimensions specifications
 #define BATCH 8192
-#define FEAT 128
-#define HIDDEN 32
+#define FEAT 64
+#define HIDDEN 16
 #define CLASSES 10
 #define TILING 32
 
 // AXI settings (leave it fixed)
 #define AXI_DATA (sizeof(axi_T) * 8)
-#define AXI_U 4
-#define AXI_TI 5
-#define AXI_TD 5
+#define AXI_U 0
+#define AXI_TI 0
+#define AXI_TD 0
 
 // AXI interface
 typedef ap_axiu<AXI_DATA, AXI_U, AXI_TI, AXI_TD> AXI_VAL;

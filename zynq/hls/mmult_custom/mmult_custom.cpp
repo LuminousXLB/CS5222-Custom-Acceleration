@@ -66,12 +66,19 @@ LOAD_WEIGHT1:
 LOAD_WEIGHT2:
     for (int i = 0; i < CLASSES; i++) {
 #pragma HLS PIPELINE II = 1
+#if W2_WIDTH_RATIO <= HIDDEN
         for (int j = 0; j < HIDDEN; j += W2_WIDTH_RATIO) {
             axi_T packet = pop_stream(in_stream);
             for (int w = 0; w < W2_WIDTH_RATIO; w++) {
                 weight2[i][j + w] = packet.w2[w];
             }
         }
+#else
+        axi_T packet = pop_stream(in_stream);
+        for (int j = 0; j < HIDDEN; j++) {
+            weight2[i][j] = packet.w2[j];
+        }
+#endif
     }
 
 // Iterate over tiles
@@ -144,12 +151,7 @@ axi_T pop_stream(hls::stream<AXI_VAL> &is)
     is.read(e);
 
     axi_T ret = *(axi_T *)(&e.data);
-    volatile ap_uint<sizeof(axi_T)> strb = e.strb;
-    volatile ap_uint<sizeof(axi_T)> keep = e.keep;
-    volatile ap_uint<AXI_U> user = e.user;
     volatile ap_uint<1> last = e.last;
-    volatile ap_uint<AXI_TI> id = e.id;
-    volatile ap_uint<AXI_TD> dest = e.dest;
 
     return ret;
 }
@@ -160,12 +162,7 @@ void push_stream(hls::stream<AXI_VAL> &is, axi_T const &v, bool last = false)
 
     AXI_VAL e;
     *(axi_T *)(&e.data) = v;
-    e.strb = -1;
-    e.keep = -1;
-    e.user = 0;
     e.last = last ? 1 : 0;
-    e.id = 0;
-    e.dest = 0;
 
     is.write(e);
 }
