@@ -26,15 +26,15 @@ void mmult_hw(hls::stream<AXI_VAL> &in_stream, hls::stream<AXI_VAL> &out_stream)
     out_T offset[CLASSES];
     out_T out_buf[TILING][CLASSES];
 
-// #pragma HLS bind_storage variable = input type = RAM_T2P
-// #pragma HLS bind_storage variable = weight1 type = RAM_T2P
-// #pragma HLS bind_storage variable = weight2 type = RAM_T2P
-// #pragma HLS bind_storage variable = offset type = RAM_T2P
-// #pragma HLS bind_storage variable = out_buf type = RAM_T2P
+#pragma HLS bind_storage variable = input type = RAM_T2P
+#pragma HLS bind_storage variable = weight1 type = RAM_T2P
+#pragma HLS bind_storage variable = weight2 type = RAM_T2P
+#pragma HLS bind_storage variable = offset type = RAM_T2P
+#pragma HLS bind_storage variable = out_buf type = RAM_T2P
 
-// #pragma HLS array_partition variable = input block factor = 4 dim = 2
-// #pragma HLS array_partition variable = weight1 block factor = 4 dim = 2
-// #pragma HLS array_partition variable = weight2 block factor = 4 dim = 2
+#pragma HLS array_partition variable = input block factor = 2 dim = 2
+#pragma HLS array_partition variable = weight1 block factor = 2 dim = 2
+#pragma HLS array_partition variable = weight2 block factor = 2 dim = 2
 
 // Stream in offset vector
 LOAD_OFFSET:
@@ -99,30 +99,34 @@ LT:
             }
         }
 
-    FORWARD_COMPUTE:
-        for (int i = 0; i < TILING; i++) {
-            w1_T hidden[HIDDEN] = {0};
+        w1_T hidden[TILING][HIDDEN] = {0};
 
-        COMPUTE_HIDDEN:
-            for (int j = 0; j < HIDDEN; j++) {
+        // FORWARD_COMPUTE:
+    COMPUTE_HIDDEN:
+        for (int i = 0; i < TILING; i++) {
+        H_INNER1:
+            for (int h = 0; h < HIDDEN; h++) {
 #pragma HLS PIPELINE II = 1
                 // Perform the dot product
                 w1_T sum = 0;
-            H_INNER:
-                for (int k = 0; k < FEAT; k++) {
-                    sum += input[i][k] * weight1[j][k];
+            H_INNER2:
+                for (int f = 0; f < FEAT; f++) {
+                    sum += input[i][f] * weight1[h][f];
                 }
-                hidden[j] = sum * (sum > 0);
+                hidden[i][h] = sum * (sum > 0);
             }
+        }
 
-        COMPUTE_OUTPUT:
-            for (int j = 0; j < CLASSES; j++) {
+    COMPUTE_OUTPUT:
+        for (int i = 0; i < TILING; i++) {
 #pragma HLS PIPELINE II = 1
+        O_INNER1:
+            for (int c = 0; c < CLASSES; c++) {
                 // Perform the dot product
-                out_buf[i][j] = offset[j];
-            O_INNER:
-                for (int k = 0; k < HIDDEN; k++) {
-                    out_buf[i][j] += hidden[k] * weight2[j][k];
+                out_buf[i][c] = offset[c];
+            O_INNER2:
+                for (int h = 0; h < HIDDEN; h++) {
+                    out_buf[i][c] += hidden[i][h] * weight2[c][h];
                 }
             }
         }
