@@ -1,8 +1,11 @@
-\subsection{Further Reducing the Input Dimension}
 
-The size of input is determined by the dimension of inputs (originally \(16 \times 16\)) and the depth of each pixel (8-bit in the previous section).
-A search is done as \autoref{fig:mnist-shrink} to find a suitable pair of dimension and depth with the naive linear regression model.
+\subsection{Reducing the Input Dimension}
 
+The size of input is determined by the dimension of inputs (originally \(16 \times 16\)) and the depth of each pixel (8-bit in the previous design).
+A search is done by trying different pair of input dimension and depth and calculating the prediction accuracy using linear regression model, which is actually a lower bound we can achieve.
+The result is as \autoref{fig:mnist-shrink}.
+
+It is shown that 
 
 When the input size is shrunk to \(8 \times 8\), the misclassifications rate is 15.96\%, which is slightly worse than our target (over 85\% in accuracy).
 However, this is a desirable configuration, which means we can fit an input in precisely 8 bytes.
@@ -11,64 +14,80 @@ Thus I believe it is worth sacrificing some accuracy here and getting it back us
 \begin{figure}[ht!]
     \centering
     \includegraphics[width=\textwidth]{images/mnist-shrink.pdf}
-    \caption{Prediction accuracy with floating point numbers under different input size}
+    \caption{Accuracy of prediction using floating point numbers under different input size}
     \label{fig:mnist-shrink}
 \end{figure}
 
+\subsection{Improve Prediction Accuracy}
 
-Grading breakdown
+The accuracy is improve by using a more complex model, which includes a ReLU activated input layer (\(64 \times 16\)), which is unbiased, and a biased output layer (\(16\times 10\)).
+Using ReLU with an unbiased input layer, we can refrain from floating point calculation while keep the linear property.
 
-\begin{itemize}
-    \item You will receive full marks if you can both improve performance and accuracy of your classifier by a significant margin (\textbf{over 85\% in accuracy, and achieve less than 4.5ms of FPGA inference time} as measured on the board for 8k invocations). You are free to change the classifier algorithm.
-    \item The best projects will include ambitious classifier implementations (e.g. neural networks).
-\end{itemize}
+\[
+    \mathbf{O} = \operatorname{ReLU}(\mathbf{I} \cdot \mathbf{W_1}) \cdot \mathbf{W_2} + \mathbf{b}
+\]
 
-Hints To provide some guidance, you can implement one of the following optimizations:
+To get a better training result, we add a Softmax layer after the model and use train towards minimized cross entropy loss.
+This layer can be removed when predicting on FPGA, which will not affect the final result.
 
-\begin{itemize}
-    \item \textbf{Image resizing} to reduce bandwidth constraints
-    \item \textbf{Int4} computation to improve overall throughput and compute parallelism
-    \item Static weight and input pruning to improve throughput
-    \item Tweaking the classifier parameters (alpha, normalize, solver etc.) to minimize the impact of quantization after training: \url{http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.RidgeClassifier.html}
-    \item Quantized training of Perceptrons or MLPs to greatly improve on accuracy (hard): you can try using Tensorflow's quantized neural network training framework based on Google's gemmlowp
-\end{itemize}
+\subsection{Evaluation}
 
+Our design took 4.54 ms to generate the prediction while the CPU used 169.64 ms, which means the FPGA solution achieves a 37.36x speedup against the CPU solution.
+The prediction accuracy is 88.18\% on both FPGA and CPU.
 
 
 
-\subsection{Further Reducing the Input Word Size}
 
-\begin{verbatim}
-    0	1
-    Min/Max of coefficient values [-0.1269286942809636, 0.1594202734201814]
-    Min/Max of intersect values [-0.12298597158796834, 0.25215023898894595]
-    Misclassifications (float) = 14.04%
-    1	2
-    Min/Max of coefficient values [-0.2579727805346529, 0.3367354053287503]
-    Min/Max of intersect values [-0.12221092950313273, 0.25146283191769414]
-    Misclassifications (float) = 14.06%
-    2	4
-    Min/Max of coefficient values [-0.2528431590374692, 0.4579900512360424]
-    Min/Max of intersect values [-0.120955370412382, 0.25034842273687996]
-    Misclassifications (float) = 13.97%
-    3	8
-    Min/Max of coefficient values [-0.1561473482609172, 0.13999005012436186]
-    Min/Max of intersect values [-0.11811364720247122, 0.24783921190473537]
-    Misclassifications (float) = 14.08%
-    4	16
-    Min/Max of coefficient values [-0.2975492959158691, 0.2944870681567359]
-    Min/Max of intersect values [-0.11693540191183108, 0.24602396492534034]
-    Misclassifications (float) = 14.20%
-    5	32
-    Min/Max of coefficient values [-0.31002173110897463, 0.36055035977853817]
-    Min/Max of intersect values [-0.1172926133330838, 0.24529586638455075]
-    Misclassifications (float) = 14.33%
-    6	64
-    Min/Max of coefficient values [-0.29022187874077926, 0.4405762865450562]
-    Min/Max of intersect values [-0.11859062509994753, 0.2517921052496037]
-    Misclassifications (float) = 14.45%
-    7	128
-    Min/Max of coefficient values [-0.2759871254368684, 0.4880494589107611]
-    Min/Max of intersect values [-0.1256726010592734, 0.26636986937055335]
-    Misclassifications (float) = 15.89%
-\end{verbatim}
+
+
+
+
+
+% Since we modified the AXI data width, the data width of DMA IP needs to be fixed manually as \autoref{fig:adjust-axi-data-width}.
+
+% \begin{figure}
+%     \centering
+%     \caption{Adjust AXI data width by re-customizing AXI-DMA IP}
+%     \label{fig:adjust-axi-data-width}
+%     \includegraphics[scale=0.32]{images/adjust-axi-data-width.png}
+% \end{figure}
+
+
+
+
+
+
+
+
+
+
+% \subsection{Reduce I/O Latency}
+
+% As we've discussed in \autoref{sec:reflection}, our current design is limited by I/O.
+% Thus we seek for reducing the I/O latency, first of all.
+
+% The I/O latency is determined by the number of bits we can transfer per cycle and the number of bits needed to transfer in total.
+
+% \subsubsection{Enhancing a Single AXI Transfer}
+
+% In order to accomodate more data in a single AXI transfer\footnote{
+%     \href{https://developer.arm.com/documentation/ihi0051/a/Introduction/About-the-AXI4-Stream-protocol/Stream-terms}{Stream terms}
+% }, we need to increase the \texttt{TDATA} width.
+
+% The width in the default design is 64 bits, which took 32 cycles to transfer a single input of 256 bytes.
+% By widening the \texttt{TDATA} width to 256 bits, it takes only 8 cycles to transfer the 256 bytes (\autoref{tab:tdata}).
+
+% \begin{table}[ht!]
+%     \centering
+%     \caption{\texttt{LOAD\_INPUT} latency under different \texttt{TDATA} width}
+%     \label{tab:tdata}
+%     \begin{tabular}{cccccccc}
+%         \toprule
+%         \texttt{TDATA} width (bits) & Latency (cycles) & Iteration Latency & Initiation Interval (achieved) & Trip Count & Pipelined \\
+%         \midrule
+%         64                          & 4096             & 32                & 32                             & 128        & yes       \\
+%         128                         & 2048             & 16                & 16                             & 128        & yes       \\
+%         256                         & 1024             & 8                 & 8                              & 128        & yes       \\
+%         \bottomrule
+%     \end{tabular}
+% \end{table}
