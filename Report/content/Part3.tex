@@ -1,4 +1,4 @@
-\subsection{Further Reducing the Input Size}
+\subsection{Further Reducing the Input Dimension}
 
 The size of input is determined by the dimension of inputs (originally \(16 \times 16\)) and the depth of each pixel (8-bit in the previous section).
 A search is done as \autoref{fig:mnist-shrink} to find a suitable pair of dimension and depth with the naive linear regression model.
@@ -32,3 +32,43 @@ Hints To provide some guidance, you can implement one of the following optimizat
     \item Tweaking the classifier parameters (alpha, normalize, solver etc.) to minimize the impact of quantization after training: \url{http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.RidgeClassifier.html}
     \item Quantized training of Perceptrons or MLPs to greatly improve on accuracy (hard): you can try using Tensorflow's quantized neural network training framework based on Google's gemmlowp
 \end{itemize}
+
+
+
+
+\subsection{Further Reducing the Input Word Size}
+
+\begin{verbatim}
+    0	1
+    Min/Max of coefficient values [-0.1269286942809636, 0.1594202734201814]
+    Min/Max of intersect values [-0.12298597158796834, 0.25215023898894595]
+    Misclassifications (float) = 14.04%
+    1	2
+    Min/Max of coefficient values [-0.2579727805346529, 0.3367354053287503]
+    Min/Max of intersect values [-0.12221092950313273, 0.25146283191769414]
+    Misclassifications (float) = 14.06%
+    2	4
+    Min/Max of coefficient values [-0.2528431590374692, 0.4579900512360424]
+    Min/Max of intersect values [-0.120955370412382, 0.25034842273687996]
+    Misclassifications (float) = 13.97%
+    3	8
+    Min/Max of coefficient values [-0.1561473482609172, 0.13999005012436186]
+    Min/Max of intersect values [-0.11811364720247122, 0.24783921190473537]
+    Misclassifications (float) = 14.08%
+    4	16
+    Min/Max of coefficient values [-0.2975492959158691, 0.2944870681567359]
+    Min/Max of intersect values [-0.11693540191183108, 0.24602396492534034]
+    Misclassifications (float) = 14.20%
+    5	32
+    Min/Max of coefficient values [-0.31002173110897463, 0.36055035977853817]
+    Min/Max of intersect values [-0.1172926133330838, 0.24529586638455075]
+    Misclassifications (float) = 14.33%
+    6	64
+    Min/Max of coefficient values [-0.29022187874077926, 0.4405762865450562]
+    Min/Max of intersect values [-0.11859062509994753, 0.2517921052496037]
+    Misclassifications (float) = 14.45%
+    7	128
+    Min/Max of coefficient values [-0.2759871254368684, 0.4880494589107611]
+    Min/Max of intersect values [-0.1256726010592734, 0.26636986937055335]
+    Misclassifications (float) = 15.89%
+\end{verbatim}
