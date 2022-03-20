@@ -13,10 +13,10 @@ That fixes the problem.
 \begin{figure}
     \begin{minted}{text}
         [xilinx.com:ip:axi_dma:7.1-9] /axi_dma_1
-        ########################################################### 
+        ###########################################################
         Interface connected to S_AXIS_S2MM does not have TLAST port
         ###########################################################
-    \end{minted}    
+    \end{minted}
     \caption{Critical Warning from validating the design}
     \label{fig:tlast}
 \end{figure}
@@ -24,14 +24,14 @@ That fixes the problem.
 After building, move the bitstream files to the board.
 
 \begin{minted}{console}
-    $ scp `find -name "*.bit"` xilinx@<pynq-ip-addr>:~/classifier.bit 
+    $ scp `find -name "*.bit"` xilinx@<pynq-ip-addr>:~/classifier.bit
     $ scp `find -name "*.hwh"` xilinx@<pynq-ip-addr>:~/classifier.hwh
 \end{minted}
 
 According to the different versions of PYNQ, I have to modify the notebook as well.
 The new version is attached in the submission.
 
-The measured classificationde accuracy is 13.04\% for both FPGA and CPU, which indicates that our implementation is correct.
+The measured misclassification rate is 13.04\% for both FPGA and CPU, which indicates that our implementation is correct.
 The running time on FPGA is around 16.16ms, while 78.04ms on CPU.
 That is, speedup on FPGA is 4.83x, a little bit smaller than required.
 This may due to the optimization between different versions of python and numpy.
