@@ -135,16 +135,9 @@ PACK_W1:
     for (int i = 0; i < HIDDEN; i++) {
         for (int j = 0; j < FEAT; j += W1_WIDTH_RATIO) {
             axi_T packet;
-#if W1_WIDTH == 4
-            for (int w = 0; w < W1_WIDTH_RATIO / 2; w++) {
-                packet.w1[w].a0 = weight1[i][j + 2 * w];
-                packet.w1[w].a1 = weight1[i][j + 2 * w + 1];
-            }
-#else
             for (int w = 0; w < W1_WIDTH_RATIO; w++) {
                 packet.w1[w] = weight1[i][j + w];
             }
-#endif
             push_stream_w(istream, packet, 0);
         }
     }

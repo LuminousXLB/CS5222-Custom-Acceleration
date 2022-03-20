@@ -64,16 +64,9 @@ LOAD_WEIGHT1:
 #pragma HLS PIPELINE II = 1
         for (int j = 0; j < FEAT; j += W1_WIDTH_RATIO) {
             axi_T packet = pop_stream(in_stream);
-#if W1_WIDTH == 4
-            for (int w = 0; w < W1_WIDTH_RATIO / 2; w++) {
-                weight1[i][j + 2 * w] = packet.w1[w].a0;
-                weight1[i][j + 2 * w + 1] = packet.w1[w].a1;
-            }
-#else
             for (int w = 0; w < W1_WIDTH_RATIO; w++) {
                 weight1[i][j + w] = packet.w1[w];
             }
-#endif
         }
     }
 
@@ -202,8 +195,6 @@ axi_T pop_stream(hls::stream<AXI_VAL> &is)
     AXI_VAL e;
     is.read(e);
 
-    axi_T ret = {._packet = e.data};
-
     volatile ap_uint<sizeof(axi_T)> strb = e.strb;
     volatile ap_uint<sizeof(axi_T)> keep = e.keep;
     volatile ap_uint<AXI_U> user = e.user;
@@ -211,7 +202,14 @@ axi_T pop_stream(hls::stream<AXI_VAL> &is)
     volatile ap_uint<AXI_TI> id = e.id;
     volatile ap_uint<AXI_TD> dest = e.dest;
 
-    return ret;
+    axi_T packet;
+
+    packet._packet[0] = e.data.range((0 + 1) * 64 - 1, 0 * 64);
+    packet._packet[1] = e.data.range((1 + 1) * 64 - 1, 1 * 64);
+    packet._packet[2] = e.data.range((2 + 1) * 64 - 1, 2 * 64);
+    packet._packet[3] = e.data.range((3 + 1) * 64 - 1, 3 * 64);
+
+    return packet;
 }
 
 void push_stream(hls::stream<AXI_VAL> &os, axi_T const &v, bool last = false)
@@ -220,10 +218,13 @@ void push_stream(hls::stream<AXI_VAL> &os, axi_T const &v, bool last = false)
 
     AXI_VAL e;
 
-    e.data = v._packet;
+    e.data.range((0 + 1) * 64 - 1, 0 * 64) = v._packet[0];
+    e.data.range((1 + 1) * 64 - 1, 1 * 64) = v._packet[1];
+    e.data.range((2 + 1) * 64 - 1, 2 * 64) = v._packet[2];
+    e.data.range((3 + 1) * 64 - 1, 3 * 64) = v._packet[3];
 
-    e.strb = (1 << sizeof(axi_T)) - 1;
-    e.keep = (1 << sizeof(axi_T)) - 1;
+    e.strb = -1;
+    e.keep = -1;
     e.user = 0;
     e.last = last ? 1 : 0;
     e.id = 0;

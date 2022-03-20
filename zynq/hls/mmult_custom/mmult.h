@@ -16,7 +16,7 @@ typedef ap_int<W2_WIDTH> w2_T;
 typedef ap_int<OUT_WIDTH> out_T;
 
 // Data type ratio between data type and axi width
-#define AXI_WIDTH (64)
+#define AXI_WIDTH (256)
 
 #define IN_WIDTH_RATIO (AXI_WIDTH / IN_WIDTH)
 #define W1_WIDTH_RATIO (AXI_WIDTH / W1_WIDTH)
@@ -39,7 +39,7 @@ union axi_T {
 #endif
     int8_t w2[W2_WIDTH_RATIO];
     int16_t o[OUT_WIDTH_RATIO];
-    uint64_t _packet;
+    uint64_t _packet[AXI_WIDTH / 8 / sizeof(uint64_t)];
 };
 
 // Matrix dimensions specifications
