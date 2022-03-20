@@ -23,12 +23,12 @@ void matrix_multiply_ref(
 #endif
 {
 
-    w2_T hidden[BATCH][HIDDEN];
+    out_T hidden[BATCH][HIDDEN];
 
     // matrix multiplication of a A*B matrix
     for (int i = 0; i < BATCH; ++i) {
         for (int j = 0; j < HIDDEN; ++j) {
-            w1_T sum = 0;
+            out_T sum = 0;
             for (int k = 0; k < FEAT; ++k) {
                 sum += inputs[i][k] * weight1[j][k];
             }

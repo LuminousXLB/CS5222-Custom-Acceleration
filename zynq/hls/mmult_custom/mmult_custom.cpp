@@ -127,14 +127,13 @@ LT:
             }
         }
 
-        // FORWARD_COMPUTE:
     COMPUTE_HIDDEN:
         for (int i = 0; i < TILING; i++) {
         H_INNER1:
             for (int h = 0; h < HIDDEN; h++) {
 #pragma HLS PIPELINE II = 1
                 // Perform the dot product
-                w1_T sum = 0;
+                out_T sum = 0;
             H_INNER2:
                 for (int f = 0; f < FEAT; f++) {
                     sum += input[i][f] * weight1[h][f];
