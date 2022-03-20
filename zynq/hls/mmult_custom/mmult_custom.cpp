@@ -23,7 +23,7 @@ void mmult_hw(hls::stream<AXI_VAL> &in_stream, hls::stream<AXI_VAL> &out_stream)
     in_T input[BATCH][FEAT];
     w1_T weight1[HIDDEN][FEAT];
     w2_T weight2[CLASSES][HIDDEN];
-    out_T hidden[TILING][HIDDEN] = {0};
+    out_T hidden[TILING][HIDDEN];
 #if CLASSES < OUT_WIDTH_RATIO
     out_T offset[CLASSES];
     out_T out_buf[TILING][CLASSES];
@@ -121,8 +121,8 @@ LT:
             for (int j = 0; j < FEAT; j += IN_WIDTH_RATIO) {
                 axi_T packet = pop_stream(in_stream);
                 for (int w = 0; w < IN_WIDTH_RATIO / 2; w++) {
-                    input[i][j + 2 * w] = packet.i[w].a0;
-                    input[i][j + 2 * w + 1] = packet.i[w].a1;
+                    input[i][j + 2 * w] = packet.i[w].a1;
+                    input[i][j + 2 * w + 1] = packet.i[w].a0;
                 };
             }
         }

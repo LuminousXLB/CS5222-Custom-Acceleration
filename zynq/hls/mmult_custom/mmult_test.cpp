@@ -189,8 +189,8 @@ PACK_IN:
         for (int j = 0; j < FEAT; j += IN_WIDTH_RATIO) {
             axi_T packet;
             for (int w = 0; w < IN_WIDTH_RATIO / 2; w++) {
-                packet.i[w].a0 = (uint8_t)inputs[i][j + 2 * w];
-                packet.i[w].a1 = (uint8_t)inputs[i][j + 2 * w + 1];
+                packet.i[w].a1 = (uint8_t)inputs[i][j + 2 * w];
+                packet.i[w].a0 = (uint8_t)inputs[i][j + 2 * w + 1];
             };
             push_stream_w(istream, packet, (i == BATCH - 1) && (j == FEAT - IN_WIDTH_RATIO));
         }
