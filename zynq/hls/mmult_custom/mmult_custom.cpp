@@ -17,15 +17,20 @@ void mmult_hw(hls::stream<AXI_VAL> &in_stream, hls::stream<AXI_VAL> &out_stream)
     assert(FEAT % IN_WIDTH_RATIO == 0);
     assert(FEAT % W1_WIDTH_RATIO == 0);
     assert(FEAT % W2_WIDTH_RATIO == 0);
-    assert((BATCH * CLASSES) % OUT_WIDTH_RATIO == 0);
+    // assert((BATCH * CLASSES) % OUT_WIDTH_RATIO == 0);
 
     // Hardware memory buffers
     in_T input[BATCH][FEAT];
     w1_T weight1[HIDDEN][FEAT];
     w2_T weight2[CLASSES][HIDDEN];
     out_T hidden[TILING][HIDDEN] = {0};
+#if CLASSES < OUT_WIDTH_RATIO
     out_T offset[CLASSES];
     out_T out_buf[TILING][CLASSES];
+#elif OUT_WIDTH_RATIO == 4
+    out_T offset[CLASSES + 2];
+    out_T out_buf[TILING][CLASSES + 2];
+#endif
 
 #pragma HLS bind_storage variable = input type = RAM_T2P
 #pragma HLS bind_storage variable = weight1 type = RAM_T2P
@@ -37,11 +42,21 @@ void mmult_hw(hls::stream<AXI_VAL> &in_stream, hls::stream<AXI_VAL> &out_stream)
 
 // Stream in offset vector
 LOAD_OFFSET:
+#if CLASSES < OUT_WIDTH_RATIO
     axi_T packet = pop_stream(in_stream);
     for (int i = 0; i < CLASSES; i++) {
 #pragma HLS PIPELINE II = 1
         offset[i] = packet.o[i];
     }
+#else
+    for (int i = 0; i < CLASSES; i += OUT_WIDTH_RATIO) {
+#pragma HLS PIPELINE II = 1
+        axi_T packet = pop_stream(in_stream);
+        for (int w = 0; w < OUT_WIDTH_RATIO; w++) {
+            offset[i + w] = packet.o[w];
+        }
+    }
+#endif
 
 // Stream in weight matrix
 LOAD_WEIGHT1:
@@ -63,6 +78,19 @@ LOAD_WEIGHT1:
     }
 
 LOAD_WEIGHT2:
+#if W2_WIDTH_RATIO == 2 * HIDDEN
+    for (int i = 0; i < CLASSES; i += 2) {
+#pragma HLS PIPELINE II = 1
+        axi_T packet = pop_stream(in_stream);
+        for (int j = 0; j < HIDDEN; j++) {
+            weight2[i][j] = packet.w2[j];
+        }
+
+        for (int j = 0; j < HIDDEN; j++) {
+            weight2[i + 1][j] = packet.w2[j + HIDDEN];
+        }
+    }
+#else
     for (int i = 0; i < CLASSES; i++) {
 #pragma HLS PIPELINE II = 1
 #if W2_WIDTH_RATIO <= HIDDEN
@@ -79,6 +107,7 @@ LOAD_WEIGHT2:
         }
 #endif
     }
+#endif
 
 // Iterate over tiles
 LT:
@@ -132,11 +161,34 @@ LT:
     STORE_OUTPUT:
         for (int i = 0; i < TILING; i++) {
 #pragma HLS PIPELINE II = 1
+
+#if CLASSES < OUT_WIDTH_RATIO
             axi_T packet;
             for (int j = 0; j < CLASSES; j++) {
                 packet.o[j] = out_buf[i][j];
             }
-            push_stream(out_stream, packet, (t + i) == (BATCH - 1));
+
+#define LAST ((t + i) == (BATCH - 1))
+            if (LAST) {
+                printf("FPGA PUSHING %d (last=%d)\n", t + i, LAST);
+            }
+            push_stream(out_stream, packet, LAST);
+#undef LAST
+#else
+            for (int j = 0; j < CLASSES; j += OUT_WIDTH_RATIO) {
+                axi_T packet;
+                for (int w = 0; w < OUT_WIDTH_RATIO; w++) {
+                    packet.o[w] = out_buf[i][j + w];
+                }
+#define LAST (((t + i) == (BATCH - 1)) && (j == (OUT_WIDTH_RATIO * (CLASSES / OUT_WIDTH_RATIO))))
+                if (LAST) {
+                    printf("FPGA PUSHING %d (last=%d)\n", t + i, LAST);
+                }
+                push_stream(out_stream, packet, LAST);
+#undef LAST
+            }
+
+#endif
         }
     }
 }
@@ -151,19 +203,32 @@ axi_T pop_stream(hls::stream<AXI_VAL> &is)
     AXI_VAL e;
     is.read(e);
 
-    axi_T ret = *(axi_T *)(&e.data);
+    axi_T ret = {._packet = e.data};
+
+    volatile ap_uint<sizeof(axi_T)> strb = e.strb;
+    volatile ap_uint<sizeof(axi_T)> keep = e.keep;
+    volatile ap_uint<AXI_U> user = e.user;
     volatile ap_uint<1> last = e.last;
+    volatile ap_uint<AXI_TI> id = e.id;
+    volatile ap_uint<AXI_TD> dest = e.dest;
 
     return ret;
 }
 
-void push_stream(hls::stream<AXI_VAL> &is, axi_T const &v, bool last = false)
+void push_stream(hls::stream<AXI_VAL> &os, axi_T const &v, bool last = false)
 {
 #pragma HLS INLINE
 
     AXI_VAL e;
-    *(axi_T *)(&e.data) = v;
-    e.last = last ? 1 : 0;
 
-    is.write(e);
+    e.data = v._packet;
+
+    e.strb = (1 << sizeof(axi_T)) - 1;
+    e.keep = (1 << sizeof(axi_T)) - 1;
+    e.user = 0;
+    e.last = last ? 1 : 0;
+    e.id = 0;
+    e.dest = 0;
+
+    os.write(e);
 }

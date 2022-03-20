@@ -1600,9 +1600,9 @@ wait_on_run impl_1
 puts "Implementation done!"
 
 # Export hardware description file and bitstream files to export/ dir
-file mkdir $proj_path/export
-file copy -force $proj_path/$proj_name.runs/impl_1/${proj_name}_wrapper.sysdef $proj_path/export/classifier.hdf
-file copy -force $proj_path/$proj_name.runs/impl_1/${proj_name}_wrapper.bit $proj_path/export/classifier.bit
+# file mkdir $proj_path/export
+# file copy -force $proj_path/$proj_name.runs/impl_1/${proj_name}_wrapper.sysdef $proj_path/export/classifier.hdf
+# file copy -force $proj_path/$proj_name.runs/impl_1/${proj_name}_wrapper.bit $proj_path/export/classifier.bit
 
 exit
 
