@@ -4,6 +4,10 @@ _minted*
 acmart.*
 !acmart.cls
 
+Presentation.nav
+Presentation.snm
+Presentation.vrb
+
 *.aux
 *.bbl
 *.bcf
