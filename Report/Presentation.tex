@@ -132,12 +132,14 @@ ERROR: [SIM 211-100] 'csim_design' failed: compilation error(s).
               \begin{minted}{tcl}
             set scripts_vivado_version 2020.2
         \end{minted}
-        \item Bad lexical cast: source type value could not be interpreted as target
-              \begin{minted}{console}
-            $ faketime -f "-1y" make
-        \end{minted}
-        \item Fail to export \nolinkurl{classifier.bit} and \nolinkurl{classifier.hdf}
-
+        \item (Y2K22) Bad lexical cast: source type value could not be interpreted as target
+        \begin{itemize}
+            \item \begin{minted}{console}
+                $ faketime -f "-1y" make
+            \end{minted}
+            \item Patch: \url{https://support.xilinx.com/s/article/76960}
+        \end{itemize}
+        \item Fail to export \nolinkurl{classifier.hdf} \\
               It doesn't matter, see next page
     \end{itemize}
 
