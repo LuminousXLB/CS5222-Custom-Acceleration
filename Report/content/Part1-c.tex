@@ -5,10 +5,17 @@
 The work in this section is based on L2 pipelining with auto pipelining enabled using T2P memory.
 The loop details for this baseline is in \autoref{tab:float-loop-1c0-baseline-ap-l2}.
 
+\begin{table}[ht!]
+    \caption{Loop details for baseline of array partition}
+    \label{tab:float-loop-1c0-baseline-ap-l2}
+    \centering
+    \input{report/float-loop-1c0-baseline-ap-l2.tex}
+\end{table}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Understanding the \texttt{dim} parameter}\label{sec:1cDim}
 
-Instead of diving into the factor, which is of interest in this project,
+Instead of diving into the \texttt{factor}, which is of interest in this project,
 we try to choose an appropriate \texttt{dim}.
 The \texttt{dim} option is used to specify which dimension is partitioned.
 \autoref{fig:float-partition-dim} is a figure coming from \textit{Vitis HLS User Guide (ug1399)}, which clearly shows the idea of \texttt{dim}.
@@ -39,19 +46,18 @@ That is, we need to set \texttt{dim} to 2.
 \end{figure}
 
 I have also experimented on this, where the code is modified as \autoref{fig:1c1-partition-d12}.
-The HLS summary (\autoref{tab:float-summary}) shows setting \texttt{dim} to 1 introduces more resource usage but the latency is worse.
+The HLS summary (\autoref{tab:float-summary}) shows setting \texttt{dim} to 1, producing the same number of adders and multipliers, introduces more resource usage but the latency is worse.
 On the contrary, setting \texttt{dim} to 2 leads to introducing more floating-point adders and multipliers and achieves a lower latency.
 The result also supports our conclusion above.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Trying different \texttt{factor}s}\label{sec:1cFac}
 
-As shown in \autoref{tab:float-summary}, adding the \texttt{factor} to 32 makes the utilization of DSP and LUT exceeds the resource budget.
-
-When \texttt{factor}=8, the latency is reduced to 4911, which means 46.4x improvement, where 16 floating-point adders and 16 floating-point multipliers are used.
+As shown in \autoref{tab:float-summary}, when \texttt{factor}=8, the latency is reduced to 4911, which means 46.4x improvement, where 16 floating-point adders and 16 floating-point multipliers are used.
 When \texttt{factor}=16, the latency is reduced to 4279, which means 53.3x improvement, where 32 floating-point adders and 32 floating-point multipliers are used.
 That is exactly 16 times of that when array partition is not used.
 From \autoref{tab:float-loop-1c2-partition-ap-d2-f8} and \autoref{tab:float-loop-1c2-partition-ap-d2-f16}, it can be seen that the initiation interval is 16 cyles when \texttt{factor}=8 and 8 cycles when \texttt{factor}=16.
+Adding the \texttt{factor} to 32 makes the utilization of DSP and LUT exceeds the resource budget.
 
 \begin{table}[ht!]
     \caption{Loop details for partition with \texttt{dim}=2 \texttt{factor}=8}

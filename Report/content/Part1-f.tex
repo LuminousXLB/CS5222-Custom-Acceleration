@@ -28,10 +28,10 @@ After building, move the bitstream files to the board.
     $ scp `find -name "*.hwh"` xilinx@<pynq-ip-addr>:~/classifier.hwh
 \end{minted}
 
-According to the different versions of PYNQ, I have to modify the notebook as well.
+Because of the changing of PYNQ version, I have to modify the notebook as well.
 The new version is attached in the submission.
 
 The measured misclassification rate is 13.04\% for both FPGA and CPU, which indicates that our implementation is correct.
 The running time on FPGA is around 16.16ms, while 78.04ms on CPU.
 That is, speedup on FPGA is 4.83x, a little bit smaller than required.
-This may due to the optimization between different versions of python and numpy.
+This may due to the better optimization coming from the higher versions of python and numpy.
